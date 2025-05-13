@@ -1,0 +1,17 @@
+✅ Upgrading Angular version
+"Upgrading a project from Angular 10 to Angular 17 was challenging. It involved dealing with deprecated APIs, breaking changes in RxJS, and reworking how modules and lazy loading were handled. I learned how to use the Angular CLI effectively, analyze build errors, and write migration-safe code."
+
+
+✅ Optimizing Performance
+"I struggled with performance issues in an application with many nested components and data-heavy tables. 
+Change detection was triggering unnecessary updates. 
+I learned to use `OnPush` change detection strategy, trackBy in *ngFor, lazy loading modules, and debouncing user input. 
+This significantly improved performance, especially on lower-end devices."
+
+
+✅ Handling Complex State Management
+"One of the most challenging parts I faced was managing complex state across multiple components, especially when building large-scale applications. 
+Initially, I relied on services with Subjects and BehaviorSubjects, but as the app grew, this became hard to maintain. 
+I had to learn and implement NgRx for proper state management, 
+which involved understanding concepts like actions, reducers, selectors, and effects. 
+It was a steep learning curve but ultimately improved scalability and maintainability."
