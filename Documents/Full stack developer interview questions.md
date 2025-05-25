@@ -1782,7 +1782,7 @@ By understanding the causes of memory leaks and following best practices, you ca
 
 ---
 ## 19. Scenario Based Questions:
-## You want to **exclude `salary` from serialization** (i.e., not returned in REST responses), but still persist it in the database.
+## A. You want to **exclude `salary` from serialization** (i.e., not returned in REST responses), but still persist it in the database.
 
 To exclude specific fields (like `salary`) from being returned in a Spring Boot API response, you can use one of the following approaches:
 
