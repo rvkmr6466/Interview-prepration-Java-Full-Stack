@@ -1,6 +1,6 @@
 # Java, Spring Boot, JPA & Microservices Interview Questions  
 
-## Q1. Spring Boot application works internally?
+## 1. Spring Boot application works internally?
 Understanding how a **Spring Boot application works internally** is crucial for mastering backend development. Here's a detailed explanation of the internal workflow when a Spring Boot application starts and runs.
 
 ### 1. **Spring Boot Application Entry Point**
@@ -102,8 +102,7 @@ Spring Boot auto-configures everything:
 
 You just run the app and hit `http://localhost:8080/hello`.
 
----
-## Q1.1 Spring Boot Application Workflow
+## 1.1 Spring Boot Application Workflow
 
 Here's a step-by-step breakdown of how a Spring Boot application initializes and processes requests:
 
@@ -160,8 +159,7 @@ Spring Boot applications typically follow a layered architecture:
 
 This structured approach ensures a clear separation of concerns, making the application more maintainable and scalable.
 
----
-## Q1.2 `@SpringBootApplication` Annotation in Spring Boot
+## 1.2 `@SpringBootApplication` Annotation in Spring Boot
 
 The `@SpringBootApplication` annotation is a **composite annotation** in Spring Boot that combines three other annotations:  
 
@@ -182,7 +180,7 @@ The `@SpringBootApplication` annotation is a **composite annotation** in Spring 
 - Simplifies the setup by reducing the need for manual configuration.  
 - Provides a **concise way** to bootstrap a Spring Boot application.  
 
-## Q1.3 Class level annotation in spring boot
+## 1.3 Class level annotation in spring boot
 In Spring Boot, class-level annotations are used to define configurations, components, and behaviors at the class level. Here are some commonly used class-level annotations:
 ### 1. `@RestController`
    - Used in Spring MVC to define a RESTful controller.
@@ -281,7 +279,7 @@ These annotations help configure and organize a Spring Boot application efficien
 5. ([How Spring Boot Application Works Internally? | GeeksforGeeks](https://www.geeksforgeeks.org/how-spring-boot-application-works-internally/?utm_source=chatgpt.com))
 
 ---
-## Q2. How to disable auto-configuration in Spring Boot?
+## 2. How to disable auto-configuration in Spring Boot?
 ### Understanding Auto-Configuration
 Spring Boot's auto-configuration automatically configures your application based on the dependencies it finds on the classpath. This significantly reduces the amount of manual configuration you need to write. However, in some cases, you might want to disable auto-configuration and take full control of your application's configuration.
 
@@ -390,7 +388,7 @@ test {
 - **Documentation**: Document clearly which auto-configurations you've excluded and why.  This will help other developers (and yur future self) understand the application's configuration.
 
 ---
-## Q3. Creating an Immutable Class in Java  
+## 3. Creating an Immutable Class in Java  
 An **immutable class** in Java is a class whose instances cannot be modified once they are created. This means that the state of an immutable object remains constant throughout its lifetime. Immutable classes are beneficial for various reasons, including thread-safety, simplicity, and predictability.
 
 ### Key Principles of Immutability
@@ -468,7 +466,7 @@ In this example, the `Student` class is immutable because:
   - **Example** – `String` Class
 
 ---
-## Q3.1 `String` Class:  
+## 3.1 `String` Class:  
    - The `String` class in Java is immutable. Once a `String` object is created, its value cannot be changed.
 In Java, the term "immutable" means that once a String object is created, its content cannot be changed. This implies that any operation that appears to modify a String actually creates a new String object with the modified content, leaving the original String unchanged.
 
@@ -486,7 +484,7 @@ System.out.println(str1); // Output: Hello (str1 remains unchanged)
 System.out.println(str2); // Output: Hello World (str2 is a new string)
 ```
 
-## Q3.2 String Immutability in Java Explained
+## 3.2 String Immutability in Java Explained
 Here's an explanation of String immutability in Java, using your example:
 ```java
 String s = "A";
@@ -508,7 +506,7 @@ System.out.println(s);
 - This line prints the value of s, which is now the memory address of the String object containing "B".  So, the output is "B".
 
 ---
-## Q3.3 How String Immutability Works
+## 3.3 How String Immutability Works
 - **_Strings are Objects:_** In Java, String is a class, and string literals (like "A" and "B") are instances of that class (String objects).
 - **_Memory Allocation:_** When you create a string, the JVM allocates a block of memory to store the sequence of characters.Immutable Nature: The key point is that once a String object is created, its internal state (the character sequence) cannot be changed.  Any operation that appears to modify a string (e.g., concatenation, substring) actually creates a new String object with the modified content. The original String object remains unchanged.
 - **_No Setter Methods:_** The String class doesn't provide any methods to directly change the characters within an existing String object. You can't do something like `s.changeCharacter(0, 'C')`.
@@ -537,7 +535,7 @@ s:  -------
 By following these principles and practices, you can create robust and reliable immutable classes in Java. This approach helps in writing cleaner, safer, and more maintainable code.
 
 ---
-## Q4. Validation in Spring Boot  
+## 4. Validation in Spring Boot  
 Spring Boot provides robust support for validating data, especially in the context of handling web requests and ensuring data integrity.  The primary mechanism for validation in Spring Boot is through the use of the Bean Validation API (JSR-380), with Hibernate Validator being the most commonly used implementation.
 
 ### Key Concepts and Components
@@ -563,8 +561,7 @@ Spring Boot provides robust support for validating data, especially in the conte
 
 **6. `@Validated` Annotation:** A class-level annotation that tells Spring to enable validation of @Constraint annotations defined on method parameters.
 
----
-## Q4.1 How Validation Works in Spring Boot
+## 4.1 How Validation Works in Spring Boot
 * **_Define Constraints:_** 
 Add validation annotations to the fields of the class you want to validate (e.g., a data transfer object (DTO) or an entity).
 * **_Trigger Validation:_**
@@ -1225,7 +1222,7 @@ public class Client {
 - Java Compiler:The Java compiler uses the Interpreter pattern to parse and interpret Java source code into bytecode, which is then executed by the Java Virtual Machine (JVM).
 
 ---
-## 10. ConcurrentHashMap vs HashMap
+## 10. Difference between `ConcurrentHashMap` vs `HashMap`. Their internal working. How `HashSet` works internally?
 A `ConcurrentHashMap` and a `HashMap` are both part of the Java Collections Framework, but they differ significantly in terms of how they handle concurrency and thread safety. Here's a comparison:
 
 1. **Thread Safety**
@@ -1263,10 +1260,10 @@ ConcurrentHashMap<Integer, String> concurrentMap = new ConcurrentHashMap<>();
 concurrentMap.put(1, "A");
 ```
 
-### How `ConcurrentHashMap` works internally
+## 10.1 How `ConcurrentHashMap` works internally?
 Internally, `ConcurrentHashMap` utilizes segmentation and fine-grained locking to enable efficient concurrent access. It's divided into segments, each acting as a mini `HashMap`, allowing multiple threads to operate on different segments concurrently. This reduces contention and improves performance, particularly for read operations, which can occur without blocking. 
 
-**Elaboration:** 
+### Elaboration:
 
 #### - Segmentation: 
 `ConcurrentHashMap` is internally divided into segments (by default 16), each managed by its own lock. This partitioning allows multiple threads to access and modify the map concurrently, as long as they are working on different segments.
@@ -1291,7 +1288,7 @@ To ensure read operations see the most recently updated values, `ConcurrentHashM
 
 In essence, `ConcurrentHashMap` provides a thread-safe and performant way to manage concurrent access to a hash table by dividing the table into smaller, independently managed segments. This design minimizes contention and allows for efficient concurrent read and write operations.
 
-### Threads in ConcurrentHashMap
+## 10.2 Threads in ConcurrentHashMap
 
 In Java, a `ConcurrentHashMap` is designed to allow concurrent access by multiple threads. It supports a preset concurrency level of 32, meaning that up to 32 threads can perform operations like put and remove simultaneously. However, the actual number of threads running can vary based on the application's design and workload. 
 
@@ -1312,18 +1309,48 @@ In Java, a `ConcurrentHashMap` is designed to allow concurrent access by multipl
 - The actual number of threads can vary based on the application's design and the specific operations being performed.
 - Utilizing parallelism can lead to an increase in the number of threads actively working on tasks related to the `ConcurrentHashMap`.
 
----
-## 11. What is Java Persistence API (JPA)?
-Java Persistence API is a collection of classes and methods to persist or store a vast amount of data in a database using ORM. JPA Persistence framework needs to follow:
+## 10.3 How `Hashmap` works internally?
+A HashMap in Java uses a hash table to store key-value pairs. The hash table is made up of an array of buckets, and each bucket can contain multiple key-value pairs.
 
-- **Spring Data JPA**: It reduces the amount of boilerplate code needed for common database operations like GET, PUT, POST, etc.
-- **Spring Repository**: It is an extension of Spring Repository which contains APIs for basic CRUD operations, pagination, and Sorting.
+### How it works:
+1. When a key-value pair is added, the key's `hashCode()` method is called to calculate an integer hash value.
+2. The hash value is used to determine the bucket where the entry will be placed.
+3. If the bucket is empty, the entry is placed there.
+4. If the bucket is not empty, the entry is added to the linked list at that bucket.
+5. When a value is retrieved, the hash function is used to calculate the index of the key.
+6. If there is a linked list at that index, the linked list is traversed until the key is found.
+
+### Collisions
+When two keys hash to the same index, this is called a collision. To handle collisions, HashMap uses separate chaining (linked list or tree). It will create another LinkedList at same bucket and store the value.
+
+### Performance
+A good hash function distributes objects evenly. A good implementation of hashCode and equals method is required to avoid unwanted behavior.
+
+## 10.4 How `HashSet` works internally
+A `HashSet` in Java utilizes a HashMap internally to store its elements. When a `HashSet` is created, a corresponding HashMap is also instantiated. The elements added to the `HashSet` are stored as keys in this HashMap, with a constant dummy value associated with each key. This mechanism ensures that each element in the `HashSet` is unique, as duplicate keys are not permitted in a HashMap.
+
+When an element is added to the `HashSet` using the `add()` method, the `put()` method of the internal HashMap is invoked. The element being added becomes the key, and a predefined constant value, often named `PRESENT`, serves as its associated value. If the `put()` method returns `null`, it indicates that the key was not already present in the HashMap, and the element is successfully added to the `HashSet`. Conversely, if the `put()` method returns a non-null value, it signifies that the key already exists, and the new element is not added, maintaining the uniqueness of the `HashSet`.
+
+The `remove()` and `contains()` methods of the `HashSet` also leverage the internal HashMap's functionalities. The `remove()` method removes the key-value pair associated with the specified element, while the `contains()` method checks for the existence of the element as a key in the HashMap. These operations ensure the efficient management and retrieval of elements within the `HashSet`.
+
+## 10.5 What happened when we add value in a certain size of a HashMap?
+When a value is added to a HashMap when it reaches a certain size (defined by the load factor), the HashMap automatically re-sizes itself. This involves creating a new, larger internal array and then re-hashing all the existing key-value pairs into the new array. This process is called "rehashing" or "resizing".  
+
+### Elaboration:
+- **_Load Factor_**: HashMap uses a "load factor" (default is 0.75) to determine when to resize. This factor specifies the threshold at which the HashMap will resize.
+- **_Threshold_**: The threshold is calculated by multiplying the current capacity of the HashMap by the load factor. For example, if the initial capacity is 16 and the load factor is 0.75, the threshold would be 12. 
+- **_Resizing_**: When the number of key-value pairs in the HashMap exceeds the threshold, it triggers resizing.
+- **_Rehashing_**: During resizing, the HashMap creates a new array with a larger capacity (typically twice the size of the previous one). Then, it iterates through all the existing key-value pairs and calculates their new hash codes based on the new capacity. These key-value pairs are then placed in the new array based on their new hash codes.
+- **_Performance_**: Rehashing can be computationally expensive, but it helps to maintain the efficiency of the HashMap by preventing excessive collisions and ensuring good average-case performance.
 
 ---
-## 12. How to prevent concurrency issues in multithreaded Java applications
+## 11. TODO
+
+---
+## 12. How to prevent concurrency issues in multithreaded Java applications?
 To prevent concurrency issues in multithreaded Java applications, several strategies can be employed: 
 
-### Synchronization: 
+### 1. Synchronization: 
 - The `synchronized` keyword ensures that only one thread can access a critical section of code or a method at a time, preventing race conditions. 
 ```java
 public synchronized void incrementCounter() {
@@ -1331,7 +1358,7 @@ public synchronized void incrementCounter() {
 }
 ```
 
-### Locks: 
+### 2. Locks: 
 - `ReentrantLock` provides more flexible control over locking compared to `synchronized`, allowing for features like timed waits and fairness. 
 ```java
 private ReentrantLock lock = new ReentrantLock();
@@ -1346,7 +1373,7 @@ public void processData() {
 }
 ```
 
-### Atomic Variables: 
+### 3. Atomic Variables: 
 - Classes like `AtomicInteger` and `AtomicLong` provide atomic operations that ensure thread safety without explicit locking. 
 ```java
 private AtomicInteger counter = new AtomicInteger(0);
@@ -1356,37 +1383,37 @@ public void incrementCounter() {
 }
 ```
 
-### Immutable Objects: 
+### 4. Immutable Objects: 
 - Immutable objects cannot be modified after creation, eliminating the risk of data corruption in concurrent environments. 
 
-### Thread-Safe Collections: 
+### 5. Thread-Safe Collections: 
 - Use concurrent collections like `ConcurrentHashMap` and `CopyOnWriteArrayList` instead of their non-thread-safe counterparts. 
 
-### ThreadLocal: 
+### 6. ThreadLocal: 
 - `ThreadLocal` variables provide each thread with its own independent copy of a variable, avoiding sharing and potential conflicts. 
 
-### Avoid Shared Mutable State: 
+### 7. Avoid Shared Mutable State: 
 - Minimize the use of shared mutable data. When sharing is necessary, ensure proper synchronization or use immutable objects. 
 
-### Use BlockingQueue: 
+### 8. Use BlockingQueue: 
 - For producer-consumer scenarios, `BlockingQueue` simplifies the implementation without manual synchronization. 
 
-### Executor Framework: 
+### 9. Executor Framework: 
 - Utilize thread pools provided by the Executor framework to manage threads efficiently and avoid the overhead of creating new threads for each task. 
 
-### Reactive Programming: 
+### 10. Reactive Programming: 
 - Frameworks like `RxJava` and `Reactor` offer event-driven approaches to handle concurrency, improving scalability and responsiveness. 
 
-### Careful Use of Thread Priorities: 
+### 11. Careful Use of Thread Priorities: 
 - Be cautious when setting thread priorities, as it can lead to starvation if not managed properly. 
 
-### Testing: 
+### 12. Testing: 
 - Thoroughly test concurrent code to identify and resolve concurrency bugs. 
 
-### Minimize Shared Resources: 
+### 13. Minimize Shared Resources: 
 - Reducing the use of shared resources helps decrease contention and lowers synchronization overhead, leading to better performance.
 
-### File Locking: 
+### 14. File Locking: 
 - Use the `FileLock` class to prevent multiple threads or processes from concurrently accessing the same file. 
 
 By applying these techniques, developers can effectively manage concurrency in Java multithreaded applications and prevent issues like race conditions, deadlocks, and data corruption.
@@ -1623,7 +1650,7 @@ Here's a more detailed breakdown:
 - This is achieved by the JVM handling the translation of bytecode into machine code specific to the underlying platform. 
 
 ---
-## 17. Spring Boot Actuator  
+## 17. Spring Boot Actuator
 Spring Boot Actuator provides production-ready features to monitor and manage Spring Boot applications. It exposes operational information about the application, such as health, metrics, and environment details, through HTTP endpoints or JMX beans. By adding the `spring-boot-starter-actuator` dependency, several built-in endpoints become available, allowing for easy interaction and monitoring of the application's state. 
 
 ### Key Features 
@@ -1670,7 +1697,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ```
 
 ---
-## 18. Memory Leaks in Java
+## 18. Memory Leaks in Java and its prevention.
 While Java's automatic memory management (garbage collection) helps prevent many memory issues, memory leaks can still occur. A memory leak happens when objects are no longer needed by the application but the garbage collector fails to reclaim them, leading to gradual memory consumption and potential `OutOfMemoryError` exceptions.
 
 ### **Common Causes of Memory Leaks in Java**
@@ -1754,7 +1781,8 @@ protected void finalize() {
 By understanding the causes of memory leaks and following best practices, you can significantly reduce the risk of memory leaks in your Java applications.
 
 ---
-## 19. Scenario: You want to **exclude `salary` from serialization** (i.e., not returned in REST responses), but still persist it in the database.
+## 19. Scenario Based Questions:
+## You want to **exclude `salary` from serialization** (i.e., not returned in REST responses), but still persist it in the database.
 
 To exclude specific fields (like `salary`) from being returned in a Spring Boot API response, you can use one of the following approaches:
 
@@ -1870,15 +1898,7 @@ private Double salary;
 This means salary will not be saved or read from the DB at all
 
 ---
-## 20. What happened when we add value in a certain size of a HashMap?
-When a value is added to a HashMap when it reaches a certain size (defined by the load factor), the HashMap automatically re-sizes itself. This involves creating a new, larger internal array and then re-hashing all the existing key-value pairs into the new array. This process is called "rehashing" or "resizing".  
-
-### Elaboration:
-- **_Load Factor_**: HashMap uses a "load factor" (default is 0.75) to determine when to resize. This factor specifies the threshold at which the HashMap will resize.
-- **_Threshold_**: The threshold is calculated by multiplying the current capacity of the HashMap by the load factor. For example, if the initial capacity is 16 and the load factor is 0.75, the threshold would be 12. 
-- **_Resizing_**: When the number of key-value pairs in the HashMap exceeds the threshold, it triggers resizing.
-- **_Rehashing_**: During resizing, the HashMap creates a new array with a larger capacity (typically twice the size of the previous one). Then, it iterates through all the existing key-value pairs and calculates their new hash codes based on the new capacity. These key-value pairs are then placed in the new array based on their new hash codes.
-- **_Performance_**: Rehashing can be computationally expensive, but it helps to maintain the efficiency of the HashMap by preventing excessive collisions and ensuring good average-case performance.
+## 20. TODO
 
 ---
 ## 21. What is Event-Driven Architecture? Event-Driven Implementation Using Kafka in Spring Boot.
@@ -6185,26 +6205,7 @@ Example:
     map.put("key1", "value2"); // map now contains {"key1": "value2"} (value1 is replaced)
 ```
 ---
-## 74. How hashmap works internally?
-A HashMap in Java uses a hash table to store key-value pairs. The hash table is made up of an array of buckets, and each bucket can contain multiple key-value pairs.
-
-**How it works**
-1. When a key-value pair is added, the key's `hashCode()` method is called to calculate an integer hash value.
-2. The hash value is used to determine the bucket where the entry will be placed.
-3. If the bucket is empty, the entry is placed there.
-4. If the bucket is not empty, the entry is added to the linked list at that bucket.
-5. When a value is retrieved, the hash function is used to calculate the index of the key.
-6. If there is a linked list at that index, the linked list is traversed until the key is found.
-
-- **Collisions** 
-When two keys hash to the same index, this is called a collision. To handle collisions, HashMap uses separate chaining (linked list or tree). It will create another LinkedList at same bucket and store the value. 
-- **Performance**
-A good hash function distributes objects evenly. A good implementation of hashCode and equals method is required to avoid unwanted behavior.
-
-### HashSet internall working
-A HashSet in Java utilizes a HashMap internally to store its elements. When a HashSet is created, a corresponding HashMap is also instantiated. The elements added to the HashSet are stored as keys in this HashMap, with a constant dummy value associated with each key. This mechanism ensures that each element in the HashSet is unique, as duplicate keys are not permitted in a HashMap.
-When an element is added to the HashSet using the `add()` method, the `put()` method of the internal HashMap is invoked. The element being added becomes the key, and a predefined constant value, often named `PRESENT`, serves as its associated value. If the `put()` method returns `null`, it indicates that the key was not already present in the HashMap, and the element is successfully added to the HashSet. Conversely, if the `put()` method returns a non-null value, it signifies that the key already exists, and the new element is not added, maintaining the uniqueness of the HashSet.
-The `remove()` and `contains()` methods of the HashSet also leverage the internal HashMap's functionalities. The `remove()` method removes the key-value pair associated with the specified element, while the `contains()` method checks for the existence of the element as a key in the HashMap. These operations ensure the efficient management and retrieval of elements within the HashSet.
+## 74. TODO
 
 ---
 ## 75. How does garbage collection work in java?
@@ -9194,7 +9195,11 @@ Guarantees that resources are always closed, even if an exception is thrown, whi
 If an exception is thrown during the resource's `close()` method, it is suppressed and a `Throwable` instance can be accessed via `getSuppressed()` to retrieve the suppressed exceptions.
 
 ---
-## Q.
+## Q. What is Java Persistence API (JPA)?
+Java Persistence API is a collection of classes and methods to persist or store a vast amount of data in a database using ORM. JPA Persistence framework needs to follow:
+
+- **Spring Data JPA**: It reduces the amount of boilerplate code needed for common database operations like GET, PUT, POST, etc.
+- **Spring Repository**: It is an extension of Spring Repository which contains APIs for basic CRUD operations, pagination, and Sorting.
 
 ---
 ## Q.
