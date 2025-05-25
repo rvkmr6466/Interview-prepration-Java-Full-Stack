@@ -14,10 +14,10 @@ Key Differences:
 
 * Usage:
 	* Procedures: Can be called directly or indirectly through other procedures or SQL statements.  
-	* Functions: Can be used within SQL statements, including SELECT, INSERT, UPDATE, and DELETE.  
+	* Functions: Can be used within SQL statements, including `SELECT`, `INSERT`, `UPDATE`, and `DELETE`.  
 
 * Data Modification:
-	* Procedures: Can modify data in the database (e.g., using DML statements like INSERT, UPDATE, DELETE).
+	* Procedures: Can modify data in the database (e.g., using DML statements like `INSERT`, `UPDATE`, `DELETE`).
 	* Functions: Generally, they cannot modify data in the database.  
 
 * Example:
@@ -26,7 +26,7 @@ Key Differences:
 
 ---
 ## Q. What are views and temporary tables in SQL?
-In database management, both views and temporary tables offer ways to present and work with data without storing it physically in the main database tables, but they differ in their persistence and usage. Views are virtual representations of data, reflecting the latest underlying data changes, while temporary tables store a copy of data within a specific session and are deleted when that session ends. [1, 2]  
+In database management, both views and temporary tables offer ways to present and work with data without storing it physically in the main database tables, but they differ in their persistence and usage. Views are virtual representations of data, reflecting the latest underlying data changes, while temporary tables store a copy of data within a specific session and are deleted when that session ends. 
 
 * **Views**:
   * _Virtual Representations_: Views are not actual data storage; they are like virtual tables based on SQL queries.
@@ -34,7 +34,7 @@ In database management, both views and temporary tables offer ways to present an
   * _Abstraction_: Views can hide complex table structures or data transformations, providing a simplified interface for users or applications.
   * _Security_: Views can be used to restrict access to specific columns or rows, improving security.
   * _Reusability_: Views can be used multiple times in different queries or stored procedures, saving time and effort.
-  * _Persistence_: Views persist until they are explicitly dropped or the database is altered. [1, 3]  
+  * _Persistence_: Views persist until they are explicitly dropped or the database is altered.
 
 * **Temporary Tables**:
   * _Data Storage_: Temporary tables physically store data, similar to regular tables, but within a temporary storage area (often the tempdb database).
@@ -171,27 +171,6 @@ HAVING COUNT(*) > 1;
 
 ---
 ## Q. `WHERE` vs `HAVING` in sql
-In SQL, `WHERE` and `HAVING` are both used for filtering data, but they operate at different stages of query processing. `WHERE` filters rows before grouping, applying conditions to individual rows. `HAVING`, on the other hand, filters groups after they've been created by a `GROUP BY` clause, allowing conditions based on aggregate functions.
-
-### `WHERE` Clause:
-- Purpose: Filters rows based on individual row values.
-- Timing: Applied before the `GROUP BY` clause, meaning it filters data before any grouping or aggregation is performed.
-- Aggregate Functions: Cannot be used directly within the `WHERE` clause.
-- Usage: Can be used with `SELECT`, `UPDATE`, and `DELETE` statements. 
-
-### `HAVING` Clause:
-- Purpose: Filters groups of rows based on conditions involving aggregate functions. 
-- Timing: Applied after the `GROUP BY` clause, meaning it filters the results of grouped data. 
-- Aggregate Functions: Can be used within the `HAVING` clause to filter based on aggregated values like `COUNT()`, `SUM()`, `AVG()`. 
-- Usage: Can only be used with the `SELECT` statement. 
-
-#### In this example: 
-- `WHERE salary > 50000` filters the table to include only employees with a salary greater than $50,000.
-- `GROUP BY department` groups the remaining employees by department.
-- `HAVING employee_count > 5` then filters the groups to include only departments with more than 5 employees with salaries greater than $50,000.
-
----
-## Q. Where vs Having
 In SQL, `WHERE` and `HAVING` clauses are used for filtering data, but they operate at different levels. `WHERE` filters rows based on conditions applied to individual columns before any grouping or aggregation. `HAVING` filters groups of rows based on conditions involving aggregate functions like `COUNT`, `SUM`, or `AVG`, and it's always used with `GROUP BY`. 
 
 Here's a more detailed breakdown: 
@@ -273,10 +252,44 @@ In this example, the `sales` table is partitioned by year, with each partition c
 Partitioning is a powerful technique in database design that can significantly enhance performance, manageability, and availability. By carefully choosing a partitioning strategy that aligns with your data access patterns and business requirements, you can optimize your database for better performance and easier maintenance.
 
 ---
+## Q. Main difference between left join vs left outer join
+There's no practical difference between a `LEFT JOIN` and a `LEFT OUTER JOIN` in most database systems. They perform the same function, returning all rows from the left table and only the matching rows from the right table. If there are no matches in the right table, the corresponding columns in the result set will have `NULL` values. 
 
-## Q.
+In essence, they are interchangeable and can be used synonymously. 
+Here's a more detailed breakdown:
+
+- `LEFT JOIN`: Returns all rows from the left table and the matching rows from the right table. If a row in the left table doesn't have a match in the right table, `NULL` values will be returned for the columns from the right table. 
+- `LEFT OUTER JOIN`: This is the same as `LEFT JOIN`. The "OUTER" keyword is optional and doesn't change the functionality or performance. 
+
+#### Why the confusion? 
+The "OUTER" keyword was initially added to the SQL standard for clarity, but it's become redundant in most database systems. Many systems treat LEFT JOIN and LEFT OUTER JOIN identically, and the "OUTER" keyword is optional in their syntax.
 
 ---
+## Q. Write an SQL query to fetch three max GPA from a table using co-related subquery.
+```sql
+SELECT gpa FROM Student
+WHERE gpa IN (SELECT DISTINCT gpa FROM Student ORDER BY gpa DESC LIMIT 3)
+ORDER BY gpa DESC
+LIMIT 3;
+```
+Explanation: 
+
+#### 1. `SELECT gpa FROM Student`: 
+This selects the GPA column from the Student table.
+
+#### 2. `WHERE gpa IN (SELECT DISTINCT gpa FROM Student ORDER BY gpa DESC LIMIT 3)`: 
+This part filters the GPA values.
+  #### - `SELECT DISTINCT gpa FROM Student ORDER BY gpa DESC LIMIT 3`: 
+  This subquery selects the top 3 distinct GPA values in descending order.
+  #### - `WHERE gpa IN (...)`: 
+  This condition ensures that only the GPA values that are within the top 3 distinct GPA values are selected. 
+
+#### 3. `ORDER BY gpa DESC`: 
+This orders the results in descending order, ensuring that the highest GPA values are at the top.
+
+#### 4. `LIMIT 3`: 
+This limits the results to the top 3 GPA values, effectively retrieving the three highest GPA values.
+
 
 
 ## TODO

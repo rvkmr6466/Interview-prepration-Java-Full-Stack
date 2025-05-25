@@ -1,31 +1,31 @@
 ## Basic JavaScript - Interview Answers
-### Q. What are the different data types in JavaScript?
+## Q. What are the different data types in JavaScript?
 JavaScript has:
 - Primitive Types: String, Number, Boolean, Undefined, Null, BigInt, and Symbol.
 - Non-Primitive Type: Object (includes Arrays, Functions, etc.)
 
-### Q. What is the difference between var, let, and const?
+## Q. What is the difference between var, let, and const?
 - `var` is function-scoped, can be re-declared and updated.
 - `let` is block-scoped, cannot be re-declared but can be updated.
 - `const` is block-scoped, cannot be re-declared or updated (though objects/arrays can be mutated).
 
-### Q. What is hoisting in JavaScript?
+## Q. What is hoisting in JavaScript?
 Hoisting is a behavior where variable and function declarations are moved to the top of their scope before code execution.
 - `var` is hoisted with undefined.
 - `let` and `const` are hoisted but not initialized (they stay in a temporal dead zone until declared).
 
-### Q. What are truthy and falsy values?
+## Q. What are truthy and falsy values?
 - Falsy values: false, 0, '', null, undefined, NaN
 - Everything else is truthy (e.g., '0', [], {}, 'false', etc.)
 
-### Q. What is the difference between == and ===?
+## Q. What is the difference between == and ===?
 - == compares values with type coercion.
 - === compares values and types strictly (no coercion).
  ```javascript
  2 == '2'  // true
  2 === '2' // false
  ```
-### Q. What is a closure in JavaScript?
+## Q. What is a closure in JavaScript?
 A closure is a function that has access to its outer function’s scope even after the outer function has returned.
 ```javascript
 function outer() {
@@ -40,21 +40,21 @@ const counter = outer();
 counter(); // 1
 ```
 
-### Q. How does the `this` keyword work?
+## Q. How does the `this` keyword work?
 - In regular functions, `this` refers to the object that calls the function.
 - In arrow functions, `this` is lexically bound (refers to `this` of the outer scope).
 - In the global context (non-strict mode), `this` refers to window in browsers.
 
-### Q. What is the difference between null and undefined?
+## Q. What is the difference between null and undefined?
 - `null`: Explicitly means `no value`.
 - `undefined`: A variable declared but not assigned a value.
 
-### Q. What is event bubbling and event capturing?
+## Q. What is event bubbling and event capturing?
 - `Bubbling`: Event starts from the target element and bubbles up to the parent.
 - `Capturing`: Event starts from the parent and goes down to the target element.
 - Default behavior is bubbling.
 
-### Q. How does the typeof operator work?
+## Q. How does the typeof operator work?
 typeof is used to get the data type of a variable.
  Example:
 ```javascript
@@ -65,7 +65,7 @@ typeof null      // "object" (quirk in JS)
 ```
 
 ## Functions & Scope – Interview Answers
-### Q. What are arrow functions and how are they different from regular functions?
+## Q. What are arrow functions and how are they different from regular functions?
 - Arrow functions are a shorter syntax for writing functions introduced in ES6.
 - They do not have their own this, arguments, or super, and are not suitable for methods.
  ```javascript
@@ -79,7 +79,7 @@ typeof null      // "object" (quirk in JS)
  }
  ```
 
-### Q. What is a callback function?
+## Q. What is a callback function?
 A callback is a function passed as an argument to another function, which is then called after a task is completed.
  ```javascript
  function greet(name, callback) {
@@ -90,7 +90,7 @@ A callback is a function passed as an argument to another function, which is the
  greet("John", () => console.log("Callback executed"));
  ```
 
-### Q. What is a higher-order function?
+## Q. What is a higher-order function?
 A function that takes another function as an argument or returns a function is called a higher-order function.
  ```javascript
  function multiplier(factor) {
@@ -103,7 +103,7 @@ A function that takes another function as an argument or returns a function is c
  double(5); // 10
  ```
 
-### Q. What is the scope of a variable in JavaScript?
+## Q. What is the scope of a variable in JavaScript?
 - Global Scope: Available everywhere.
 - Function Scope: var is function-scoped.
 - Block Scope: let and const are block-scoped (only available inside {}).
@@ -116,7 +116,7 @@ A function that takes another function as an argument or returns a function is c
  console.log(x); // 10
  console.log(y); // ReferenceError
  ```
-### Q. What is the difference between function declaration and function expression?
+## Q. What is the difference between function declaration and function expression?
 - Function Declaration: Can be hoisted.
  ```javascript
  function greet() {
@@ -132,19 +132,19 @@ A function that takes another function as an argument or returns a function is c
  ```
 
 ## Asynchronous JavaScript – Interview Answers
-### Q. What is the event loop in JavaScript?
+## Q. What is the event loop in JavaScript?
 - The event loop is what allows JavaScript (which is single-threaded) to perform non-blocking operations.
 - It continuously checks the call stack and task queue, and executes queued tasks when the call stack is empty.
 - It enables handling of callbacks, promises, and DOM events.
 
-### Q. What is the difference between setTimeout and setInterval?
+## Q. What is the difference between setTimeout and setInterval?
 - setTimeout(fn, delay): Executes fn once after the delay.
 - setInterval(fn, interval): Repeatedly executes fn every interval milliseconds.
  ```javascript
  setTimeout(() => console.log("Once"), 1000);
  setInterval(() => console.log("Repeat"), 1000);
  ```
-### Q. What are Promises and how do they work?
+## Q. What are Promises and how do they work?
 - Promises are used to handle asynchronous operations.
 - They have three states: `pending`, `fulfilled`, and `rejected`.
 - Use `.then()` and `.catch()` to handle the result.
@@ -158,7 +158,7 @@ A function that takes another function as an argument or returns a function is c
  promise.then(console.log).catch(console.error);
  ```
 
-### Q. What is async/await and how does it improve asynchronous code?
+## Q. What is async/await and how does it improve asynchronous code?
 - async/await is syntax sugar over Promises.
 - It makes asynchronous code look synchronous and is easier to read and maintain.
 - Must be used inside an `async` function.
@@ -175,13 +175,13 @@ A function that takes another function as an argument or returns a function is c
  }
  ```
 
-### Q. What is the difference between microtask and macrotask queues?
+## Q. What is the difference between microtask and macrotask queues?
 - Microtasks: Include Promises (`.then())`, `MutationObserver`.
 - Macrotasks: Include `setTimeout`, `setInterval`, `setImmediate`, and `I/O`.
   Microtasks are prioritized and executed before the next macrotask.
 
 ## Objects, Arrays & ES6 Features – Interview Answers
-### Q. What are the different ways to clone an object in JavaScript?
+## Q. What are the different ways to clone an object in JavaScript?
 - Shallow Copy:
  ```javascript
  const obj1 = { a: 1 };
@@ -193,7 +193,7 @@ A function that takes another function as an argument or returns a function is c
  const deepCopy = JSON.parse(JSON.stringify(obj1)); // not ideal for all cases
  ```
 
-### Q. What are destructuring assignments?
+## Q. What are destructuring assignments?
 Destructuring allows you to extract values from arrays or objects into variables.
 
 ```javascript
@@ -204,14 +204,14 @@ const arr = [1, 2, 3];
 const [a, b] = arr; // a = 1, b = 2
 ```
 
-### Q. What are template literals?
+## Q. What are template literals?
 Template literals are string literals that allow embedded expressions using backticks (`).
 ```javascript
 const name = "John";
 console.log(`Hello, ${name}!`); // Hello, John!
 ```
 
-### Q. What is the spread operator (...) and rest parameter?
+## Q. What is the spread operator (...) and rest parameter?
 - Spread Operator: Expands iterable elements.
 ```javascript
 const arr1 = [1, 2];
@@ -225,7 +225,7 @@ function sum(...numbers) {
 }
 ```
 
-### Q. What is the difference between `map()`, `filter()`, and `reduce()` methods?
+## Q. What is the difference between `map()`, `filter()`, and `reduce()` methods?
 - `map()`: Transforms each element and returns a new array.
 ```javascript
 [1, 2, 3].map(x => x * 2); // [2, 4, 6]
@@ -240,7 +240,7 @@ function sum(...numbers) {
 ```
 
 ## DOM & Events – Interview Answers
-### Q. What is the DOM and how do you manipulate it with JavaScript?
+## Q. What is the DOM and how do you manipulate it with JavaScript?
 - The DOM (Document Object Model) is a tree structure representation of the HTML document.
 - JavaScript can access and manipulate it using methods like:
 ```javascript
@@ -250,7 +250,7 @@ element.innerHTML = "new content";
 element.style.color = "red";
 ```
 
-### Q. What are event listeners and how are they used?
+## Q. What are event listeners and how are they used?
 - Event listeners allow you to execute code when a specific event occurs.
 ```javascript
 const button = document.querySelector("button");
@@ -259,7 +259,7 @@ button.addEventListener("click", () => {
 });
 ```
 
-### Q. What is the difference between innerHTML, innerText, and textContent?
+## Q. What is the difference between innerHTML, innerText, and textContent?
 - innerHTML: Gets/sets HTML content (includes tags).
 - innerText: Gets/sets visible text content (excludes hidden elements and formatting).
 - textContent: Gets/sets all text content (includes hidden elements, faster than innerText).
@@ -268,7 +268,7 @@ element.innerHTML = "<b>Bold</b>";
 element.innerText = "<b>Bold</b>";     // displays tags as text
 element.textContent = "<b>Bold</b>";   // same as above
 ```
-### Q. How do you prevent default behavior in an event handler?
+## Q. How do you prevent default behavior in an event handler?
 Use event.preventDefault() inside the event listener to prevent the default action (like form submission, link redirect).
 ```javascript
 document.querySelector("form").addEventListener("submit", function(e) {
@@ -277,7 +277,7 @@ console.log("Form submission prevented!");
 });
  ```
 
-### Q. What is event delegation?
+## Q. What is event delegation?
 - Event delegation is a technique where a parent element handles events from its child elements.
 - It’s efficient because you don’t need to attach listeners to each child.
 ```javascript
@@ -289,9 +289,9 @@ document.getElementById("list").addEventListener("click", function(e) {
 ```
 
 ## Advanced JavaScript – Interview Answers
-### Q. What is a prototype in JavaScript?
-- Every JavaScript object has a hidden internal property called [[Prototype]], accessible via .prototype (for functions/constructors) or **__proto__**.
-- It allows inheritance of properties and methods.
+## Q. What is a prototype in JavaScript?
+In JavaScript, a `prototype` is an internal object that serves as a blueprint for other objects. When an object is created, it inherits properties and methods from its prototype. This mechanism is known as prototypal inheritance. Every object in JavaScript has an associated prototype, and this prototype can itself have a prototype, creating a chain of prototypes until reaching `null`.
+
   ```javascript
   function Person(name) {
     this.name = name;
@@ -305,16 +305,16 @@ document.getElementById("list").addEventListener("click", function(e) {
   john.sayHello(); // Hi, I'm John
   ```
 
-### Q. What is prototypal inheritance?
+## Q. What is prototypal inheritance?
 - It’s a feature in JavaScript where an object can inherit properties and methods from another object using its prototype chain.
-- This is done through Object.create(), constructor functions, or ES6 class syntax.
+- This is done through `Object.create()`, constructor functions, or ES6 class syntax.
  ```javascript
  const parent = { greet() { console.log("Hello!"); } };
  const child = Object.create(parent);
  child.greet(); // Hello!
  ```
 
-### Q. What is the difference between deep copy and shallow copy?
+## Q. What is the difference between deep copy and shallow copy?
 - Shallow Copy: Copies only the top-level properties.
  ```javascript
  const obj1 = { a: 1, b: { c: 2 } };
@@ -326,12 +326,12 @@ document.getElementById("list").addEventListener("click", function(e) {
  const deep = JSON.parse(JSON.stringify(obj1));
  ```
 
-### Q. How does JavaScript handle memory management?
+## Q. How does JavaScript handle memory management?
 - JavaScript uses automatic garbage collection.
 - Memory is allocated when variables/objects are created and deallocated when no longer referenced.
 - Common issue: memory leaks from closures, unused event listeners, or global variables.
 
-### Q. What is a module in JavaScript (ES6 modules)?
+## Q. What is a module in JavaScript (ES6 modules)?
 - ES6 introduced native module support using export and import.
 - Modules help organize and reuse code.
  ```javascript 
@@ -349,7 +349,7 @@ document.getElementById("list").addEventListener("click", function(e) {
  ```
 
 ## Add-ons questions
-### Q. What is javascript and why it is used for backend?
+## Q. What is javascript and why it is used for backend?
 JavaScript (JS) is a high-level, interpreted programming language that is commonly used to create interactive effects within web browsers. It is a dynamic, prototype-based language that supports object-oriented, imperative, and functional programming styles.
 
 Node.js is a runtime environment that allows JavaScript to be executed on the server side. It is used for backend development because:
@@ -359,7 +359,7 @@ Node.js is a runtime environment that allows JavaScript to be executed on the se
 3. **Package management**: Node.js has a vast ecosystem of libraries and modules through npm (Node Package Manager), which accelerates development by providing reusable code.
 4. **Performance**: Node.js is built on the V8 JavaScript engine from Google, which compiles JavaScript to native machine code, resulting in high performance.
 
-### Q. What will be the output?
+## Q. What will be the output?
  ```javascript
  console.log(a);
  var a = 10;
@@ -396,7 +396,7 @@ Explanation:
 - _setImmediate():_ `setImmediate` is also a macrotask and is executed after the current event loop iteration completes and all microtasks are processed. It is processed in the Check phase, which is later than the Timer phase where setTimeout with 0 delay is processed.
 
 ---
-### Q. How Asynchronous call works?
+## Q. How Asynchronous call works?
 Asynchronous calls allow a program to start a task and continue executing other code without waiting for the task to finish, using mechanisms like callbacks or promises to handle the result later. 
 Here's a more detailed explanation:
 1. **_The Concept of Asynchronous Operations_**
@@ -420,7 +420,7 @@ Here's a more detailed explanation:
 
 ---
 
-### Q. Add a delay of two second between two console.log.
+## Q. Add a delay of two second between two console.log.
 ```javascript
 console.log(1);
 await new Promise(resolve => setTimeout(resolve, 3000)); // 3 sec
@@ -428,7 +428,7 @@ console.log(2);
 ```
 ---
 
-### Q. Find Output
+## Q. Find Output
 ```javascript
 let obj1 = { key: "value" };
 let obj2 = obj1;
@@ -446,7 +446,7 @@ new value
 
 ---
 
-### Q. Reverse string and remove duplicate in javascript
+## Q. Reverse string and remove duplicate in javascript
 ```javascript
 let s = "ravi Kumar";
 let s1 ="";
@@ -464,7 +464,7 @@ console.log(s1); // ramuK iv
 console.log(s3); // ramuK ivar
 ```
 ---
-### Q. Middleware in Node.js
+## Q. Middleware in Node.js
 Middleware in Node.js refers to functions that intercept requests before they reach the final route handler. These functions have access to the request object (`req`), the response object (`res`), and the `next()` function, which allows them to pass control to the subsequent middleware in the chain. Middleware functions can perform a variety of tasks, including modifying request or response objects, executing code, ending the request-response cycle, or calling the next middleware function.
 There are several types of middleware: 
 - _Application-level middleware:_ Bound to an instance of `express` using `app.use()`. It applies to all routes defined after it. 
@@ -511,7 +511,7 @@ app.listen(3000, () => {
 });
 ```
 ---
-### Q. Implement a function fn in JavaScript that can be invoked multiple times in a chain, where each call increments a count of how many times it was invoked. When the final call is made with 0 as an argument, the function should return the total number of times it was previously invoked in the chain. // Examples: // fn()()()(0) should return 3 because fn was called 3 times before passing 0. // fn()()()()()(0) should return 5 because fn was called 5 times before passing 0.
+## Q. Implement a function fn in JavaScript that can be invoked multiple times in a chain, where each call increments a count of how many times it was invoked. When the final call is made with 0 as an argument, the function should return the total number of times it was previously invoked in the chain. // Examples: // fn()()()(0) should return 3 because fn was called 3 times before passing 0. // fn()()()()()(0) should return 5 because fn was called 5 times before passing 0.
 ```javascript
 function fn(count = 1) {
   return function inner(arg) {
@@ -525,7 +525,7 @@ function fn(count = 1) {
 console.log(fn()()()()(0));
 ```
 ---
-### Q. Streams in NodeJS
+## Q. Streams in NodeJS
 In Node.js, streams facilitate handling streaming data, allowing data to be processed piece by piece. This approach is efficient for working with large datasets, such as files or network communications, as it avoids loading the entire dataset into memory at once. 
 There are four main types of streams:
 - _Readable_: Used for reading data from a source. 
@@ -564,7 +564,7 @@ writableStream.on('finish', () => {
 });
 ```
 ---
-### Q. How Authentication works in Node.js. 
+## Q. How Authentication works in Node.js. 
 Authentication verifies a user's identity, while JWT (JSON Web Token) is a standard for securely transmitting information between parties as a JSON object. In Node.js, these concepts work together to manage user sessions and secure APIs. 
 
 - **User Login:** When a user attempts to log in, the server verifies their credentials (e.g., username and password) against a database.
@@ -1087,7 +1087,7 @@ Currying
 
 ## Angular Interview Questions
 
-### Q. Angular 17 Features with Examples
+## Q. Angular 17 Features with Examples
 Angular 17 brought a fresh syntax, performance improvements, and better dev ergonomics. Here's a section-wise guide with examples to explore the new capabilities.
 #### 1. Built-in Control Flow (`@if`, `@for`, `@switch`)
 Angular now supports native control flow syntax directly in templates, replacing structural directives like `*ngIf`, `*ngFor`.
@@ -1221,9 +1221,10 @@ Enable via experimental builder in `angular.json`.
 | Vite/Esbuild         | Fast experimental build system               | `--configuration=esbuild`    |
 
 ---
-### Q. Exception handling in Angular  
+## Q. Exception handling in Angular  
 Angular applications can handle exceptions using several approaches: 
-**Try...Catch Blocks** 
+
+### **Try...Catch Blocks** 
 As in standard JavaScript, try...catch blocks manage errors within specific code sections, particularly for synchronous operations. 
 ```javascript
 try {
@@ -1235,7 +1236,8 @@ try {
   console.error('An error occurred:', error);
 }
 ```
-**ErrorHandler** 
+
+### **ErrorHandler** 
 Angular's ErrorHandler provides centralized error handling across the application. By extending this class, developers can customize how errors are managed globally. 
 ```javascript
 import { ErrorHandler, Injectable } from '@angular/core';
@@ -1248,12 +1250,14 @@ export class GlobalErrorHandler implements ErrorHandler {
     // Send error to server, display user-friendly message, etc.
   }
 }
-```
+
 // In module or application configuration:
 providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }]
-**RxJS catchError Operator** 
-```javascript
+```
+
+### **RxJS catchError Operator** 
 For asynchronous operations with observables, catchError from RxJS intercepts and handles errors gracefully. 
+```javascript
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -1268,9 +1272,10 @@ this.http.get('/api/data').pipe(
   // Process data or handle completion
 });
 ```
-**HttpInterceptor** 
-```javascript
+
+### **HttpInterceptor** 
 HttpInterceptor provides a robust way to handle errors related to the server and network by intercepting HTTP requests and responses. 
+```javascript
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -1289,13 +1294,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       );
   }
 }
-```
+
 //In module or application configuration:
 providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }]
+```
 You can define multiple interceptors, and they will be called in the order they are provided. 
 
 ---
-### Q. Signal in Angular  
+## Q. Signal in Angular  
 Signals in Angular are a reactivity primitive that notifies interested consumers when a wrapped value changes. They optimize change detection by tracking where values are used, ensuring updates only occur when necessary. 
 
 Key Concepts 
@@ -1344,7 +1350,7 @@ counter.set(1); // Triggers the effect and logs "Counter value changed: 1"
 - _Predictable Updates_: Ensures glitch-free and consistent data flow. 
 
 ---
-### Q. Zone.js  
+## Q. Zone.js  
 `zone.js` is a crucial library for Angular applications, managing and tracking asynchronous operations. It essentially creates execution contexts, or "zones," that monitor tasks like event handling, timers, promises, and HTTP requests. This allows Angular to automatically detect changes and update the UI accordingly, ensuring efficient change detection. 
 `zone.js` intercepts and wraps asynchronous tasks, enabling Angular to run code before and after these tasks. This mechanism is vital for triggering Angular's change detection cycle whenever an asynchronous operation completes, ensuring the UI remains synchronized with the application state. While change detection is not part of zone.js itself, Angular utilizes `zone.js` to initiate it automatically. 
 Angular offers the `NgZone` service, which allows developers to run code outside the context of zone.js when necessary, such as for performance optimization. This can be useful when dealing with tasks that don't require UI updates. 
@@ -2088,7 +2094,7 @@ export class AppModule {}
 ## Q. Optimizing Your Angular Application
 Optimizing your Angular application is crucial for achieving better performance, faster load times, and a smoother user experience. Here's a comprehensive guide to help you optimize your Angular application:
 
-#### 1. Lazy Loading Modules
+### 1. Lazy Loading Modules
 - **What it is:** Lazy loading is a technique that loads parts of your application on demand, rather than loading everything upfront. This can significantly reduce the initial load time of your application.
 - **How to implement:** Use the `loadChildren` property in your route definitions to specify modules that should be loaded lazily.
 ```
@@ -2101,32 +2107,33 @@ const routes: Routes = [
 ];
 ```
 
-#### 2. Ahead-of-Time (AOT) Compilation
+### 2. Ahead-of-Time (AOT) Compilation
 **What it is:** AOT compilation compiles your Angular templates and components at build time, rather than in the browser at runtime. This results in smaller bundle sizes and faster rendering.
 **How to enable:** AOT is enabled by default in production builds (`ng build --prod`).  For Angular CLI versions prior to 8, use `ng build --aot`.
 
-#### 3. Production Mode
+### 3. Production Mode
 **What it is:** Running your Angular application in production mode disables development-mode checks and optimizations, resulting in improved performance.How to enable:Use the --prod flag when building your application: `ng build --prod`
 
-#### 4. Bundle Optimization
+### 4. Bundle Optimization
 **What it is:** Reducing the size of your application's bundles is crucial for faster loading.
 **How to optimize:**
 - _Tree Shaking:_ Eliminate unused code.  Angular CLI and modern bundlers like Webpack do this automatically.
 - _Minification:_ Reduce the size of your code by removing whitespace and shortening variable names.  Enabled in production builds.
 - _Code Splitting:_ Split your code into smaller chunks that can be loaded on demand.  Lazy loading is a form of code splitting.
 
-#### 5. Caching
+### 5. Caching
 **What it is:** Caching can significantly improve performance by storing frequently accessed data or resources.
 **How to implement:** 
 - _HTTP caching:_ Configure your server to set appropriate HTTP headers (e.g., `Cache-Control`) to enable browser caching of static assets and API responses.
 - _In-memory caching:_ Use services to cache data within your Angular application (e.g., using `localStorage`, `sessionStorage`, or a custom service with a `BehaviorSubject`).
 - _Service Workers:_ For more advanced caching, you can use service workers to cache assets and even enable offline functionality.  Use `@angular/service-worker`.
 
-#### 6. Change Detection Optimization
+### 6. Change Detection Optimization
 **What it is:** Angular's change detection mechanism can be a performance bottleneck if not used carefully.
+
 **How to optimize:**
 - `ChangeDetectionStrategy.OnPush`: Use this change detection strategy for components whose templates only depend on their `@Input()` properties. This tells Angular to only check for changes when the input properties change.
-```
+```javascript
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
@@ -2138,9 +2145,9 @@ export class MyComponent {
   @Input() data: any;
 }
 ```
-- _trackBy:_ Use the trackBy function in *ngFor loops to help Angular identify which items in a list have changed, allowing it to update only the changed items.
+- `trackBy`: Use the trackBy function in *ngFor loops to help Angular identify which items in a list have changed, allowing it to update only the changed items.
 - 
-```
+```javascript
 <li *ngFor="let item of items; trackBy: trackById">
   {{ item.name }}
 </li>
@@ -2153,7 +2160,7 @@ export class MyComponent {
 }
 ```
 - _Detach Change Detector:_ If you have a component whose subtree you know doesn't need to be checked, you can detach its change detector.
-```
+```javascript
 constructor(private cd: ChangeDetectorRef) {}
 
 ngOnInit() {
@@ -2161,7 +2168,7 @@ ngOnInit() {
 }
 ```
 
-#### 7. Optimize Images
+### 7. Optimize Images
 **What it is:** Large image files can significantly slow down your application.
 **How to optimize:**
 - _Use appropriate formats:_ Use modern image formats like WebP, which offer better compression than JPEG or PNG.
@@ -2169,7 +2176,7 @@ ngOnInit() {
 - _Use responsive images:_  Serve different sized images based on the user's device and screen size using the `<picture>` element or the `srcset` attribute of the `<img>` tag.
 - _Lazy load images:_  Load images only when they are about to become visible in the viewport using libraries or native lazy loading (`loading="lazy"`).
 
-#### 8. Optimize Dependencies
+### 8. Optimize Dependencies
 **What it is:** Unnecessary or large dependencies can increase your bundle size and slow down your application.
 **How to optimize:** 
 - _Analyze your dependencies:_ Use tools to identify large or unused dependencies.
@@ -2178,12 +2185,12 @@ ngOnInit() {
 - _Tree shaking:_  Ensure that your dependencies are tree-shakable.
 
 
-#### 9. Virtualization/Windowing
+### 9. Virtualization/Windowing
 **What it is:** For lists with a very large number of items, rendering all of them at once can be very slow. Virtualization or windowing is a technique that only renders the items that are currently visible in the viewport.
 **How to implement:**
 - Use libraries like `ngx-virtual-scroll`, `@angular/cdk Virtual Scroll`, or `react-virtualized` (if using React within Angular) to implement virtualization.
 
-#### 10. Web Worker
+### 10. Web Worker
 **What it is:** Web workers allow you to run JavaScript code in a background thread, freeing up the main thread to handle UI updates and other tasks.
 **How to implement:** 
 - Use Angular CLI to generate a web worker:  `ng generate web-worker my-worker`
@@ -2192,7 +2199,7 @@ ngOnInit() {
 By implementing these optimizations, you can significantly improve the performance of your Angular application, resulting in a faster, more responsive, and more enjoyable user experience.
 
 ---
-## Q. AOT vs JIT
+## Q. AOT vs JIT in Angular
 Angular applications require compilation because browsers cannot directly understand Angular components and templates. The two primary compilation methods are _Ahead-of-Time (AOT)_ and _Just-in-Time (JIT)_. 
 
 1. **Ahead-of-Time (AOT)** 
@@ -2200,7 +2207,7 @@ Angular applications require compilation because browsers cannot directly unders
 
 **Advantages of AOT:** 
 • _Faster rendering:_ The browser renders the UI immediately upon loading, without waiting for compilation. 
-• _Smaller bundle size:_ AOT eliminates the need to ship the Angular compiler in the production bundle, reducing the overall size. [2]  
+• _Smaller bundle size:_ AOT eliminates the need to ship the Angular compiler in the production bundle, reducing the overall size.  
 • _Improved security:_ Pre-compilation mitigates the risk of client-side code injection attacks. 
 • _Template type checking:_ AOT performs template type checking during compilation, catching errors early in the development cycle. 
 
@@ -2292,10 +2299,7 @@ export class App implements OnInit {
 ---
 ## Q. Here are **Angular best practices** to implement **efficient and reusable frontend components**, focusing on maintainability, scalability, and performance:
 
----
-
-## ✅ 1. **Use Presentational & Container Component Pattern**
-
+### 1. **Use Presentational & Container Component Pattern**
 * **Container Components**: Handle data-fetching and business logic.
 * **Presentational Components**: Focus only on UI and accept inputs/emit outputs.
 * This separation promotes reusability and clean code architecture.
@@ -2313,24 +2317,20 @@ export class App implements OnInit {
 </app-expense-card>
 ```
 
-## ✅ 2. **Keep Components Small and Focused**
-
+### 2. **Keep Components Small and Focused**
 * Follow the **Single Responsibility Principle**: each component should do one thing well.
 * Split large components into smaller ones, especially when dealing with complex UIs.
 
-## ✅ 3. **Use `@Input()` and `@Output()` Smartly**
-
+### 3. **Use `@Input()` and `@Output()` Smartly**
 * Use `@Input()` to pass data *into* a component.
 * Use `@Output()` with `EventEmitter` to communicate *out*.
 * Avoid tightly coupling components; use shared services only when needed.
 
-## ✅ 4. **Use Angular Reactive Forms for Complex Forms**
-
+### 4. **Use Angular Reactive Forms for Complex Forms**
 * More scalable than template-driven forms.
 * Easier to unit test and dynamically control validation, visibility, and nested structures.
 
-## ✅ 5. **Avoid Logic in Templates**
-
+### 5. **Avoid Logic in Templates**
 * Move complex expressions to the component class.
 * It improves readability and simplifies testing.
 
@@ -2348,8 +2348,7 @@ get hasItems(): boolean {
 }
 ```
 
-## ✅ 6. **Use `trackBy` in `*ngFor` Loops**
-
+### 6. **Use `trackBy` in `*ngFor` Loops**
 Improves performance by preventing unnecessary re-renders:
 
 ```html
@@ -2362,18 +2361,15 @@ trackById(index: number, item: User): number {
 }
 ```
 
-## ✅ 7. **Modularize Your App**
-
+### 7. **Modularize Your App**
 * Create **feature modules** (`ExpenseModule`, `AuthModule`, etc.).
 * Use **shared modules** for reusable components, directives, and pipes.
 
-## ✅ 8. **Style Components with View Encapsulation**
-
+### 8. **Style Components with View Encapsulation**
 * Keep styles scoped with Angular’s encapsulation (default is `Emulated`).
 * Use component-specific SCSS/CSS files for maintainability.
 
-## ✅ 9. **Lazy Load Feature Modules**
-
+### 9. **Lazy Load Feature Modules**
 * Improve initial load performance.
 * Use Angular routing to lazy-load modules when needed.
 
@@ -2381,23 +2377,20 @@ trackById(index: number, item: User): number {
 { path: 'expenses', loadChildren: () => import('./expenses/expenses.module').then(m => m.ExpensesModule) }
 ```
 
-## ✅ 10. **Use Services and Dependency Injection (DI)**
-
+### 10. **Use Services and Dependency Injection (DI)**
 * Extract business logic and API calls into services.
 * Inject services into components via DI to promote reusability and testing.
 
-## ✅ 11. **Use Angular CLI and Linting Tools**
-
+### 11. **Use Angular CLI and Linting Tools**
 * Follow style guides and enforce standards using ESLint.
 * Use CLI to generate code scaffolds with best practices in place.
 
-## ✅ 12. **Write Unit and Integration Tests**
-
+### 12. **Write Unit and Integration Tests**
 * Use `TestBed`, mocks, and spies to ensure component behavior is predictable.
 * Keep test coverage high, especially for reusable components.
 
 ---
-## Q. When to use ngoninit and constructor in Angular
+## Q. When to use `ngoninit` and `constructor` in Angular
 #### Constructor:
 - Primarily used for dependency injection.
 - Initializes class members and sets up the class.
@@ -2434,10 +2427,7 @@ export class MyComponent implements OnInit {
 ## Q. Angular form vs Reactive form
 Here's a comprehensive overview of **Angular Forms** with a focus on **Reactive Forms**, including comparison, examples, and best practices.
 
----
-
-## ✅ Angular Forms Overview
-
+### Angular Forms Overview
 Angular offers **two types of forms**:
 
 | Form Type                 | Description                                                                                  |
@@ -2445,18 +2435,12 @@ Angular offers **two types of forms**:
 | **Template-driven forms** | Simpler to use, defined mostly in HTML using `ngModel`, suitable for basic use cases         |
 | **Reactive forms**        | More scalable, defined in the component class, offers better testability and dynamic control |
 
----
-
-## ✅ Reactive Forms – Key Features
-
+### Reactive Forms – Key Features
 * Defined and controlled in **TypeScript class**.
 * Built using `FormGroup`, `FormControl`, and `FormArray`.
 * Easy to **dynamically add/remove fields**, handle **complex validations**, and **unit test**.
 
----
-
-## 🔧 Setup
-
+### Setup
 First, import the necessary module:
 
 ```ts
@@ -2474,11 +2458,8 @@ In `app.module.ts`:
 export class AppModule {}
 ```
 
----
-
-## ✨ Reactive Forms Example (Expense Form)
-
-### 📁 **expense-form.component.ts**
+### Reactive Forms Example (Expense Form)
+#### **expense-form.component.ts**
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -2510,9 +2491,7 @@ export class ExpenseFormComponent implements OnInit {
 }
 ```
 
----
-
-### 🧾 **expense-form.component.html**
+#### **expense-form.component.html**
 
 ```html
 <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
@@ -2542,9 +2521,7 @@ export class ExpenseFormComponent implements OnInit {
 </form>
 ```
 
----
-
-## ✅ Best Practices with Reactive Forms
+### Best Practices with Reactive Forms
 
 1. **Use FormBuilder**: Simplifies syntax for creating nested forms.
 2. **Group Fields Logically**: Use `FormGroup` for related controls (e.g., address fields).
@@ -2552,11 +2529,8 @@ export class ExpenseFormComponent implements OnInit {
 4. **Async Validators**: For backend validations like checking username availability.
 5. **Reactive Form Hooks**: Use `valueChanges` and `statusChanges` to react to form changes.
 
----
-
-## 🔍 Template-Driven Form (Quick Example)
-
-> Not ideal for dynamic or complex forms.
+### Template-Driven Form (Quick Example)
+Not ideal for dynamic or complex forms.
 
 ```html
 <form #form="ngForm" (ngSubmit)="submit(form.value)">
@@ -2565,8 +2539,6 @@ export class ExpenseFormComponent implements OnInit {
   <button type="submit">Submit</button>
 </form>
 ```
-
----
 
 ## 🚀 Summary
 
@@ -2591,32 +2563,37 @@ export class ExpenseFormComponent implements OnInit {
 
 - **Test Thoroughly:** 
   - After the update, run all your tests to ensure that the application is working as expected. Pay attention to both unit and end-to-end tests. 
+
 - **Address Deprecations:** 
   - Angular might have deprecated some features in older versions. Replace any deprecated code with the recommended alternatives. 
+
 - **Update Third-Party Libraries:** 
   - Ensure that your third-party libraries are compatible with Angular 17. Update them to the latest versions if necessary. 
+
 - **Code Cleanup:** 
   - Remove any unused code, modules, or dependencies. This is a good time to refactor and improve the overall structure of your application. 
+
 - **Commit Changes:** 
   - Commit your changes regularly throughout the migration process. This makes it easier to revert to a previous state if necessary. 
+
 - **Consider Incremental Updates:** 
   - For large applications, consider updating one major version at a time (e.g., `10 to 11`, then `11 to 12`, and so on). This can help to manage the complexity of the migration. 
 
 ---
-### Q. RxJS vs NgRx 
+## Q. RxJS vs NgRx 
 RxJS is a reactive programming library in JavaScript that helps manage asynchronous operations using observables, while NgRx is an Angular library built on top of RxJS that provides a structured approach to state management in Angular applications. NgRx implements the Redux pattern, which uses a centralized store, actions, reducers, and selectors, to manage the application state. 
   
 Here's a more detailed breakdown:  
 
 ### RxJS:
 
-### Purpose: 
+#### Purpose: 
 Primarily used for handling asynchronous data, creating streams of data (observables), and composing asynchronous or callback-based code.
 
-### Features: 
+#### Features: 
 Observables, operators (like `map`, `filter`, `subscribe`), subjects, and more. 
 
-### Use Cases:
+#### Use Cases:
 	• Handling API requests.
 	• Managing events.  
 	• Creating shared services that expose observables.
@@ -2624,22 +2601,22 @@ Observables, operators (like `map`, `filter`, `subscribe`), subjects, and more.
 
 ### NgRx: 
 
-### Purpose: 
+#### Purpose: 
 A library for managing the state of an Angular application, providing a structured and consistent way to handle state changes using the Redux pattern.
 
-### Features:  
+#### Features:  
 	- Store: A central repository for the application state.
 	- Actions: Plain JavaScript objects that describe a change to the state.
 	- Reducers: Pure functions that take the current state and an action, and return a new state.
 	- Selectors: Functions that extract data from the store.
 	- Effects: Side effects that can be triggered by actions, such as making API calls or navigating to different pages.
 
-### Use Cases:
+#### Use Cases:
 - Managing global application state.
 - Handling complex state changes.
 - Making applications more predictable and testable.
 
-### In essence:
+#### In essence:
 
 - NgRx is a higher-level library that provides a framework for managing state within Angular, while RxJS is a foundational library for reactive programming in JavaScript.
 - NgRx relies heavily on RxJS under the hood, using observables to handle asynchronous operations and track state changes.
@@ -2659,8 +2636,7 @@ A library for managing the state of an Angular application, providing a structur
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
  
 const removeDups = (arr: number[]): number[] => {
-    return arr.filter((item,
-        index) => arr.indexOf(item) === index);
+    return arr.filter((item, index) => arr.indexOf(item) === index);
 }
 console.log(removeDups(arr));
 ```
@@ -2681,7 +2657,7 @@ const removeDups = (arr: number[]) : number[] => {
 console.log(removeDups(arr));
 ```
 
-### Approach 3: Using `map() ` method
+### Approach 3: Using `map()` method
 ```typescript
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
 
@@ -2702,7 +2678,7 @@ const removeDups = (arr: number[]): number[] => {
 console.log(removeDups(arr));
 ```
 
-### Approach 3: Using `map() ` method
+### Approach 3: Using `Set()` method
 ```typescript
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
 
@@ -2752,6 +2728,7 @@ In essence, Angular micro frontends enable a more modular, scalable, and maintai
 
 ---
 ## Q. Angular 19 features
+TODO
 
 ---
 ## Q. View encapsulation in Angular
@@ -2786,13 +2763,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class MyComponent { }
 ```
+
 In the generated HTML, Angular might add a unique attribute like `_ngcontent-c0` to the elements:
 ```html
-<div _ngcontent-c0="" 
-class="my-class">
+<div _ngcontent-c0="" class="my-class">
   <p _ngcontent-c0="">This is my component content.</p>
 </div>
 ```
+
 And the styles are transformed to:
 ```css
 .my-class[_ngcontent-c0] {
@@ -2831,6 +2809,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class MyComponent { }
 ```
+
 The HTML structure will be like this
 ```html
 <my-component>
@@ -2877,7 +2856,6 @@ The styles will apply to any element in the application with the class `my-class
 - `None`: Use this option sparingly when you need global styles or are integrating with a CSS framework that requires global styles. Be very cautious about style collisions.
 
 In most cases, you should stick with the default `Emulated` encapsulation. If you need stronger isolation and are targeting modern browsers, `ShadowDom` is a good choice. Use `None` only when absolutely necessary.
-
 
 ---
 ## Q. Approach to create application in angular (top down, down to up or component based or module based)?
@@ -3575,13 +3553,89 @@ Configuration remains the same as with class-based resolvers, simply referencing
 
 
 ---
-## Q.
+## Q. Why should we choose angular over other libraries?
+Angular is often chosen over other front-end frameworks or libraries due to its comprehensive features, structured approach, and suitability for large-scale, enterprise-level applications. It provides a full-featured framework with built-in tools for routing, state management, and form handling, which reduces the need for third-party integrations. Additionally, Angular's component-based architecture and TypeScript integration promote code quality, maintainability, and developer productivity.
+
+Here's a more detailed look at the advantages: 
+
+#### 1. Comprehensive Framework: 
+Angular is a full-fledged framework, not just a library, meaning it provides a complete set of tools and features out of the box. This includes built-in solutions for routing, state management, forms, and more.
+
+#### 2. Structured and Scalable: 
+Angular's component-based architecture and strict guidelines encourage a structured and scalable approach to building applications. This makes it easier to manage complex projects and maintain code over time.
+
+#### 3. TypeScript Integration: 
+Angular uses TypeScript, a superset of JavaScript, which adds static typing, classes, and interfaces. This improves code quality, reduces errors, and enhances developer productivity.
+
+#### 4. Developer Productivity: 
+Angular's CLI (Command Line Interface) simplifies common development tasks like creating new components, services, and libraries. This saves developers time and effort, allowing them to focus on core application logic.
+
+#### 5. Large Community and Support: 
+Angular has a large and active community, with ample documentation, tutorials, and forums available. This ensures a wide range of resources and support for developers.
+
+#### 6. Built for Enterprise Applications: 
+Angular's strong features and structured approach make it well-suited for building enterprise-grade applications, where scalability, maintainability, and performance are crucial.
+
+#### 7. Performance and Efficiency: 
+Angular's component-based architecture and data binding mechanisms can lead to improved performance and efficiency compared to some other frameworks.
+
+#### 8. Cross-Platform Development: 
+Angular supports building applications that can run on various platforms, including browsers and mobile devices.
+
+#### 9. Good for Teams: 
+Angular's opinionated structure and clear guidelines make it easier for teams to collaborate and maintain code consistency.
+
+#### In summary: 
+Angular is a robust and powerful framework that offers a complete set of features, a structured approach to development, and a strong community. It is particularly well-suited for large-scale, enterprise-level applications where scalability, maintainability, and performance are critical.
 
 ---
-## Q.
+## Q. class vs ngClass in Angular.
+In Angular, both `class` binding and `ngClass` are used to dynamically add or remove CSS classes from HTML elements. However, they differ in their capabilities and use cases. 
+
+#### `class` binding: 
+It provides a straightforward way to toggle a single CSS class based on a condition. It's best suited for simple scenarios where only one class needs to be controlled. 
+```javascript
+<div [class.active]="isActive">This is a div</div>
+```
+In this example, the `active` class is added to the div element only when the `isActive` expression evaluates to `true`. 
+
+#### `ngClass` directive: 
+It offers more flexibility by allowing multiple CSS classes to be added or removed based on various conditions. It can handle a string, an array, or an object to determine which classes should be applied. 
+```javascript
+<div [ngClass]="{
+  'class-a': conditionA,
+  'class-b': conditionB,
+  'class-c': conditionC
+}">This is a div</div>
+```
+In this case, `class-a` is added if `conditionA` is `true`, `class-b` if `conditionB` is `true`, and `class-c` if `conditionC` is `true`. This approach is useful for managing complex class combinations. 
+`ngClass` can also be used with an array: 
+```javascript   
+<div [ngClass]="['class-a', 'class-b', 'class-c']">This is a div</div>
+```
+
+All classes within the array will be applied. 
+
+Another way to use `ngClass` is with a string of space-separated class names: 
+```javascript
+<div [ngClass]="'class-a class-b class-c'">This is a div</div>
+```
+
+All classes in the string will be applied. 
+
+| Feature | class binding | ngClass directive  |
+| --- | --- | --- |
+| Scope | Single class | Multiple classes  |
+| Input Type | Boolean expression | String, array, or object  |
+| Use Cases | Simple conditional class toggling | Complex class management, multiple conditional classes, dynamic class lists  |
+| Performance | Generally more performant for single class toggling | Can have a slight performance overhead when handling complex expressions or lists  |
+| Syntax | [class.className]="condition" | [ngClass]="expression"  |
+| Deepwatching | No | Yes  |
+
+It's recommended to use class binding for simple scenarios and ngClass for more complex scenarios involving multiple classes or dynamic class lists. While ngClass is more powerful, class binding can be more efficient for single class toggling. 
 
 ---
-## Q.
+## Q. Hot or Cold operator in angular
 
 ---
 ## Q.

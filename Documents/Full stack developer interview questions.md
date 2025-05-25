@@ -102,8 +102,8 @@ Spring Boot auto-configures everything:
 
 You just run the app and hit `http://localhost:8080/hello`.
 
---- 
-### Spring Boot Application Workflow
+---
+## Q1.1 Spring Boot Application Workflow
 
 Here's a step-by-step breakdown of how a Spring Boot application initializes and processes requests:
 
@@ -161,7 +161,8 @@ Spring Boot applications typically follow a layered architecture:
 This structured approach ensures a clear separation of concerns, making the application more maintainable and scalable.
 
 ---
-@SpringBootApplication Annotation in Spring Boot
+## Q1.2 `@SpringBootApplication` Annotation in Spring Boot
+
 The `@SpringBootApplication` annotation is a **composite annotation** in Spring Boot that combines three other annotations:  
 
 1. **`@Configuration`**  
@@ -181,10 +182,9 @@ The `@SpringBootApplication` annotation is a **composite annotation** in Spring 
 - Simplifies the setup by reducing the need for manual configuration.  
 - Provides a **concise way** to bootstrap a Spring Boot application.  
 
-
-### Class level annotation in spring boot
+## Q1.3 Class level annotation in spring boot
 In Spring Boot, class-level annotations are used to define configurations, components, and behaviors at the class level. Here are some commonly used class-level annotations:
-#### 1. **[@RestController](w)**
+### 1. `@RestController`
    - Used in Spring MVC to define a RESTful controller.
    ```java
    @RestController
@@ -195,7 +195,7 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        }
    }
    ```
-#### 2. **[@Controller](w)**
+### 2. `@Controller`
    - Marks a class as a Spring MVC controller (typically used with views like Thymeleaf).
    ```java
    @Controller
@@ -206,7 +206,7 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        }
    }
    ```
-#### 3. **[@Service](w)**
+### 3. `@Service`
    - Marks a class as a service component in the business layer.
    ```java
    @Service
@@ -216,7 +216,7 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        }
    }
    ```
-#### 4. **[@Repository](w)**
+### 4. `@Repository`
    - Indicates a DAO (Data Access Object) and enables exception translation.
    ```java
    @Repository
@@ -224,7 +224,8 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        // Data access logic
    }
    ```
-#### 5. **[@Component](w)**
+
+### 5. `@Component`
    - Generic stereotype for any Spring-managed component.
    ```java
    @Component
@@ -234,7 +235,7 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        }
    }
    ```
-#### 6. **[@Configuration](w)**
+### 6. `@Configuration`
    - Marks a class as a source of Spring bean definitions.
    ```java
    @Configuration
@@ -245,7 +246,8 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        }
    }
    ```
-#### 7. **[@SpringBootApplication](w)**
+
+### 7. `@SpringBootApplication`
    - Combination of `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
    ```java
    @SpringBootApplication
@@ -255,7 +257,8 @@ In Spring Boot, class-level annotations are used to define configurations, compo
        }
    }
    ```
-#### 8. **[@EnableScheduling](w)**
+
+### 8. `@EnableScheduling`
    - Enables scheduling for running scheduled tasks.
    ```java
    @Configuration
@@ -266,16 +269,16 @@ In Spring Boot, class-level annotations are used to define configurations, compo
 These annotations help configure and organize a Spring Boot application efficiently.
 
 
-**Refs:**
-[Understanding the internal processes when a Spring Boot ... - Medium](https://medium.com/%40tuananhbk1996/understanding-the-internal-processes-when-a-spring-boot-application-begins-d906a8f71ce2?utm_source=chatgpt.com)
+### Refs:
+1. [Understanding the internal processes when a Spring Boot ... - Medium](https://medium.com/%40tuananhbk1996/understanding-the-internal-processes-when-a-spring-boot-application-begins-d906a8f71ce2?utm_source=chatgpt.com)
 
-([Spring Boot Startup Process - Dev Skill Builder](https://www.devskillbuilder.com/spring-boot-startup-process-dc851f670c42?utm_source=chatgpt.com))
+2. ([Spring Boot Startup Process - Dev Skill Builder](https://www.devskillbuilder.com/spring-boot-startup-process-dc851f670c42?utm_source=chatgpt.com))
 
-([The startup process of the Spring Boot application. - ResearchGate](https://www.researchgate.net/figure/The-startup-process-of-the-Spring-Boot-application_fig4_355936643?utm_source=chatgpt.com))
+3. ([The startup process of the Spring Boot application. - ResearchGate](https://www.researchgate.net/figure/The-startup-process-of-the-Spring-Boot-application_fig4_355936643?utm_source=chatgpt.com))
 
-([Spring Boot – Architecture | GeeksforGeeks](https://www.geeksforgeeks.org/spring-boot-architecture/?utm_source=chatgpt.com))
+4. ([Spring Boot – Architecture | GeeksforGeeks](https://www.geeksforgeeks.org/spring-boot-architecture/?utm_source=chatgpt.com))
 
-([How Spring Boot Application Works Internally? | GeeksforGeeks](https://www.geeksforgeeks.org/how-spring-boot-application-works-internally/?utm_source=chatgpt.com))
+5. ([How Spring Boot Application Works Internally? | GeeksforGeeks](https://www.geeksforgeeks.org/how-spring-boot-application-works-internally/?utm_source=chatgpt.com))
 
 ---
 ## Q2. How to disable auto-configuration in Spring Boot?
@@ -284,10 +287,12 @@ Spring Boot's auto-configuration automatically configures your application based
 
 ### Methods to Disable Auto-Configuration
 There are several ways to disable auto-configuration. Here are the most common and recommended methods:
+
 #### 1. Using `@SpringBootApplication` Exclusion
 - The `@SpringBootApplication` annotation is a convenience annotation that combines @Configuration, `@EnableAutoConfiguration`, and `@ComponentScan`.
 - You can exclude specific auto-configuration classes using the `exclude` or `excludeName` attributes of `@SpringBootApplication`.
 - This is the most common and recommended way to disable specific auto-configurations.
+
 #### Example:
 ```java
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -339,7 +344,7 @@ public class MyApplication {
 ```
 spring.autoconfigure.exclude=*
 ```
-##### Explanation:
+#### Explanation:
 - `spring.autoconfigure.exclude=*`: The asterisk "*" excludes all auto-configuration classes.
 
 #### Gradle Configuration (build.gradle)
@@ -462,17 +467,18 @@ In this example, the `Student` class is immutable because:
   - **Functional Programming:** Immutability is a core principle of functional programming, making code easier to understand and debug.
   - **Example** – `String` Class
 
-### `String` Class:  
+---
+## Q3.1 `String` Class:  
    - The `String` class in Java is immutable. Once a `String` object is created, its value cannot be changed.
 In Java, the term "immutable" means that once a String object is created, its content cannot be changed. This implies that any operation that appears to modify a String actually creates a new String object with the modified content, leaving the original String unchanged.
 
-#### Elaboration:
+### Elaboration:
 - **_No In-Place Modification_**: Unlike mutable objects (like StringBuffer or StringBuilder), you cannot directly alter the internal character array of a String object once it's been initialized.
 - **_New Object Creation_**: When you try to modify a String (e.g., by concatenating or using methods like substring), the Java runtime creates a new String object containing the desired changes. The original String object remains unchanged.  
 - **_Memory Efficiency and Thread Safety_**: Immutability is crucial for memory management and thread safety. Because String objects are immutable, they can be shared across threads without synchronization concerns, as their value will never change unexpectedly.  
 - **_String Pool_**: Immutability also allows for the implementation of the String pool, where the JVM caches String objects with the same content. This can save memory by reusing the same object when multiple String variables refer to the same value.
 
-#### Example:
+### Example:
 ```java
 String str1 = "Hello";
 String str2 = str1 + " World";
@@ -480,7 +486,7 @@ System.out.println(str1); // Output: Hello (str1 remains unchanged)
 System.out.println(str2); // Output: Hello World (str2 is a new string)
 ```
 
-### String Immutability in Java Explained
+## Q3.2 String Immutability in Java Explained
 Here's an explanation of String immutability in Java, using your example:
 ```java
 String s = "A";
@@ -488,20 +494,21 @@ s = "B";
 System.out.println(s);
 ```
 **Understanding the Code**
-#### 1. `String s = "A";`
+### 1. `String s = "A";`
 - This line creates a String object in memory containing the character "A".
 - The variable s is a reference that stores the memory address of this String object.
 
-#### 2. `s = "B";`
+### 2. `s = "B";`
 - This line does not change the existing String object that contains "A".
 - Instead, it creates a new String object in memory containing the character "B".
 - The reference s is then updated to store the memory address of this new String object.
 - The original String object ("A") still exists in memory, but there are no more references pointing to it.  It will eventually be garbage collected by the JVM.
 
-#### 3. `System.out.println(s)`;
+### 3. `System.out.println(s)`;
 - This line prints the value of s, which is now the memory address of the String object containing "B".  So, the output is "B".
 
-**How String Immutability Works**
+---
+## Q3.3 How String Immutability Works
 - **_Strings are Objects:_** In Java, String is a class, and string literals (like "A" and "B") are instances of that class (String objects).
 - **_Memory Allocation:_** When you create a string, the JVM allocates a block of memory to store the sequence of characters.Immutable Nature: The key point is that once a String object is created, its internal state (the character sequence) cannot be changed.  Any operation that appears to modify a string (e.g., concatenation, substring) actually creates a new String object with the modified content. The original String object remains unchanged.
 - **_No Setter Methods:_** The String class doesn't provide any methods to directly change the characters within an existing String object. You can't do something like `s.changeCharacter(0, 'C')`.
@@ -556,7 +563,8 @@ Spring Boot provides robust support for validating data, especially in the conte
 
 **6. `@Validated` Annotation:** A class-level annotation that tells Spring to enable validation of @Constraint annotations defined on method parameters.
 
-### How Validation Works in Spring Boot
+---
+## Q4.1 How Validation Works in Spring Boot
 * **_Define Constraints:_** 
 Add validation annotations to the fields of the class you want to validate (e.g., a data transfer object (DTO) or an entity).
 * **_Trigger Validation:_**
@@ -630,10 +638,10 @@ public class UserController {
 }
 ```
 
-**In this example:**
+### In this example:
 - The `UserRequest` class defines the structure of the expected request body and includes validation annotations.
 - The `createUser` method in the `UserController` is annotated with `@PostMapping` to handle `POST` requests to `/users`.  The `@Valid` annotation ensures that the `userRequest` object is validated before the method logic is executed.
-- The `@ExceptionHandler` method `handleValidationExceptions` is defined within the controller to handle `MethodArgumentNotValidException`.  When validation fails, this method is invoked, and it formats the error messages into a user-friendly JSON response. The `@ResponseStatus` annotation ensures that a 400 Bad Request status is returned.
+- The `@ExceptionHandler` method `handleValidationExceptions` is defined within the controller to handle `MethodArgumentNotValidException`.  When validation fails, this method is invoked, and it formats the error messages into a user-friendly JSON response. The `@ResponseStatus` annotation ensures that a `400 Bad Request` status is returned.
 
 ---
 ## 5. Spring – Dependency Injection with Factory Method
@@ -654,7 +662,7 @@ There are three types of factory methods:
 2. **Static Factory Method for Creating Instances of Another Class** – It is used to return the runtime instance of another class.
 3. **Non-Static Factory Method** – It is used to return the runtime instance of another class through an instance method, allowing for more flexible and customizable instantiation processes. 
 
-#### Ref: 
+### Ref: 
 [Factory Method](https://www.geeksforgeeks.org/spring-dependency-injection-with-factory-method/)
 
 ---
@@ -665,7 +673,7 @@ Functional interfaces can be used as the assignment target for a lambda expressi
 
 ### Key Characteristics of Functional Interfaces:
 1. **Single Abstract Method**: A functional interface must have exactly one abstract method. This is the method that will be implemented by a lambda expression or method reference.
-2. **@FunctionalInterface Annotation**: While not mandatory, it is a good practice to annotate a functional interface with `@FunctionalInterface`. This annotation helps to enforce the rule of having only one abstract method and provides compile-time checking.
+2. **`@FunctionalInterface` Annotation**: While not mandatory, it is a good practice to annotate a functional interface with `@FunctionalInterface`. This annotation helps to enforce the rule of having only one abstract method and provides compile-time checking.
 3. **Default and Static Methods**: Functional interfaces can have multiple default and static methods. These methods can provide additional functionality without affecting the functional nature of the interface.
 
 ### Common Examples of Functional Interfaces:
@@ -690,8 +698,8 @@ Java provides several built-in functional interfaces in the `java.util.function`
    ```java
    BinaryOperator<Integer> add = (a, b) -> a + b;
    ```
-
-### **How are Functional Interfaces Used?**
+---
+## Q6.1 **How are Functional Interfaces Used?**
 Functional interfaces are primarily used in the context of lambda expressions and method references. Here are some common use cases:
 1. **Lambda Expressions**: You can use a lambda expression to provide the implementation of a functional interface.
    ```java
@@ -717,7 +725,35 @@ Functional interfaces are primarily used in the context of lambda expressions an
 ### Conclusion
 Functional interfaces are a powerful feature in Java that enable functional programming paradigms. They allow for cleaner, more concise code by enabling the use of lambda expressions and method references, making it easier to pass behavior as parameters and work with collections and streams.
 
-**[BiFunction](https://www.geeksforgeeks.org/java-bifunction-interface-methods-apply-and-andthen/)**
+#### Refs:
+1. [BiFunction](https://www.geeksforgeeks.org/java-bifunction-interface-methods-apply-and-andthen/)
+
+---
+## Q6.2 Built-in functional interfaces in Java
+Built-in functional interfaces in Java's `java.util.function` package generally have a return type based on their purpose. Some interfaces, like `Predicate`, `BiPredicate`, and `Supplier`, have distinct return types, while others, like `Consumer`, `BiConsumer`, and `Runnable`, return `void`.
+
+Here's a breakdown of common functional interfaces and their return types: 
+
+#### - Predicate<T>: 
+Takes an input of type `T` and returns a `boolean` value, representing a boolean-valued function of one argument.  
+#### Function<T, R>: 
+Takes an input of type `T` and returns a result of type `R`, representing a function that produces a result.
+#### Consumer<T>: 
+Takes an input of type `T` and returns `void`, representing an operation that accepts a single input argument.
+#### Supplier<T>: 
+Takes no input and returns a result of type `T`, representing a supplier of results.
+#### BiPredicate<T, U>: 
+Takes two inputs of type `T` and `U` and returns a `boolean` value.
+#### BiFunction<T, U, R>: 
+Takes two inputs of type `T` and `U` and returns a result of type `R`.
+#### BiConsumer<T, U>: 
+Takes two inputs of type `T` and `U` and returns `void`.
+#### UnaryOperator<T>: 
+Takes an input of type `T` and returns a result of the same type as the input, `T`.   
+#### BinaryOperator<T>: 
+Takes two inputs of type `T` and returns a result of the same type as the inputs, `T`.
+#### Runnable: 
+Takes no input and returns `void`, representing an operation that can be executed. 
 
 ---
 ## 7. SOLID Principles  
@@ -1000,7 +1036,6 @@ class Switch {
 The facade pattern is appropriate when you have a complex system that you want to expose to clients in a simplified way, or you want to make an external communication layer over an existing system that is incompatible with the system. Facade deals with interfaces, not implementation. Its purpose is to hide internal complexity behind a single interface that appears simple on the outside.  
 
 --- 
-
 ### Proxy: 
   - Provides a placeholder for another object, controlling access to it and potentially reducing its cost or complexity. It is used to control access to the original object, adding a layer of abstraction.
 
@@ -1193,29 +1228,29 @@ public class Client {
 ## 10. ConcurrentHashMap vs HashMap
 A `ConcurrentHashMap` and a `HashMap` are both part of the Java Collections Framework, but they differ significantly in terms of how they handle concurrency and thread safety. Here's a comparison:
 
- 1. **Thread Safety**
-   - **HashMap**: Not thread-safe. It is not designed to be used in concurrent applications without additional synchronization.
-   - **ConcurrentHashMap**: Thread-safe. It is designed for use in concurrent applications and allows multiple threads to read and write safely without explicit synchronization.
+1. **Thread Safety**
+  - **HashMap**: Not thread-safe. It is not designed to be used in concurrent applications without additional synchronization.
+  - **ConcurrentHashMap**: Thread-safe. It is designed for use in concurrent applications and allows multiple threads to read and write safely without explicit synchronization.
 
- 2. **Concurrency Mechanism**
-   - **HashMap**: If you need to use it in a multi-threaded environment, you must synchronize access manually (e.g., using `Collections.synchronizedMap()` or external synchronization).
-   - **ConcurrentHashMap**: Uses a concept of segmentation or bucket-level locking (internally, it uses a form of lock striping). This allows multiple threads to operate on different parts of the map simultaneously, improving performance in concurrent environments.
+2. **Concurrency Mechanism**
+  - **HashMap**: If you need to use it in a multi-threaded environment, you must synchronize access manually (e.g., using `Collections.synchronizedMap()` or external synchronization).
+  - **ConcurrentHashMap**: Uses a concept of segmentation or bucket-level locking (internally, it uses a form of lock striping). This allows multiple threads to operate on different parts of the map simultaneously, improving performance in concurrent environments.
 
- 3. **Performance**
-   - **HashMap**: Better performance in single-threaded environments since there is no overhead of synchronization.
-   - **ConcurrentHashMap**: Better performance in multi-threaded environments compared to a synchronized `HashMap`, as it reduces contention by allowing concurrent access to different segments.
+3. **Performance**
+  - **HashMap**: Better performance in single-threaded environments since there is no overhead of synchronization.
+  - **ConcurrentHashMap**: Better performance in multi-threaded environments compared to a synchronized `HashMap`, as it reduces contention by allowing concurrent access to different segments.
 
- 4. **Null Keys and Values**
-   - **HashMap**: Allows one null key and multiple null values.
-   - **ConcurrentHashMap**: Does not allow null keys or null values. This restriction helps avoid potential ambiguities and NullPointerExceptions in concurrent scenarios.
+4. **Null Keys and Values**
+  - **HashMap**: Allows one null key and multiple null values.
+  - **ConcurrentHashMap**: Does not allow null keys or null values. This restriction helps avoid potential ambiguities and NullPointerExceptions in concurrent scenarios.
 
- 5. **Iteration**
-   - **HashMap**: Not fail-safe. Modifications to the map during iteration can result in a `ConcurrentModificationException`.
-   - **ConcurrentHashMap**: Fail-safe for iteration. It provides a "weakly consistent" iterator, meaning it does not throw exceptions if the map is modified during iteration, but it may not reflect the most recent updates.
+5. **Iteration**
+  - **HashMap**: Not fail-safe. Modifications to the map during iteration can result in a `ConcurrentModificationException`.
+  - **ConcurrentHashMap**: Fail-safe for iteration. It provides a "weakly consistent" iterator, meaning it does not throw exceptions if the map is modified during iteration, but it may not reflect the most recent updates.
 
- 6. **Use Cases**
-   - **HashMap**: Suitable for single-threaded applications or where manual synchronization is acceptable.
-   - **ConcurrentHashMap**: Ideal for multi-threaded applications where high concurrency is needed, such as caching, counters, and managing shared states.
+6. **Use Cases**
+  - **HashMap**: Suitable for single-threaded applications or where manual synchronization is acceptable.
+  - **ConcurrentHashMap**: Ideal for multi-threaded applications where high concurrency is needed, such as caching, counters, and managing shared states.
 
 **Example:**
 ```java
@@ -1437,10 +1472,120 @@ public class FactoryPatternDemo {
 - Consider Spring’s **BeanFactory** as a real-world use case.
 
 ---
-## 14. TODO
+## 14. How do you authenticate microservices?
+In a microservices architecture, authentication can be handled in a _centralized_ or _decentralized_ manner. One common approach is to use an API gateway for authentication, which then passes the user's identity to the individual microservices. This centralized approach ensures consistency and reduces latency. Another approach involves using tokens, such as JWTs, which can be issued by a dedicated authentication service and validated by the individual microservices.
+
+Here's a more detailed breakdown: 
+
+### 1. Centralized Authentication through API Gateway: 
+
+#### API Gateway: 
+The API gateway acts as the single entry point for all microservices, handling authentication for incoming requests.
+####  Authentication: 
+The gateway verifies the user's identity (e.g., using a username/password or a token).
+#### Passing User Identity: 
+The gateway adds the user's identity information to the request headers or context, which is then passed to the microservices.
+#### Microservices: 
+Microservices can access the user's identity from the request headers or context to determine if they are authorized to access the resource.
+
+### 2. Decentralized Authentication with Tokens:
+
+#### Authentication Service: 
+A dedicated authentication service is responsible for verifying user credentials and issuing tokens.
+#### Token Issuance: 
+The authentication service generates a token (e.g., JWT) that represents the user's identity and claims.
+#### Token Transmission: 
+The token is passed to the microservices along with the request.  
+#### Token Validation: 
+Microservices validate the token against a trusted key or service to verify its authenticity.
+
+### 3. Other Approaches: 
+
+#### Mutual TLS (mTLS):
+Microservices can authenticate each other by using mutual TLS certificates, ensuring secure communication between services.
+#### API Keys: 
+API keys can be used for authentication between microservices, allowing them to interact without requiring user credentials.
+#### Decentralized Authentication: 
+Each microservice can have its own authentication mechanism, which can be more complex to manage.  
+#### Hybrid Authentication: 
+A combination of centralized and decentralized authentication methods can be used to address specific needs.
+
+### Benefits of Centralized Authentication: 
+
+#### Consistency: 
+Ensures that authentication is handled consistently across all microservices. 
+#### Reduces Complexity: 
+Microservices don't need to handle authentication logic themselves.  
+#### Improved Security: 
+Allows for centralized management of security policies and access controls. 
+#### Reduced Latency: 
+Authentication can be performed at the gateway level, reducing the time it takes for requests to reach the microservices. 
+
+### Benefits of Decentralized Authentication: 
+
+#### Flexibility: 
+Allows for more granular control over authentication and authorization. 
+#### Scalability: 
+Can be easier to scale individual microservices without impacting other services. 
+#### Isolation: 
+Each microservice can have its own authentication mechanism, isolating security risks.
+
+### Key Considerations: 
+
+#### Security: 
+Choose authentication methods that are secure and robust.
+#### Performance: 
+Consider the performance impact of different authentication methods, especially in high-traffic scenarios.
+#### Maintainability: 
+Choose authentication methods that are easy to maintain and manage.
+#### Scalability: 
+Ensure that the authentication mechanism can scale to meet the needs of the microservices architecture.
+
+In summary, the best approach for microservice authentication depends on the specific requirements of the application, but centralized authentication through an API gateway or token-based authentication are common and effective solutions.
 
 ---
-## 15. TODO  
+## 15. `@Controller` and `@RestController` 
+The `@Controller` and `@RestController` annotations serve different purposes in Spring applications. The key distinction lies in how they handle the response body. 
+
+### @Controller: 
+This annotation marks a class as a controller in the Spring MVC framework. It's primarily used for building traditional web applications where the controller's methods typically return the name of a view to be rendered (e.g., an HTML page). To return data directly in the response body, methods within a `@Controller` class need to be explicitly annotated with `@ResponseBody`. 
+
+### @RestController: 
+Introduced in Spring 4, this annotation is a convenience annotation that combines `@Controller` and `@ResponseBody`. It's specifically designed for building RESTful APIs. In a `@RestController`, methods directly return the data to be serialized and included in the response body, commonly as JSON or XML. There is no need to use the `@ResponseBody` annotation for each handler method. 
+
+In essence, `@RestController` simplifies the development of RESTful web services by assuming that the primary goal of the controller is to return data rather than render a view. 
+
+| Feature | `@Controller` | `@RestController`  |
+| --- | --- | --- |
+| Purpose | Traditional web applications (MVC) | RESTful APIs  |
+| Response Handling | Returns view names or requires `@ResponseBody` | Returns data directly (no `@ResponseBody` needed)  |
+| Implicit Behavior | None | `@ResponseBody` is implicitly added to every method  |
+
+```java
+@Controller
+public class MyController {
+
+    @GetMapping("/hello")
+    @ResponseBody
+    public String sayHello() {
+        return "Hello, world!";
+    }
+
+    @GetMapping("/view")
+    public String getView() {
+        return "myView"; // Returns the name of the view
+    }
+}
+
+@RestController
+public class MyRestController {
+
+    @GetMapping("/data")
+    public String getData() {
+        return "Data from REST API";
+    }
+}
+```
 
 ---
 ## 16. How JVM Works?  
@@ -1453,7 +1598,8 @@ Here's a more detailed breakdown:
 
 ### **2. JVM Architecture:**
 - **_Class Loader:_** Loads class files (bytecode) into memory, manages the class hierarchy, and ensures that classes are loaded only once.
-- **_Execution Engine_**: Interprets or compiles bytecode into native machine code using the JIT compiler.  
+- **_Execution Engine_**
+: Interprets or compiles bytecode into native machine code using the JIT compiler.  
 - **_Runtime Data Areas:_** These are memory regions used during program execution, including:  
   - **_Heap_**: Stores objects.
   - **_Method Area_**: Stores class metadata, method code, and constant pool.
@@ -1977,6 +2123,8 @@ In microservices architectures, effective logging and monitoring are crucial for
 3. Monitoring: Set up Prometheus to scrape metrics from each microservice and store them in a time-series database.
 4. Alerting: Configure Grafana to create dashboards and alerts based on Prometheus metrics.
 5. Distributed Tracing: Use a distributed tracing tool like Jaeger to trace requests across multiple services and visualize the flow.
+
+TODO:::::Add logging level
 
 ### Links:
 [Centralized logging in microservices](https://www.geeksforgeeks.org/centralized-logging-for-microservices/)
@@ -4743,7 +4891,7 @@ Spring MVC and Spring Boot both help build Java web applications, but **Spring B
 - **Production-Ready** → Monitoring, Logging, Security.  
 
 ---
-## 57. Java Singleton Design Pattern
+## 57. Singleton Design Pattern in Java
 The **Singleton pattern** ensures that a class has **only one instance** and provides a **global point of access** to that instance. This is useful for scenarios like **database connections, logging, configuration management, and thread pools**.
 
 ### 1. Implementing Singleton Pattern in Java**
@@ -4856,8 +5004,102 @@ public enum Singleton {
 - Use **Bill Pugh Singleton** for **lazy initialization with thread safety**.
 - Avoid unnecessary **synchronization**, as it affects performance.
 
+### In how many ways singleton class can break in java
+The singleton pattern's purpose in Java is to ensure that only one instance of a class exists. However, there are several ways this pattern can be broken: [1]  
+
+#### Reflection: 
+Using Java Reflection, it's possible to access the private constructor of a singleton class and create new instances, bypassing the singleton's control. 
+```java
+Constructor<Singleton> constructor = Singleton.class.getDeclaredConstructor();
+constructor.setAccessible(true);
+Singleton instance2 = constructor.newInstance();
+```
+
+#### Serialization and Deserialization: 
+If a singleton class implements the Serializable interface, serializing and then deserializing it can create a new instance.
+```java
+// Serialization
+FileOutputStream fileOut = new FileOutputStream("singleton.ser");
+ObjectOutputStream out = new ObjectOutputStream(fileOut);
+out.writeObject(instance);
+out.close();
+fileOut.close();
+
+// Deserialization
+FileInputStream fileIn = new FileInputStream("singleton.ser");
+ObjectInputStream in = new ObjectInputStream(fileIn);
+Singleton instance2 = (Singleton) in.readObject();
+in.close();
+fileIn.close();
+```
+
+#### Cloning: 
+If the singleton class implements the Cloneable interface and the clone() method is not properly overridden, it's possible to create a copy of the singleton instance. 
+```java
+Singleton instance2 = (Singleton) instance.clone();
+```
+
+#### Multiple Class Loaders: 
+In environments with multiple class loaders, the same singleton class can be loaded by different class loaders, resulting in multiple instances. 
+
+#### Multithreading: 
+While not directly breaking the singleton after instantiation, in a multithreaded environment, if not handled properly, multiple threads could simultaneously try to create the singleton instance before it exists, leading to multiple instances. 
+```java
+//Without proper synchronization, multiple threads can enter this block
+if (instance == null) { // null == instance
+    instance = new Singleton();
+}
+```
+
+#### Garbage Collection: 
+Although less common, theoretically, if the singleton instance is not strongly referenced and the garbage collector reclaims it, a subsequent call to get the instance could result in a new instance being created (depending on the implementation). 
+
 ---
-## 58. TODO
+## 58. What is serializable interface in java. how many methods does it hava? how it is handling serialization. what is exteranlization?
+The `Serializable` interface in Java is a marker interface that enables object serialization. It has no methods. When a class implements `Serializable`, the Java runtime knows it can serialize and deserialize objects of that class. `Serialization` converts an object's state into a byte stream, and deserialization reconstructs an object from that stream. `Externalizable` is another interface used for custom serialization, offering more control over the serialization process.  
+
+#### How Serializable Handles Serialization:
+
+When a class implements `Serializable`, the Java runtime automatically handles the serialization and deserialization process for that class. This is done using the `ObjectOutputStream` for serialization and `ObjectInputStream` for deserialization. The runtime handles the conversion of object state (fields) into a byte stream and vice versa.
+
+### `Externalizable`: 
+The `Externalizable` interface is an alternative to `Serializable` that provides more control over the serialization process. It requires implementing the `writeExternal()` and `readExternal()` methods, which allow the developer to define exactly how the object's state is serialized and deserialized. This is useful when you need more control over the format of the serialized data or when you want to support different versions of the object's format.
+
+### Key Differences: 
+
+#### - `Serializable`: 
+A marker interface with no methods. The runtime handles serialization automatically.
+#### - `Externalizable`: 
+Requires implementing `writeExternal()` and `readExternal()` methods for custom serialization.  
+#### - Control: 
+`Externalizable` provides more control over the serialization process.
+#### - Compatibility: 
+`Serializable` offers simpler compatibility with older versions of classes, while `Externalizable` allows for more version-specific control.
+#### - Public No-arg Constructor: 
+`Externalizable` requires a public no-arg constructor, while `Serializable` does not.
+
+---
+## 58.1. What do we achieve with serializable?
+It preserves the object's state, making it useful for various scenarios like saving data, transmitting information, and caching.  
+
+Here's a more detailed explanation: 
+
+### Data Preservation: 
+`Serialization` allows you to save an object's state and recreate it later, even after the application has ended. This is crucial for applications that need to store and retrieve data, like databases or file systems.  
+### Network Communication: 
+By converting an object into a byte stream, you can easily send it over a network to another application or system. This is particularly useful for distributed systems where applications need to communicate with each other.  
+### Deep Copy: 
+`Serialization` can be used to create a deep copy of an object, which is an exact replica of the object, including all its nested objects. This is helpful for situations where you need to create copies of objects without affecting the original. 
+### Caching: 
+By serializing an object and storing it on disk, you can create a cache of the object's state, which can be read later without having to re-create it from scratch. This can improve performance and reduce resource consumption.  
+### NoSQL Storage: 
+Many NoSQL storage systems often store data in its serialized form, allowing for the storage of complex, nested objects in a single field.  
+### Data Integrity: 
+By using serialization, you can ensure that the data being transferred or stored is consistent and accurate.  
+### Portability: 
+Serialization can help ensure that data is portable between different systems, as it can be converted to a byte stream that can be understood by any machine.  
+### JSON and XML: 
+Serializers can convert complex data like querysets and model instances into native Python datatypes, which can then be easily rendered into JSON or XML, according to the Django REST framework.
 
 ---
 ## 59. `@qualifier` vs `@primary` annotatoion
@@ -6080,7 +6322,7 @@ System.out.println(length.get()); // 4
 - `filter(Predicate)`  
   → Returns the same Optional if the value matches the predicate; otherwise returns empty.
 
-```
+```java
 Optional<String> name = Optional.of("Alice");
 
 Optional<String> filtered = name.filter(n -> n.startsWith("A"));
@@ -6107,7 +6349,7 @@ Let’s dive into each of these types with detailed explanations and examples.
 ### **1. REQUIRED**
 It is the default propagation type in Spring. It means that the method must run within a transaction. If a transaction already exists, the method will run within that transaction. If there is no existing transaction, a new one will be started.
 Example:
-```
+```java
 @Service
 public class TransactionService {
 
@@ -6124,7 +6366,7 @@ Use REQUIRED when you want your method to participate in an existing transaction
 ### **2. REQUIRES_NEW**
 It always starts a new transaction. If an existing transaction is present, it will be suspended until the new transaction completes.
 Example:
-```
+```java
 @Service
 public class TransactionService {
 
@@ -6138,7 +6380,7 @@ public class TransactionService {
 ### **3. MANDATORY**
 It requires an existing transaction. If there is no active transaction, an exception will be thrown.
 Example:
-```
+```java
 @Service
 public class TransactionService {
 
@@ -6155,7 +6397,7 @@ Use MANDATORY when a method must be called within an existing transaction contex
 ### **4. NESTED**
 It creates a nested transaction if an existing transaction is present. Otherwise, it behaves like REQUIRED and starts a new transaction.
 Example:
-```
+```java
 @Service
 public class TransactionService {
 
@@ -6173,7 +6415,7 @@ Use NESTED for scenarios where you need savepoints and rollback capabilities wit
 It executes the method without a transaction. If a transaction is present, it will be suspended during the method execution.
 Example:
 
-```
+```java
 @Service
 public class TransactionService {
 
@@ -6190,7 +6432,7 @@ Use NOT_SUPPORTED when you want to ensure that a method does not run within a tr
 ### **6. NEVER**
 It ensures that the method is never executed within a transaction. If an existing transaction is present, an exception will be thrown.
 Example:
-```
+```java
 @Service
 public class TransactionService {
 
@@ -6207,7 +6449,7 @@ Use NEVER when you need to guarantee that a method runs outside of any transacti
 ### **7. SUPPORTS**
 It runs the method within a transaction if one exists, but does not start a new transaction if none exists.
 Example:
-```
+```java
 @Service
 public class TransactionService {
 
@@ -7095,6 +7337,13 @@ Sorted by name: [Alice (30), Bob (25), Charlie (35)]
 In summary, a class can implement both `Comparator` and `Comparable` interfaces. This allows you to define a natural ordering for the class while also providing additional sorting strategies through comparators. This flexibility is useful for sorting objects in different ways without modifying the original class structure.
 
 ---
+In Java, `Comparable` is not a functional interface; it's more of a marker interface that indicates a class's ability to be compared naturally. Comparator, on the other hand, is a functional interface. This difference stems from how they are used for sorting: Comparable defines the inherent ordering within a class, while Comparator provides external comparison logic.
+Elaboration: 
+
+-    Comparable: This interface has a single method, `compareTo()`, which defines the natural ordering of objects within a class. If a class implements Comparable, its objects can be sorted using algorithms like `Collections.sort()` without needing a separate comparator.
+- Comparator: This interface has a single abstract method, `compare()`. It's a functional interface, meaning it can be implemented with lambda expressions or method references. Comparator allows you to define custom comparison logic for sorting, which is particularly useful when you want to sort objects in different ways or when you can't modify the class itself.
+
+---
 ## Q. How do you handle multiple sorting criteria in Java? 
 Sorting with Multiple Criteria in Java
 When you need to sort a collection of objects based on more than one attribute, you can use a `Comparator` in Java.  Here's how to do it, along with explanations and an example:
@@ -7108,7 +7357,7 @@ When you need to sort a collection of objects based on more than one attribute, 
 
 **Example**
 Let's say you have a `Person` class, and you want to sort a list of `Person` objects first by last name (ascending) and then by first name (ascending) for people with the same last name.
-```
+```java
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7208,7 +7457,7 @@ Here are the main principles:
 **Definition**: Encapsulation is the bundling of data (attributes) and the methods that operate on that data into a single unit (a class). It also involves controlling access to the internal state of an object and hiding it from the outside world. This is achieved through access modifiers like `private`, `protected`, and `public`.
 
 **Example:**
-```
+```java
 public class BankAccount {
     private String accountNumber;
     private double balance;
@@ -7257,7 +7506,7 @@ public class Main {
 **Definition**: Inheritance is a mechanism that allows a new class (subclass/derived class) to inherit the properties and methods of an existing class (superclass/base class). It promotes code reuse and establishes an "is-a" relationship between classes.
 
 **Example**:
-```
+```java
 public class Animal {
     private String name;
 
@@ -7314,7 +7563,7 @@ public class Main {
 **Definition**: Polymorphism allows objects of different classes to be treated as objects of a common type. It enables you to write code that can work with objects of multiple classes without knowing their specific types at compile time.  In Java, polymorphism is achieved through inheritance and interfaces.
 
 **Example**:
-```
+```java
 public class Animal {
     private String name;
 
@@ -7379,7 +7628,7 @@ public class Main {
 **Definition**: Abstraction is the process of simplifying complex reality by modeling classes based on essential properties and behavior, while ignoring irrelevant details. It focuses on what an object does rather than how it does it. Abstraction is achieved through abstract classes and interfaces in Java.
 
 **Example:**
-```
+```java
 // Abstract class
 public abstract class Shape {
     protected String color;
@@ -7558,7 +7807,7 @@ The stack is a memory area used for storing:
 - Variables have a limited scope (they are only accessible within the method in which they are declared).
 
 **Example:**
-```
+```java
 public class StackExample {
     public static void main(String[] args) {
         int a = 10; // 'a' is stored on the stack
@@ -7598,7 +7847,7 @@ In this example, the variables `a`, `b`, and `result` in the `main` method, and 
 - Objects have a global scope (they can be accessed from anywhere in the application).
 
 **Example:**
-```
+```java
 public class HeapExample {
     public static void main(String[] args) {
         String name = new String("John"); // The String object is stored in the heap
@@ -7688,7 +7937,7 @@ A shallow copy creates a new object, and then copies the values of the fields of
 The new object contains copies of the primitive data types from the original object, and it contains the same references to any other objects that the original object had.  Both the original object and the new object end up pointing to the same underlying objects.
 
 **Example:**
-```
+```java
 public class ShallowCopyExample {
     public static void main(String[] args) {
         // Create an original object with a nested object
@@ -7737,7 +7986,7 @@ A deep copy creates a new object and then recursively copies the values of all f
 The new object is a completely independent copy of the original object.  Any changes made to the new object or its nested objects will not affect the original object.
 
 **Example:**
-```
+```java
 public class DeepCopyExample {
     public static void main(String[] args) {
         // Create an original object with a nested object
@@ -7789,6 +8038,7 @@ In this example, `deepCopy` is a deep copy of `original`.  A new `InnerObject` i
 
 ---
 ## Q. List vs List<?> vs List<Object>
+Here's the comparision between List vs List<?> vs List<Object>
 ```java
 import java.util.ArrayList;
 import java.util.List;
@@ -8899,8 +9149,58 @@ To use this program:
 - Create a text file named `input.txt` (or change the `filePath` variable in the code). 
 - Compile the code using a Java compiler: `javac ReplaceTextInFile.java`. 
 - Run the compiled code: `java ReplaceTextInFile`.
+---
+## Q. Example of try with resources
+A "try-with-resources" statement in Java ensures that resources are automatically closed after their use, regardless of whether an exception is thrown or not. It simplifies resource management and helps prevent leaks.
+
+Here's a basic example of reading a file using `try-with-resources`:
+```java 
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class TryWithResourcesExample {
+    public static void main(String[] args) {
+        try (FileInputStream fileInputStream = new FileInputStream("input.txt")) {
+            int data;
+            while ((data = fileInputStream.read()) != -1) {
+                System.out.print((char) data);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+### Explanation: 
+
+#### 1. Declaration: 
+Inside the parentheses after `try`, you declare the resource(s) you want to manage (e.g., `FileInputStream fileInputStream`). The resource is instantiated and initialized at the same time.
+#### 2. Try Block: 
+The code that uses the resource is placed inside the curly braces of the `try` block.
+#### 3. Automatic Closing: 
+After the `try` block completes (whether normally or due to an exception), the fileInputStream will be automatically closed, according to documentation.
+#### 4. `AutoCloseable`: 
+The resource class (like `FileInputStream`) needs to implement the `AutoCloseable` interface, which requires the `close()` method to be implemented.
+#### 5. Catch Block: 
+A `catch` block can be used to handle any exceptions that might occur within the try block.  
+
+### Benefits of `try-with-resources`: 
+
+#### - Simplified Code: 
+Reduces the need for explicit `finally` blocks to ensure resource closure, making the code more readable and maintainable.  
+#### - Resource Leak Prevention: 
+Guarantees that resources are always closed, even if an exception is thrown, which prevents resource leaks.  
+#### - Improved Exception Handling: 
+If an exception is thrown during the resource's `close()` method, it is suppressed and a `Throwable` instance can be accessed via `getSuppressed()` to retrieve the suppressed exceptions.
 
 ---
+## Q.
+
+---
+## Q.
+
+---
+
 
 ### TODO
 orchestration vs containerisation

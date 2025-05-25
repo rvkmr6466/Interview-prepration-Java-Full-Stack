@@ -2922,6 +2922,72 @@ public static void main(String[] args) {
     System.out.println(ch); // Output: o
 }
 ```
+## Q. Filter common objects from two employees lists.
+```java
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class Employee {
+    private String name;
+    private int id;
+
+    public Employee(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
+}
+
+public class CommonEmployeeFinder {
+    public static void main(String[] args) {
+        // Sample employee lists
+        List<Employee> list1 = new ArrayList<>();
+        list1.add(new Employee("Alice", 101));
+        list1.add(new Employee("Bob", 102));
+        list1.add(new Employee("Charlie", 103));
+        list1.add(new Employee("David", 104));
+
+        List<Employee> list2 = new ArrayList<>();
+        list2.add(new Employee("Bob", 102));
+        list2.add(new Employee("Eve", 105));
+        list2.add(new Employee("Charlie", 103));
+
+        // Convert list2 to a Set for efficient contains() checks
+        Set<Employee> secondListSet = new HashSet<>(list2);
+
+        // Find common employees using streams and filter
+        List<Employee> commonEmployees = list1.stream()
+                .filter(secondListSet::contains)
+                .collect(Collectors.toList());
+
+        // Print the common employees
+        System.out.println("Common Employees:");
+        commonEmployees.forEach(employee -> System.out.println(employee.getName() + " - " + employee.getId()));
+    }
+}
+```
 
 
 
