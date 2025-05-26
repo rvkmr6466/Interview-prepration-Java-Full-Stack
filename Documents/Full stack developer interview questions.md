@@ -1343,6 +1343,159 @@ When a value is added to a HashMap when it reaches a certain size (defined by th
 - **_Rehashing_**: During resizing, the HashMap creates a new array with a larger capacity (typically twice the size of the previous one). Then, it iterates through all the existing key-value pairs and calculates their new hash codes based on the new capacity. These key-value pairs are then placed in the new array based on their new hash codes.
 - **_Performance_**: Rehashing can be computationally expensive, but it helps to maintain the efficiency of the HashMap by preventing excessive collisions and ensuring good average-case performance.
 
+## 10.6 Difference between `HashMap`, `TreeMap`, and `LinkedHashMap` in Java.
+
+### 1. HashMap
+ **Characteristics:**
+  - Stores key-value pairs.
+  - **Unordered**: Does **not maintain insertion order**.
+  - Allows one `null` key and multiple `null` values.
+  - Backed by a **hash table**.
+  - Not synchronized (not thread-safe).
+
+**Use Case:**
+
+Use `HashMap` when order **doesn't matter** and you want **fast retrieval**, insertion, and deletion (O(1) average time complexity).
+
+**Example:**
+```java
+Map<String, Integer> hashMap = new HashMap<>();
+hashMap.put("Apple", 3);
+hashMap.put("Banana", 2);
+hashMap.put("Cherry", 5);
+
+System.out.println("HashMap: " + hashMap);
+```
+*Output can vary:* `{Banana=2, Apple=3, Cherry=5}`
+
+### 2. TreeMap
+ **Characteristics:**
+  - Stores key-value pairs in a **sorted order** based on keys (natural or custom order).
+  - **Does not allow null keys**, but allows null values.
+  - Backed by a **Red-Black Tree**.
+  - Slower than `HashMap` (`O(log n)` time for operations).
+
+**Use Case:**
+Use `TreeMap` when you need to maintain a **sorted order** of keys.
+
+**Example:**
+```java
+Map<String, Integer> treeMap = new TreeMap<>();
+treeMap.put("Banana", 2);
+treeMap.put("Apple", 3);
+treeMap.put("Cherry", 5);
+
+System.out.println("TreeMap: " + treeMap);
+```
+**Output:**
+```
+{Apple=3, Banana=2, Cherry=5}
+```
+
+### 3. LinkedHashMap
+ **Characteristics:**
+  - Maintains **insertion order**.
+  - Allows one `null` key and multiple `null` values.
+  - Backed by a **hash table with a linked list**.
+
+**Use Case:**
+
+Use `LinkedHashMap` when you need **predictable iteration order** (insertion order) and still want decent performance.
+
+**Example:**
+```java
+Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
+linkedHashMap.put("Banana", 2);
+linkedHashMap.put("Apple", 3);
+linkedHashMap.put("Cherry", 5);
+
+System.out.println("LinkedHashMap: " + linkedHashMap);
+```
+**Output:**
+```java
+{Banana=2, Apple=3, Cherry=5}
+```
+
+### Summary Comparison Table
+
+| Feature                 | HashMap       | TreeMap           | LinkedHashMap       |
+|-------------------------|---------------|--------------------|----------------------|
+| **Order**               | Unordered     | Sorted (by keys)   | Insertion order      |
+| **Null Key Allowed?**   | Yes (1)       | No                 | Yes (1)              |
+| **Performance**         | Fastest (O(1))| Slower (O log n)   | Slightly slower than HashMap |
+| **Thread-Safe**         | No            | No                 | No                   |
+| **Underlying Structure**| Hash Table    | Red-Black Tree     | Hash Table + LinkedList |
+
+Here's a **real-world example** using all three types of Maps (`HashMap`, `TreeMap`, and `LinkedHashMap`) in the context of a **shopping cart system** in an e-commerce application.
+
+**Scenario**: 
+- You are building a shopping cart feature where:
+  - You need to store products and their quantities.
+  - Sometimes you want to show items in the **order they were added** (like when viewing the cart).
+  - Sometimes you want them **sorted alphabetically by product name**.
+  - Sometimes you just want **fast lookup** (for example, when updating quantities).
+
+1. **HashMap** – For Fast Lookup
+Use `HashMap` when you want quick retrieval and updates by product name.
+```java
+Map<String, Integer> cart = new HashMap<>();
+cart.put("Apple", 3);
+cart.put("Banana", 2);
+cart.put("Mango", 1);
+
+// Fast lookup
+int quantity = cart.get("Apple");
+System.out.println("Apple quantity: " + quantity);
+```
+
+**Use Case**: 
+
+Adding/removing items during checkout, validating stock availability quickly.
+
+2. **LinkedHashMap** – Preserve Insertion Order
+Use `LinkedHashMap` to display cart items in the order the customer added them.
+```java
+Map<String, Integer> cart = new LinkedHashMap<>();
+cart.put("Laptop", 1);
+cart.put("Mouse", 2);
+cart.put("Keyboard", 1);
+
+// Display items in order of addition
+for (Map.Entry<String, Integer> item : cart.entrySet()) {
+    System.out.println(item.getKey() + " => " + item.getValue());
+}
+```
+
+**Use Case**: 
+
+Showing cart items to users in UI just the way they added them.
+
+3. **TreeMap** – Sorted View of Products
+Use `TreeMap` to show cart items **sorted alphabetically** by product name.
+
+```java
+Map<String, Integer> cart = new TreeMap<>();
+cart.put("Tablet", 2);
+cart.put("Charger", 1);
+cart.put("Earphones", 3);
+
+// Display sorted cart
+for (Map.Entry<String, Integer> item : cart.entrySet()) {
+    System.out.println(item.getKey() + " => " + item.getValue());
+}
+```
+
+**Use Case**: 
+
+Sorting products alphabetically in invoice, admin reporting, or backend processing.
+
+**Summary:**
+| Requirement                                | Use This Map      |
+|--------------------------------------------|-------------------|
+| Fast access/update by product name         | `HashMap`         |
+| Display in the order items were added      | `LinkedHashMap`   |
+| Sorted product list (e.g., alphabetically) | `TreeMap`         |
+
 ---
 ## 11. TODO
 
@@ -1790,7 +1943,7 @@ To exclude specific fields (like `salary`) from being returned in a Spring Boot 
 
 This approach works if you *always* want to exclude the field from serialization (like in REST API responses).
 
-#### Example
+#### Example:
 
 ```java
 @Entity
@@ -1895,7 +2048,84 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 private Double salary;
 ```
 
-This means salary will not be saved or read from the DB at all
+This means salary will not be saved or read from the DB at all.
+
+## B. When and how to use an abstract class vs. an interface in Java, based on a real-world scenario.
+
+### Scenario: Payment System
+- Let’s say you're designing a payment system that supports different payment methods like **Credit Card**, **UPI**, and **PayPal**.
+
+### **Using an Interface**
+
+You use an interface when you want to define a **contract** that multiple classes can implement **regardless of their inheritance hierarchy**.
+```java
+interface PaymentMethod {
+    void pay(double amount);
+}
+```
+Now, different payment types implement the `PaymentMethod` interface:
+```java
+class CreditCardPayment implements PaymentMethod {
+    public void pay(double amount) {
+        System.out.println("Paid ₹" + amount + " using Credit Card.");
+    }
+}
+
+class UpiPayment implements PaymentMethod {
+    public void pay(double amount) {
+        System.out.println("Paid ₹" + amount + " using UPI.");
+    }
+}
+```
+**Why use an interface?**
+- You want flexibility: any class can implement `PaymentMethod`.
+- You don’t care about inheritance, only about behavior (`pay()` method must be implemented).
+
+### **Using an Abstract Class**
+
+You use an abstract class when you want to provide **common behavior** but also enforce that certain methods must be implemented by subclasses.
+```java
+abstract class OnlinePayment {
+    void login() {
+        System.out.println("User logged in.");
+    }
+
+    abstract void pay(double amount);
+}
+```
+Subclasses must implement `pay()`, but they **inherit** common code like `login()`:
+```java
+class PayPalPayment extends OnlinePayment {
+    public void pay(double amount) {
+        System.out.println("Paid ₹" + amount + " using PayPal.");
+    }
+}
+```
+
+### Summary:
+- Use **interface** when you just want to define capabilities (`pay()`).
+- Use **abstract class** when you want to share code across related classes and enforce specific structure.
+
+## C. What happen when API A is calling to API B and it is down?
+When API A calls API B and B is down, API A will typically receive an error response indicating the issue. This could manifest as a timeout, a _503 Service Unavailable_ error, or other HTTP error codes. API A needs to be designed to handle these error responses gracefully, potentially retrying the call, falling back to a cached response, or informing the user of the problem.
+
+Here's a more detailed breakdown: 
+
+**1. Error Responses:**  
+- **Timeouts**: If API A doesn't receive a response from API B within a reasonable timeframe, it will usually timeout and report an error.
+- **HTTP Error Codes**: API B might return an HTTP error code like 503 (Service Unavailable), 408 (Request Timeout), or 500 (Internal Server Error) to indicate the problem.
+- **Other Errors**: API A might also receive other error messages specific to the API or the network connection. 
+
+**2. Handling Errors in API A:** 
+- **Retries**: API A can be configured to automatically retry the call to API B after a certain delay, especially if the outage is temporary. 
+- **Fallback Mechanisms**: API A might have a cached version of the data from API B or be able to use a different source of information if API B is unavailable.  
+- **User Interface Updates**: API A can inform the user of the problem by displaying an error message or loading indicator to show that the service is temporarily unavailable.  
+- **Logging and Monitoring**: API A should log the error and any relevant details (e.g., time of outage, error code) for debugging and monitoring purposes.
+
+**3.  Considerations for Service B:**  
+- **Health Checks**: Service B should have health checks in place to monitor its own status and provide information to API A about its availability.
+- **Load Balancing**: If API B has multiple instances, load balancing can help distribute traffic and reduce the impact of a single instance going down.
+- **Resilience**: Service B should be designed to be resilient to failures, meaning it can continue operating even if some parts of the infrastructure are unavailable.
 
 ---
 ## 20. TODO
@@ -2060,13 +2290,7 @@ spring:
 - The **Kafka + Spring Boot** combo enables a powerful event-driven architecture. Producers publish domain events, and consumers react to them asynchronously — making your microservices resilient, loosely coupled, and scalable.
 
 ---
-## 22. JpaRepository vs CrudRepository in SpringBoot
-`JpaRepository` extends `PagingAndSortingRepository` which in turn extends `CrudRepository`.
-Their main functions are:
-- `CrudRepository` mainly provides CRUD functions.
-- `PagingAndSortingRepository` provides methods to do pagination and sorting records.
-- `JpaRepository` provides some JPA-related methods such as flushing the persistence context and deleting records in a batch.
-Because of the inheritance mentioned above, `JpaRepository` will have all the functions of `CrudRepository` and `PagingAndSortingRepository`. So if you don't need the repository to have the functions provided by `JpaRepository` and `PagingAndSortingRepository`, use `CrudRepository`.
+## 22. TODO
 
 ---
 ## 23. Circuit Breaker Pattern in Microservices
@@ -2144,7 +2368,26 @@ In microservices architectures, effective logging and monitoring are crucial for
 4. Alerting: Configure Grafana to create dashboards and alerts based on Prometheus metrics.
 5. Distributed Tracing: Use a distributed tracing tool like Jaeger to trace requests across multiple services and visualize the flow.
 
-TODO:::::Add logging level
+## 25.1 Logging levels
+Spring Boot utilizes SLF4J as an abstraction for logging, with Logback as the default implementation. Logging levels control the verbosity of log messages, allowing developers to filter output based on severity. 
+The available logging levels, in ascending order of severity, are: 
+
+• TRACE: Detailed information, often used for debugging. 
+• DEBUG: Information helpful for developers during troubleshooting. 
+• INFO: General application events and status updates. 
+• WARN: Potentially harmful situations or unusual occurrences. 
+• ERROR: Errors that do not necessarily halt application execution. 
+• FATAL: Severe errors that may cause the application to terminate. 
+• OFF: Disables all logging. 
+
+Logging levels can be configured in `application.properties` or `application.yml` using the logging.level property. For example: 
+```application.properties
+logging.level.root=INFO
+logging.level.com.example.myapp=DEBUG
+```
+This configuration sets the root logging level to INFO and the logging level for the `com.example.myapp` package to DEBUG. 
+It's also possible to configure logging levels for specific Spring profiles, allowing for different logging behavior in development, testing, and production environments. 
+
 
 ### Links:
 [Centralized logging in microservices](https://www.geeksforgeeks.org/centralized-logging-for-microservices/)
@@ -2206,78 +2449,64 @@ In microservices architecture, orchestration uses a central controller to manage
 | Resilience | Orchestrator is a potential single point of failure | Services are more resilient, but debugging is harder  |
 
 ---
-## 27. Default method vs static method
-In interfaces, default methods provide default implementations, allowing classes implementing the interface to optionally override them, while static methods provide utility functions directly on the interface itself and cannot be overridden.
+## 27. Default method vs static method with examples
+In Java, default and static methods serve different purposes within interfaces. Both were introduced in Java 8, expanding the capabilities of interfaces beyond abstract methods. 
 
-### Default Methods:
-- Provide a concrete implementation for a method within the interface.
-- Can be overridden by implementing classes, allowing them to provide their own specialized implementations.
-- Enable interface evolution without breaking backward compatibility; new default methods can be added without requiring implementing classes to change their code.
-- Used to provide default implementations for common functionality, which can be inherited by implementing classes.
+### Default Methods 
+Default methods provide a way to add new methods to an interface without breaking existing implementations. They have a default implementation within the interface itself. 
+```java
+interface MyInterface {
+    void abstractMethod();
 
-### Static Methods:
-- Are declared with the static keyword and belong to the interface itself.
-- Cannot be overridden by implementing classes.
-- Typically used for utility functions or helper methods related to the interface, without requiring an instance of the implementing class.
-- Can be accessed directly through the interface name, e.g., InterfaceName.staticMethod().
-- Provide security by preventing implementation classes from overriding them.
+    default void defaultMethod() {
+        System.out.println("Default method implementation");
+    }
+}
+
+class MyClass implements MyInterface {
+    @Override
+    public void abstractMethod() {
+        System.out.println("Implementation of abstract method");
+    }
+
+    // Can optionally override defaultMethod
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyClass obj = new MyClass();
+        obj.abstractMethod(); // Output: Implementation of abstract method
+        obj.defaultMethod();  // Output: Default method implementation
+    }
+}
+```
+
+### Static Methods 
+Static methods are associated with the interface itself, not with any specific instance of a class implementing the interface. They cannot be overridden in implementing classes. 
+```java
+interface MyInterface {
+    static void staticMethod() {
+        System.out.println("Static method implementation");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyInterface.staticMethod(); // Output: Static method implementation
+    }
+}
+```
+### Key Differences Summarized 
+
+| Feature | Default Method | Static Method  |
+| --- | --- | --- |
+| Instance Association | Associated with instances of implementing classes | Associated with the interface itself  |
+| Overriding | Can be overridden in implementing classes | Cannot be overridden  |
+| Access | Accessed through instances of implementing classes | Accessed directly using the interface name  |
+| Purpose | Add new functionality to interfaces without breaking existing implementations | Provide utility functions related to the interface  |
 
 ---
-## 28. Practical example when and how to use an abstract class vs. an interface in Java, based on a real-world scenario.
-
-### Scenario: Payment System
-- Let’s say you're designing a payment system that supports different payment methods like **Credit Card**, **UPI**, and **PayPal**.
-
-### **Using an Interface**
-
-You use an interface when you want to define a **contract** that multiple classes can implement **regardless of their inheritance hierarchy**.
-```java
-interface PaymentMethod {
-    void pay(double amount);
-}
-```
-Now, different payment types implement the `PaymentMethod` interface:
-```java
-class CreditCardPayment implements PaymentMethod {
-    public void pay(double amount) {
-        System.out.println("Paid ₹" + amount + " using Credit Card.");
-    }
-}
-
-class UpiPayment implements PaymentMethod {
-    public void pay(double amount) {
-        System.out.println("Paid ₹" + amount + " using UPI.");
-    }
-}
-```
-**Why use an interface?**
-- You want flexibility: any class can implement `PaymentMethod`.
-- You don’t care about inheritance, only about behavior (`pay()` method must be implemented).
-
-### **Using an Abstract Class**
-
-You use an abstract class when you want to provide **common behavior** but also enforce that certain methods must be implemented by subclasses.
-```java
-abstract class OnlinePayment {
-    void login() {
-        System.out.println("User logged in.");
-    }
-
-    abstract void pay(double amount);
-}
-```
-Subclasses must implement `pay()`, but they **inherit** common code like `login()`:
-```java
-class PayPalPayment extends OnlinePayment {
-    public void pay(double amount) {
-        System.out.println("Paid ₹" + amount + " using PayPal.");
-    }
-}
-```
-
-### Summary:
-- Use **interface** when you just want to define capabilities (`pay()`).
-- Use **abstract class** when you want to share code across related classes and enforce specific structure.
+## 28. 
 
 ---
 ## 29. How do you handle service discovery in microservices?
@@ -2321,8 +2550,7 @@ Let's say microservice A needs to call microservice B.
 #### Types of Service Discovery
 There are two primary patterns of service discovery, client-side discovery and server-side discovery. They both have their own uses, advantages, and disadvantages.
 
----
-### What is Eureka Server? 
+## 29.1 What is Eureka Server? 
 Eureka Server is a crucial component in a microservices architecture, acting as a service registry. It allows microservices to register themselves and discover other services dynamically. This eliminates the need for hardcoded service addresses, enabling loose coupling and scalability.  
 To create a Eureka Server in Java using Spring Boot, follow these steps: 
 
@@ -2375,8 +2603,6 @@ eureka:
   - Access the Eureka dashboard at `http://localhost:8761`. 
 
 With these steps, a basic Eureka Server is set up and running, ready for microservices to register and discover each other.
-
-
 
 ---
 ## 30. Exception Handling in Spring Boot
@@ -2431,7 +2657,7 @@ public class ErrorResponse {
 
 ### 2. Using `@ResponseStatus`
 You can annotate your custom exception classes with `@ResponseStatus` to specify the HTTP status code that should be returned when that exception is thrown.
-```
+```java
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
@@ -2620,7 +2846,7 @@ public void calculateBonus() {
 | Method Variable    | Inside method        | During method execution | Temporary calculations or helper values inside methods     |
 
 
-### What are static methods and variables, and when should you use them? 
+## 31.1 What are static methods and variables, and when should you use them? 
 In Java, the `static` keyword is used for defining **class-level members**, which means they **belong to the class itself**, rather than any specific instance (object) of the class.
 
 **Static Variables (Class Variables)**
@@ -2684,48 +2910,38 @@ public class Main {
 
 
 ---
-## 32. What happen when API A is calling to API B and it is down?
-When API A calls API B and B is down, API A will typically receive an error response indicating the issue. This could manifest as a timeout, a _503 Service Unavailable_ error, or other HTTP error codes. API A needs to be designed to handle these error responses gracefully, potentially retrying the call, falling back to a cached response, or informing the user of the problem.
-
-Here's a more detailed breakdown: 
-
-**1. Error Responses:**  
-- **Timeouts**: If API A doesn't receive a response from API B within a reasonable timeframe, it will usually timeout and report an error.
-- **HTTP Error Codes**: API B might return an HTTP error code like 503 (Service Unavailable), 408 (Request Timeout), or 500 (Internal Server Error) to indicate the problem.
-- **Other Errors**: API A might also receive other error messages specific to the API or the network connection. 
-
-**2. Handling Errors in API A:** 
-- **Retries**: API A can be configured to automatically retry the call to API B after a certain delay, especially if the outage is temporary. 
-- **Fallback Mechanisms**: API A might have a cached version of the data from API B or be able to use a different source of information if API B is unavailable.  
-- **User Interface Updates**: API A can inform the user of the problem by displaying an error message or loading indicator to show that the service is temporarily unavailable.  
-- **Logging and Monitoring**: API A should log the error and any relevant details (e.g., time of outage, error code) for debugging and monitoring purposes.
-
-**3.  Considerations for Service B:**  
-- **Health Checks**: Service B should have health checks in place to monitor its own status and provide information to API A about its availability.
-- **Load Balancing**: If API B has multiple instances, load balancing can help distribute traffic and reduce the impact of a single instance going down.
-- **Resilience**: Service B should be designed to be resilient to failures, meaning it can continue operating even if some parts of the infrastructure are unavailable.
+## 32. TODO
 
 ---
-## 33. Why we need to override equals and hashcode in Java?
-Overriding only `equals()` or only `hashCode()` without the other can lead to inconsistent behavior, especially when using hash-based collections like HashMap or HashSet. If you override only `equals()`, two objects that are considered equal might not have the same hash code, leading to issues with hash-based collections. Conversely, if you override only `hashCode()`, two objects that are considered equal might not be detected as equal by the `equals()` method, also causing problems with hash-based collections.  
+## 33. Why Override `equals()` and `hashCode()` in Java?
 
-### Overriding only `equals()`:
+In Java, overriding both `equals()` and `hashCode()` is crucial for ensuring consistent behavior, especially when using hash-based collections like `HashMap` and `HashSet`. Here’s a structured explanation of why both methods should be overridden together:
 
-• Violates the `hashCode()` contract: The `hashCode()` contract states that if two objects are equal according to `equals()`, they must have the same hash code. 
-• Causes issues with hash-based collections: When using HashMap or `HashSet`, the `equals()` method is used to compare objects, and the `hashCode()` method is used to determine which bucket to store the object in. If `equals()` is overridden but not `hashCode()`, objects that are logically equal might end up in different buckets, leading to incorrect behavior, such as `contains()` returning false for equal objects. 
-• Example: Imagine two Student objects with the same ID. If you override `equals()` to consider two students equal if their IDs match, but you don't override `hashCode()`, then these students might be placed in different buckets in a HashMap, even though they are logically equal according to your `equals()` implementation.
+#### 1. The Importance of the `hashCode()` Contract
+- **Contract Definition**: The `hashCode()` contract states that if two objects are considered equal according to the `equals()` method, they must return the same hash code.
+- **Consequences of Violating the Contract**: If you override only `equals()` without overriding `hashCode()`, two objects that are logically equal may have different hash codes. This inconsistency can lead to unexpected behavior in hash-based collections.
 
-### Overriding only `hashCode()`:
-- Default `equals()` compares references: The default `equals()` method in the Object class compares object references, not their logical equality. 
-- Can lead to incorrect comparisons: If you override only `hashCode()`, but the default `equals()` is used, then logically equal objects might not be recognized as equal by the `equals()` method. 
-- Example: If you override `hashCode()` to return a hash based on the ID of a Student object, but you don't override `equals()`, then two Student objects with the same ID but different references will not be considered equal, even though they should be.
+#### 2. Issues with Hash-Based Collections
+- **How Hash-Based Collections Work**: 
+  - In collections like `HashMap` and `HashSet`, the `hashCode()` method determines the bucket where an object is stored.
+  - The `equals()` method is used to check for equality when searching for an object.
+  
+- **Problems Arising from Inconsistent Implementations**:
+  - **Overriding Only `equals()`**:
+    - **Violation of the `hashCode()` Contract**: If two objects are equal according to `equals()` but have different hash codes, they may end up in different buckets.
+    - **Example**: Consider two `Student` objects with the same ID. If `equals()` is overridden to compare IDs but `hashCode()` is not, these students may be placed in different buckets in a `HashMap`, causing `contains()` to return false for equal objects.
 
-### In summary:
-Always override both `equals()` and `hashCode()` together. 
+  - **Overriding Only `hashCode()`**:
+    - **Default Behavior of `equals()`**: The default `equals()` method in the `Object` class compares object references, not logical equality.
+    - **Incorrect Comparisons**: If you override `hashCode()` but not `equals()`, logically equal objects may not be recognized as equal.
+    - **Example**: If you override `hashCode()` to return a hash based on a `Student` object's ID but do not override `equals()`, two `Student` objects with the same ID but different references will not be considered equal, leading to potential issues.
 
-If you change the way objects are considered equal, you must also update the hash code calculation to maintain consistency. 
+#### 3. Summary
+- **Always Override Together**: It is essential to override both `equals()` and `hashCode()` together to maintain consistency.
+- **Consistency is Key**: If you change the criteria for object equality in `equals()`, you must also update the hash code calculation in `hashCode()` to ensure that the two methods remain consistent.
+- **Avoiding Errors**: Failing to override both methods can lead to inconsistencies and errors in hash-based collections and other parts of your code that rely on these methods.
 
-Failure to do so will lead to inconsistencies and potentially errors in hash-based collections and other code that relies on these methods.
+By understanding the relationship between `equals()` and `hashCode()`, you can ensure that your objects behave correctly in collections and maintain logical equality.
 
 ---
 ## 34. Common HTTP Status Codes
@@ -2766,158 +2982,7 @@ These codes are categorized into groups based on their meaning, such as 1xx (`in
 |  5.  | Implementations: ArrayList, LinkedList | Implementations: HashSet, TreeSet, LinkedHashSet |
 
 ---
-## 36. Difference between `HashMap`, `TreeMap`, and `LinkedHashMap` in Java.
-
-### 1. HashMap
- **Characteristics:**
-  - Stores key-value pairs.
-  - **Unordered**: Does **not maintain insertion order**.
-  - Allows one `null` key and multiple `null` values.
-  - Backed by a **hash table**.
-  - Not synchronized (not thread-safe).
-
-**Use Case:**
-
-Use `HashMap` when order **doesn't matter** and you want **fast retrieval**, insertion, and deletion (O(1) average time complexity).
-
-**Example:**
-```java
-Map<String, Integer> hashMap = new HashMap<>();
-hashMap.put("Apple", 3);
-hashMap.put("Banana", 2);
-hashMap.put("Cherry", 5);
-
-System.out.println("HashMap: " + hashMap);
-```
-*Output can vary:* `{Banana=2, Apple=3, Cherry=5}`
-
-### 2. TreeMap
- **Characteristics:**
-  - Stores key-value pairs in a **sorted order** based on keys (natural or custom order).
-  - **Does not allow null keys**, but allows null values.
-  - Backed by a **Red-Black Tree**.
-  - Slower than `HashMap` (`O(log n)` time for operations).
-
-**Use Case:**
-Use `TreeMap` when you need to maintain a **sorted order** of keys.
-
-**Example:**
-```java
-Map<String, Integer> treeMap = new TreeMap<>();
-treeMap.put("Banana", 2);
-treeMap.put("Apple", 3);
-treeMap.put("Cherry", 5);
-
-System.out.println("TreeMap: " + treeMap);
-```
-**Output:**
-```
-{Apple=3, Banana=2, Cherry=5}
-```
-
-### 3. LinkedHashMap
- **Characteristics:**
-  - Maintains **insertion order**.
-  - Allows one `null` key and multiple `null` values.
-  - Backed by a **hash table with a linked list**.
-
-**Use Case:**
-
-Use `LinkedHashMap` when you need **predictable iteration order** (insertion order) and still want decent performance.
-
-**Example:**
-```java
-Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
-linkedHashMap.put("Banana", 2);
-linkedHashMap.put("Apple", 3);
-linkedHashMap.put("Cherry", 5);
-
-System.out.println("LinkedHashMap: " + linkedHashMap);
-```
-**Output:**
-```java
-{Banana=2, Apple=3, Cherry=5}
-```
-
-### Summary Comparison Table
-
-| Feature                 | HashMap       | TreeMap           | LinkedHashMap       |
-|-------------------------|---------------|--------------------|----------------------|
-| **Order**               | Unordered     | Sorted (by keys)   | Insertion order      |
-| **Null Key Allowed?**   | Yes (1)       | No                 | Yes (1)              |
-| **Performance**         | Fastest (O(1))| Slower (O log n)   | Slightly slower than HashMap |
-| **Thread-Safe**         | No            | No                 | No                   |
-| **Underlying Structure**| Hash Table    | Red-Black Tree     | Hash Table + LinkedList |
-
-Here's a **real-world example** using all three types of Maps (`HashMap`, `TreeMap`, and `LinkedHashMap`) in the context of a **shopping cart system** in an e-commerce application.
-
-**Scenario**: 
-- You are building a shopping cart feature where:
-  - You need to store products and their quantities.
-  - Sometimes you want to show items in the **order they were added** (like when viewing the cart).
-  - Sometimes you want them **sorted alphabetically by product name**.
-  - Sometimes you just want **fast lookup** (for example, when updating quantities).
-
-1. **HashMap** – For Fast Lookup
-Use `HashMap` when you want quick retrieval and updates by product name.
-```java
-Map<String, Integer> cart = new HashMap<>();
-cart.put("Apple", 3);
-cart.put("Banana", 2);
-cart.put("Mango", 1);
-
-// Fast lookup
-int quantity = cart.get("Apple");
-System.out.println("Apple quantity: " + quantity);
-```
-
-**Use Case**: 
-
-Adding/removing items during checkout, validating stock availability quickly.
-
-2. **LinkedHashMap** – Preserve Insertion Order
-Use `LinkedHashMap` to display cart items in the order the customer added them.
-```java
-Map<String, Integer> cart = new LinkedHashMap<>();
-cart.put("Laptop", 1);
-cart.put("Mouse", 2);
-cart.put("Keyboard", 1);
-
-// Display items in order of addition
-for (Map.Entry<String, Integer> item : cart.entrySet()) {
-    System.out.println(item.getKey() + " => " + item.getValue());
-}
-```
-
-**Use Case**: 
-
-Showing cart items to users in UI just the way they added them.
-
-3. **TreeMap** – Sorted View of Products
-Use `TreeMap` to show cart items **sorted alphabetically** by product name.
-
-```java
-Map<String, Integer> cart = new TreeMap<>();
-cart.put("Tablet", 2);
-cart.put("Charger", 1);
-cart.put("Earphones", 3);
-
-// Display sorted cart
-for (Map.Entry<String, Integer> item : cart.entrySet()) {
-    System.out.println(item.getKey() + " => " + item.getValue());
-}
-```
-
-**Use Case**: 
-
-Sorting products alphabetically in invoice, admin reporting, or backend processing.
-
-**Summary:**
-| Requirement                                | Use This Map      |
-|--------------------------------------------|-------------------|
-| Fast access/update by product name         | `HashMap`         |
-| Display in the order items were added      | `LinkedHashMap`   |
-| Sorted product list (e.g., alphabetically) | `TreeMap`         |
+## 36. TODO
 
 ---
 ## 37. Write a CRUD operation in RestController Springboot
@@ -6473,7 +6538,7 @@ Choose the Right Propagation Type:
 Understanding and correctly using transaction propagation in Spring Boot is essential for building robust and reliable applications. By choosing the right propagation type, you can ensure that your transactional methods behave as expected, maintaining data consistency and integrity.
 
 ---
-## Q. What is the difference between a class and an object? 
+## 79. What is the difference between a class and an object? 
 In Java, a class is a blueprint or template that defines the structure and behavior of objects. It contains fields (variables) and methods (functions) that define what the object will hold and what it can do. Think of a class like an architectural blueprint for a house — it outlines the design but is not an actual house itself.
 
 An object, on the other hand, is an instance of a class. When you create an object using the `new` keyword, you are creating a real entity in memory based on that class. You can create multiple objects from the same class, each with its own set of values.
@@ -6500,7 +6565,7 @@ Here, `Car` is the class. `car1` is an object of the `Car` class. You can create
 Classes define the behavior and structure; objects are the actual things created based on those definitions. Without a class, you cannot create an object, and without creating an object, the class serves as just a concept. Objects allow you to use and manipulate the behavior defined in classes during runtime.
 
 ---
-## Q. What are key annotations in Spring Boot?
+## 80. What are key annotations in Spring Boot?
 Spring Boot provides several key annotations that simplify the development of Spring applications. Some of the most important ones include:
 1. **@SpringBootApplication**: A convenience annotation that combines `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`. It is typically placed on the main class to enable Spring Boot features.
 2. **@Component**: Indicates that a class is a Spring-managed component. It can be used for any Spring-managed bean.
@@ -6551,7 +6616,7 @@ Some important annotations comes under this category are:
 [SpringBoot Annotation](https://www.geeksforgeeks.org/spring-boot-annotations/)
 
 ---
-## Q. Default Scope of @RestController in Spring Boot
+## 81. Default Scope of `@RestController` in Spring Boot
 In Spring Boot, which is built on the Spring Framework, the scope of a bean defines how many instances of that bean are created.
 - **Singleton**: Only one instance of the bean is created for the entire application. This single instance is shared across all requests. 
 When you use the `@RestController` annotation, you're essentially defining a Spring bean. By default, Spring beans have a singleton scope. Therefore, a `@RestController` is also a singleton by default.
@@ -6584,7 +6649,7 @@ public class MyRestController {
 In the example above, by default, `MyRestController` is a singleton. If you were to uncomment the `@Scope("prototype")` annotation, a new instance of `MyRestController` would be created for each request.
 
 ---
-## Q. What is the Bean Lifecycle in Spring?
+## 82. What is the Bean Lifecycle in Spring?
 The Bean Lifecycle in Spring consists of several phases:
 1. **Instantiation**: The Spring container creates an instance of the bean.
 2. **Populate Properties**: The container injects the dependencies into the bean's properties.
@@ -6597,7 +6662,7 @@ The Bean Lifecycle in Spring consists of several phases:
 9. **Destruction**: When the application context is closed, the container calls the `destroy()` method if the bean implements `DisposableBean`. Any custom destruction methods defined with `@PreDestroy` are also invoked.
 
 ---
-## Q. What are proxies in Spring, and why are they needed?
+## 83. What are proxies in Spring, and why are they needed?
 **Proxies** in Spring are objects that act as intermediaries for other objects. They are used primarily for:
 1. **Aspect-Oriented Programming (AOP)**: Proxies allow Spring to apply cross-cutting concerns (like logging, security, and transactions) to methods without modifying the actual business logic.
 2. **Lazy Initialization**: Proxies can be used to delay the creation of a bean until it is needed, which can improve application startup time.
@@ -6608,7 +6673,7 @@ Spring supports two types of proxies:
 - **CGLIB Proxies**: Used for classes. The proxy is a subclass of the target class and overrides its methods.
 
 ---
-## Q. How does `@Transactional` work in Spring Boot?
+## 84. How does `@Transactional` work in Spring Boot?
 The `@Transactional` annotation in Spring Boot is used to manage transactions declaratively. It can be applied at the class or method level. Here’s how it works:
 1. **Transaction Management**: When a method annotated with `@Transactional` is called, Spring creates a new transaction or joins an existing one, depending on the propagation settings.
 2. **Rollback Behavior**: If an unchecked exception (like `RuntimeException`) occurs within the transactional method, the transaction is automatically rolled back. You can customize the rollback behavior by specifying which exceptions should trigger a rollback.
@@ -6619,7 +6684,7 @@ The `@Transactional` annotation in Spring Boot is used to manage transactions de
 By using `@Transactional`, developers can simplify transaction management and ensure that operations are executed atomically, enhancing the reliability of the application.
 
 ---
-## Q. Explain filter, map, reduce operations in Java Streams.
+## 85. Explain filter, map, reduce operations in Java Streams.
 Java Streams provide a powerful way to process sequences of elements (like collections) in a functional style. The three primary operations are **filter**, **map**, and **reduce**.
 
 1. **filter**:
@@ -6660,7 +6725,7 @@ Java Streams provide a powerful way to process sequences of elements (like colle
    // sum will contain Optional[15]
    ```
 ------------------------------------------------Continue
-## Q. How do you handle parallel streams, and when should you use them?
+## 86. How do you handle parallel streams, and when should you use them?
 **Handling Parallel Streams**:
 - You can create a parallel stream by calling the `parallelStream()` method on a collection or by using the `parallel()` method on an existing stream.
 - Parallel streams utilize multiple threads to process elements concurrently, which can lead to performance improvements for large datasets.
@@ -6682,7 +6747,7 @@ int sum = numbers.parallelStream()
 - Avoid using parallel streams for small datasets, as the overhead of managing threads may lead to worse performance.
 - Be cautious with thread safety and shared mutable state when using parallel streams.
 
-## Q. What is the difference between findFirst() and findAny()?
+## 87. What is the difference between findFirst() and findAny()?
 
 - **findFirst()**:
   - Returns the first element of the stream that matches the given predicate, if any.
@@ -6712,7 +6777,7 @@ int sum = numbers.parallelStream()
   // anyName could be Optional[Charlie] or any other matching element
   ```
 
-## Q. Can you modify a collection while iterating using streams?
+## 88. Can you modify a collection while iterating using streams?
 No, you **cannot** modify a collection while iterating over it using streams. Doing so can lead to `ConcurrentModificationException` or unpredictable behavior. Streams are designed to provide a functional approach to processing data, and modifying the underlying collection during iteration goes against this paradigm.
 If you need to modify a collection based on the results of a stream operation, consider collecting the results into a new collection or using other methods to handle the modifications outside of the stream processing.
 
@@ -6910,7 +6975,7 @@ IntSummaryStatistics stats = numbers.stream()
 #### Conclusion
 Java Streams offer a rich set of operations that allow for expressive and efficient data processing. Understanding these operations, including mapping, chaining, and summary statistics, can help you manipulate collections effectively while maintaining clean and readable code. Always consider the context and performance implications when using these operations to ensure optimal results.
 
-## Q. What is the difference between Comparator and Comparable? 
+## 89. What is the difference between Comparator and Comparable? 
 In Java, both `Comparator` and `Comparable` are interfaces used for sorting objects, but they serve different purposes and are used in different contexts. Here’s a detailed explanation of the differences between the two:
 
 #### 1. **Definition**
@@ -7043,7 +7108,7 @@ public class Main {
 In summary, `Comparable` is used for defining a natural ordering of objects within the class itself, while `Comparator ` is used for defining external ordering strategies that can be applied to objects of a class. This distinction allows for greater flexibility in sorting, enabling multiple comparison methods without altering the original class structure. Understanding when to use each interface is crucial for effective data manipulation and sorting in Java.
 
 ---
-## Q. How do you sort a list using Comparator? 
+## 90. How do you sort a list using Comparator? 
 To sort a list using a `Comparator` in Java, you can follow these steps:
 1. **Create a Comparator**: Define a `Comparator` that specifies the sorting logic. You can do this either by implementing the `Comparator` interface or by using a lambda expression.
 2. **Use the `Collections.sort()` method**: Call the `Collections.sort()` method, passing the list and the `Comparator` as arguments.
@@ -7219,7 +7284,7 @@ Sorted by age, then by name: [Bob (25), David (25), Alice (30), Charlie (30)]
 Using `Comparator` provides flexibility in sorting collections in Java. You can define custom sorting logic, use built-in methods for cleaner code, and even chain comparators for complex sorting scenarios. This makes it a powerful tool for managing collections effectively.
 
 ---
-## Q. Can a class implement both Comparator and Comparable?
+## 91. Can a class implement both Comparator and Comparable?
 Yes, a class in Java can implement both the `Comparator` and `Comparable` interfaces, but they serve different purposes and are used in different contexts. Here’s a detailed explanation of how and why you might want to do this:
 
 #### 1. **Comparable Interface**
@@ -7345,7 +7410,7 @@ Elaboration:
 - Comparator: This interface has a single abstract method, `compare()`. It's a functional interface, meaning it can be implemented with lambda expressions or method references. Comparator allows you to define custom comparison logic for sorting, which is particularly useful when you want to sort objects in different ways or when you can't modify the class itself.
 
 ---
-## Q. How do you handle multiple sorting criteria in Java? 
+## 92. How do you handle multiple sorting criteria in Java? 
 Sorting with Multiple Criteria in Java
 When you need to sort a collection of objects based on more than one attribute, you can use a `Comparator` in Java.  Here's how to do it, along with explanations and an example:
 1. Create a Comparator
@@ -7447,7 +7512,7 @@ public class MultiSortExample {
   * Collections.sort() is used to sort the list with this custom comparator.
 
 ---
-## Q. Explain OOP principles (Encapsulation, Inheritance, Polymorphism, Abstraction) with examples. 
+## 93. Explain OOP principles (Encapsulation, Inheritance, Polymorphism, Abstraction) with examples. 
 Object-oriented programming (OOP) is a programming paradigm based on the concept of "objects," which can contain data and code:
 * **Data** (attributes, fields) represents the state of an object.
 * **Code** (methods) defines the behavior of an object.
@@ -7702,7 +7767,7 @@ public class Main {
 - In the `main` method, you can create instances of `Circle` and `Rectangle` and call their `getArea()` methods. The appropriate implementation is used based on the actual object type.
 
 ---
-## Q. What is method overloading vs. method overriding? 
+## 94. What is method overloading vs. method overriding? 
 In Java, **method overloading** and **method overriding** are two key concepts that fall under **polymorphism**— a core principle of Object-Oriented Programming (OOP). While both involve defining methods with the same name, their behavior and purpose are quite different.
 
 #### Method Overloading (Compile-Time Polymorphism)
@@ -7778,7 +7843,7 @@ class Dog extends Animal {
 | Use Case             | Provide multiple ways to do task | Specialize behavior in subclass |
 
 ---
-## Q. How does Java handle memory management (Heap vs. Stack, Garbage Collection)? 
+## 95. How does Java handle memory management (Heap vs. Stack, Garbage Collection)? 
 Java handles memory management automatically through a process called garbage collection. This frees developers from the burden of manually allocating and deallocating memory, as is required in languages like C and C++.  The Java Virtual Machine (JVM) manages memory in several areas, most notably the Stack and the Heap.
 
 #### 1. Stack Memory
@@ -7924,7 +7989,7 @@ The JVM uses various garbage collection algorithms, including:
 - Garbage collection automatically reclaims memory from unreachable objects, preventing memory leaks and simplifying memory management for Java developers.
 
 ---
-## Q. Explain shallow copy vs. deep copy in Java. 
+## 96. Explain shallow copy vs. deep copy in Java. 
 When you copy an object in Java, you need to understand the difference between a shallow copy and a deep copy. This distinction is crucial when dealing with objects that contain references to other objects.
 
 #### 1. Shallow Copy
@@ -8038,7 +8103,7 @@ In this example, `deepCopy` is a deep copy of `original`.  A new `InnerObject` i
 | **Memory Usage**   | Less memory (shares references)                                                  | More memory (copies all objects)                                                                 |
 
 ---
-## Q. List vs List<?> vs List<Object>
+## 97. List vs List<?> vs List<Object>
 Here's the comparision between List vs List<?> vs List<Object>
 ```java
 import java.util.ArrayList;
@@ -8151,7 +8216,7 @@ public class ListExamples {
 ```
 
 ---
-## Q. `transient` keyword in Java
+## 98. `transient` keyword in Java
 The `transient` keyword in Java is a variable modifier that indicates that a field should be excluded from the serialization process. Serialization is the process of converting an object's state into a byte stream, which can then be stored or transmitted. When an object is deserialized, the byte stream is used to recreate the object.
 When a field is declared as `transient`, its value is not included in the serialized byte stream. As a result, when the object is deserialized, the `transient` field will have its default value (e.g., `0 for integers`, `null` for objects). 
 
@@ -8228,7 +8293,7 @@ public class Example implements Serializable {
 ```
 
 ---
-## Q. How to access a private constructor of a final class in Java:
+## 99. How to access a private constructor of a final class in Java:
 You can access a private constructor of a final class using reflection. Reflection allows you to inspect and manipulate classes, interfaces, constructors, methods, and fields at runtime, even if they are private. 
 ```java
 import java.lang.reflect.Constructor;
@@ -8296,7 +8361,7 @@ While reflection allows accessing private members, it should be used with cautio
 This approach demonstrates how to access a private constructor of a final class in Java using reflection. However, it's crucial to consider the design implications and potential drawbacks before using reflection in production code. 
 
 ---
-## Q. Real-World Usage Questions on Interfaces and Abstraction in Java
+## 100. Real-World Usage Questions on Interfaces and Abstraction in Java
 
 #### **1. When would you use an interface over an abstract class in a real-world application?**
 
@@ -8406,7 +8471,7 @@ Because:
 If you just need a contract, **interfaces** are better.
 
 ---
-## Q. Drawbacks of Spring Boot
+## 101. Drawbacks of Spring Boot
 While Spring Boot offers numerous advantages, it's important to be aware of its potential drawbacks:
 
 ### 1. Complexity
@@ -8431,10 +8496,10 @@ While Spring Boot offers numerous advantages, it's important to be aware of its 
 It's important to note that many of these drawbacks can be mitigated with proper planning, development practices, and a good understanding of the Spring framework.
 
 ---
-## Q. TODO
+## 102. TODO
 
 ---
-## Q. Asynchronous call in Frontend/Backend
+## 103. Asynchronous call in Frontend/Backend
 Asynchronous calls in Java enable a program to execute tasks concurrently without blocking the main thread. This approach enhances application performance and responsiveness, especially when dealing with long-running operations or I/O-bound tasks. Java offers several mechanisms for asynchronous programming, including threads, `ExecutorService`, and `CompletableFuture`.
 
 ### Key Concepts:
@@ -8466,7 +8531,7 @@ getData(); // Call the function to initiate the API call
 - **Enhanced Performance**: Asynchronous calls allow for concurrent operations, improving overall application performance. 
 
 ---
-## Q. CSRF (Cross Site Request Forgery) Protection in Spring Boot 
+## 104. CSRF (Cross Site Request Forgery) Protection in Spring Boot 
 - CSRF: A web vulnerability where attackers trick users into making unwanted requests.
 - Spring Boot Protection: Uses the Synchronizer Token Pattern.
 - Token Generation: Server generates a unique CSRF token per user session.
@@ -8488,7 +8553,7 @@ Here's the breakdown of whether you need CSRF protection with JWT:
 In summary: 
 - If you're using JWT and handling it correctly (primarily via the `Authorization` header), you are less vulnerable to CSRF, but if you are storing the JWT in cookies, you are still vulnerable to CSRF.
 ---
-## Q. Annotations Used in Java  
+## 105. Annotations Used in Java  
 - `@Override`
 - `@FunctionalInterface`
 - `@Deprecated`
@@ -8496,36 +8561,36 @@ In summary:
 - `@RestController`
 
 ---
-## Q. Technical Architecture  
+## 106. Technical Architecture  
 Spring Boot follows **Microservices architecture** and includes:
 - **Controller Layer** - API Handling
 - **Service Layer** - Business Logic
 - **Repository Layer** - Database Interaction 
 
 ---
-## Q. Algorithm Behind `Collections.sort()`  
+## 107. Algorithm Behind `Collections.sort()`  
 It uses **TimSort**, which is a hybrid of **MergeSort and InsertionSort**.
 
 ---
 
-## Q. Challenges Faced as an Engineer  
+## 108. Challenges Faced as an Engineer  
 - **Performance Issues** → Optimized SQL Queries  
 - **Scalability** → Used Caching Mechanisms
 
 ---
-## Q. Understanding Browser Caching  
+## 109. Understanding Browser Caching  
 - **Cache-Control: max-age=3600**  
 - **ETag for validation** 
 
 ---
-## Q. Lazy Loading in Hibernate  
+## 110. Lazy Loading in Hibernate  
 ```java
 @OneToMany(fetch = FetchType.LAZY)
 private List<Order> orders;
 ```
 
 ---
-## Q. Default implementation of a cloneable interface in java
+## 111. Default implementation of a cloneable interface in java
 Since `Cloneable` is an interface, it cannot have a default implementation in the traditional sense. However, the Object class provides a `clone()` method that serves as the default implementation when a class implements `Cloneable`. This default implementation performs a shallow copy, meaning it creates a new object and copies the values of the original object's fields into it. If the fields are primitive types or immutable objects, this is sufficient. However, if the fields are references to mutable objects, both the original and the cloned object will share references to the same underlying objects.
 
 ```java
@@ -8562,7 +8627,7 @@ class MutableObject {
 ```
 
 ---
-## Q. Spring Boot - Interceptor
+## 112. Spring Boot - Interceptor
 Spring Boot Interceptor is an additional component that will intercept every request and response dispatch and perform some operations on it.
 
 ![alt text](./images/image-6.png)
@@ -8675,7 +8740,7 @@ public class RequestInterceptor implements HandlerInterceptor {
 [spring-boot-interceptor](https://www.geeksforgeeks.org/spring-boot-interceptor/)
 
 ---
-## Q. How do you prevent concurrency issue in multithreading java?
+## 113. How do you prevent concurrency issue in multithreading java?
 Concurrency issues in multithreaded Java applications arise when multiple threads access and modify shared resources simultaneously, leading to unexpected and erroneous outcomes. To prevent these issues, several techniques can be employed: 
 
 ### Synchronization: 
@@ -8698,7 +8763,7 @@ A well-designed multithreaded application should minimize the use of shared reso
 By using these techniques, developers can write robust and reliable multithreaded Java applications that are free from concurrency issues. 
 
 ---
-## Q. Is 2 @`RequestBody` can be added in POST request?
+## 114. Is 2 @`RequestBody` can be added in POST request?
 No, you cannot directly use two `@RequestBody` annotations in the same POST request method in Spring MVC or Spring Boot. The HTTP request body is a single entity, and `@RequestBody` is designed to bind that single body to a single method parameter.
 
 #### Why you can't use two `@RequestBody`:
@@ -8753,10 +8818,10 @@ public ResponseEntity<String> processData(@RequestBody RequestData requestData) 
 By creating a wrapper class, you can effectively pass multiple objects through a single `@RequestBody` parameter, making your code cleaner and easier to manage.
 
 ---
-## Q. TODO
+## 115. TODO
 
 ---
-## Q. Case-insensitive Set in java 
+## 116. Case-insensitive Set in java 
 To create a set in Java that contains only one instance of the character 'a' or 'A', regardless of case sensitivity, you can use a `HashSet` and convert the input character to lowercase (or uppercase) before adding it to the set. This way, both 'a' and 'A' will be treated as the same character.
 
 Here’s how you can implement this:
@@ -8805,7 +8870,7 @@ This indicates that the set contains only one instance of 'a', regardless of whe
 
 ---
 
-## Q. TripleTon class in Java
+## 117. TripleTon class in Java
 Below is a simple implementation of a TripleTon class in Java. Unlike the traditional Singleton (which allows only one instance), a TripleTon allows only three instances of the class.
 
 ```java
@@ -8874,7 +8939,7 @@ true
 3.	You can only have three unique instances, and it cycles through them.
 
 ---
-## Q. Integer.valueOf vs Integer.parseInt
+## 118. `Integer.valueOf` vs `Integer.parseInt`
 `Integer.parseInt()` and `Integer.valueOf()` are both used in Java to convert a string to an integer, but they differ in their return types: 
 
 - `Integer.parseInt(String s)`: This method returns a primitive `int` value. If the string cannot be parsed as an integer, it throws a `NumberFormatException`. 
@@ -8893,7 +8958,7 @@ The key difference is that `parseInt()` returns a primitive `int`, while `valueO
 `Integer.valueOf()` can offer performance benefits in certain scenarios due to the Integer cache. Java caches `Integer` objects for values between `-128` and `127`. When `valueOf()` is called with a string representing a value within this range, it returns a cached `Integer` object instead of creating a new one, potentially saving memory and improving performance. 
 
 ---
-## Q. Spring Batch
+## 119. Spring Batch
 Spring Batch is a framework for robust batch processing in Java applications, particularly useful for handling large volumes of data. Spring Boot simplifies the setup and configuration of Spring applications, including Spring Batch. 
 Key Concepts 
 
@@ -8984,7 +9049,7 @@ Spring Batch jobs can be triggered in several ways:
 
 
 ---
-## Q. How do you access 'api_key' or 'password' from google cloud to your spring boot application
+## 120. How do you access 'api_key' or 'password' from google cloud to your spring boot application
 To securely access API keys or passwords from Google Cloud within a Spring Boot application, leverage Google's Secret Manager and Spring Cloud GCP. Store your secrets in Secret Manager, a managed service for secure credential storage. Then, use Spring Cloud GCP to access these secrets in your Spring Boot application as you would any other Spring property.
 
 ### Detailed Steps: 
@@ -9024,7 +9089,7 @@ public GoogleCloudApiRequestClient googleCloudApiRequestClient() {
   - You can also set environment variables to store and access secrets, but Secret Manager offers more robust security and control.
 
 ---
-## Q. LRU cache
+## 121. LRU cache
 An LRU (Least Recently Used) cache is a type of cache that evicts the least recently accessed element when the cache is full. It's often used to manage a limited amount of memory, ensuring that the most frequently used items are readily available while less frequently used items are discarded.  
 
 Here's how to implement an LRU cache in Java using a `LinkedHashMap`: 
@@ -9065,7 +9130,7 @@ In this implementation:
 
 
 ---
-## Q. Default behavior of a bean
+## 122. Default behavior of a bean
 In Spring, the default behavior of a bean is that it is a `singleton`, meaning a single instance of the bean is created and shared throughout the application context. Additionally, by default, beans are instantiated eagerly during application startup, meaning they are created and their dependencies are injected when the application context is initialized. Bean names are also derived from the class name, with the first character converted to lowercase.
 
 Here's a more detailed breakdown: 
@@ -9103,7 +9168,7 @@ It is a YAML file that defines and manages multi-container Docker applications. 
 A `docker-compose.yaml` file can include a `build` context, pointing to a `Dockerfile`. This allows `docker-compose` to build the necessary images as part of the application setup. However, a `Dockerfile` operates independently and does not interact with `docker-compose.yaml`. 
 
 ---
-## Q. Write a Java program that reads a file, replaces all occurrences of "java" with "JVM," and writes the modified content back to the file. 
+## 123. Write a Java program that reads a file, replaces all occurrences of "java" with "JVM," and writes the modified content back to the file. 
 ```java
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9150,8 +9215,9 @@ To use this program:
 - Create a text file named `input.txt` (or change the `filePath` variable in the code). 
 - Compile the code using a Java compiler: `javac ReplaceTextInFile.java`. 
 - Run the compiled code: `java ReplaceTextInFile`.
+
 ---
-## Q. Example of try with resources
+## 124. Example of try with resources
 A "try-with-resources" statement in Java ensures that resources are automatically closed after their use, regardless of whether an exception is thrown or not. It simplifies resource management and helps prevent leaks.
 
 Here's a basic example of reading a file using `try-with-resources`:
@@ -9195,14 +9261,23 @@ Guarantees that resources are always closed, even if an exception is thrown, whi
 If an exception is thrown during the resource's `close()` method, it is suppressed and a `Throwable` instance can be accessed via `getSuppressed()` to retrieve the suppressed exceptions.
 
 ---
-## Q. What is Java Persistence API (JPA)?
+## 125. What is Java Persistence API (JPA)?
 Java Persistence API is a collection of classes and methods to persist or store a vast amount of data in a database using ORM. JPA Persistence framework needs to follow:
 
 - **Spring Data JPA**: It reduces the amount of boilerplate code needed for common database operations like GET, PUT, POST, etc.
 - **Spring Repository**: It is an extension of Spring Repository which contains APIs for basic CRUD operations, pagination, and Sorting.
 
+##JpaRepository vs CrudRepository in SpringBoot
+`JpaRepository` extends `PagingAndSortingRepository` which in turn extends `CrudRepository`.
+Their main functions are:
+- `CrudRepository` mainly provides CRUD functions.
+- `PagingAndSortingRepository` provides methods to do pagination and sorting records.
+- `JpaRepository` provides some JPA-related methods such as flushing the persistence context and deleting records in a batch.
+Because of the inheritance mentioned above, `JpaRepository` will have all the functions of `CrudRepository` and `PagingAndSortingRepository`. So if you don't need the repository to have the functions provided by `JpaRepository` and `PagingAndSortingRepository`, use `CrudRepository`.
+
+
 ---
-## Q.
+## 126.
 
 ---
 
