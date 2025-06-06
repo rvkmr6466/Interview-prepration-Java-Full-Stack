@@ -290,8 +290,52 @@ This orders the results in descending order, ensuring that the highest GPA value
 #### 4. `LIMIT 3`: 
 This limits the results to the top 3 GPA values, effectively retrieving the three highest GPA values.
 
+---
+## Q. How to design db schema for your new API?
+To design a database schema for a new API, you need to first understand the API's purpose and the data it will manage, then define the entities, attributes, relationships, and constraints within your database model. You should also consider normalization, indexing, and scalability to ensure a well-structured and efficient database.
+Here's a more detailed breakdown of the process: 
+1. Understand the API's Purpose and Data: 
+
+• Business Requirements: Analyze what the API needs to achieve and the data it will handle. This includes understanding the types of data, their relationships, and how the API will interact with this data. 
+• Data Modeling: Determine the entities (tables) and their attributes (columns) based on the data requirements. 
+• API Endpoints: Identify the API endpoints (e.g., GET, POST, PUT, DELETE) and their data input/output formats.
+
+2. Define the Database Schema:
+
+• Entities and Relationships: Identify the key entities (tables) in your database and how they relate to each other. For example, an e-commerce app might have tables for Customers, Orders, Products, and OrderDetails, connected by foreign keys.
+• Data Types: Choose appropriate data types for each column (e.g., VARCHAR, INT, DATE, BOOLEAN).  
+• Constraints: Implement constraints like PRIMARY KEY, FOREIGN KEY, NOT NULL, UNIQUE, and CHECK to ensure data integrity and enforce business rules. 
+• Normalization: Apply normalization techniques to reduce data redundancy and improve data consistency (e.g., First Normal Form (1NF), Second Normal Form (2NF), Third Normal Form (3NF)).  
+
+3. Implement Data Relationships: 
+
+• Primary Keys: Define primary keys for each table to uniquely identify records. 
+• Foreign Keys: Use foreign keys to establish relationships between tables, ensuring data consistency. 
+• Indexes: Create indexes on frequently used columns to improve query performance.  
+
+4. Test and Refine: 
+
+• Test API Endpoints: Ensure your API endpoints interact with the database correctly, including data insertion, retrieval, update, and deletion.  
+• Performance Testing: Evaluate database performance under load to ensure it can handle the expected API traffic.
+• Refine Schema: Adjust the schema based on testing results and changing requirements.  
+
+Example: E-commerce API Schema:
+Imagine an e-commerce API that needs to handle customer information, order details, and product data. A possible database schema could include:  
+
+• Customers: (customer_id, first_name, last_name, email, address) 
+• Orders: (order_id, customer_id, order_date, total_amount) 
+• Products: (product_id, product_name, description, price) 
+• OrderDetails: (order_detail_id, order_id, product_id, quantity) 
+
+These tables would be linked through foreign keys, for example, orders.customer_id would be a foreign key referencing customers.customer_id. 
+Tools for Schema Design: 
+
+• Database Design Tools: Tools like DbSchema, SQL Developer, or TablePlus can assist in visualizing and creating the database schema.  
+• ER Diagrams: Entity-Relationship Diagrams (ERDs) can help visualize the relationships between entities. 
+
+By following these steps and utilizing the appropriate tools, you can design a robust and efficient database schema for your new API, ensuring data integrity and optimized performance.
+
 
 
 ## TODO
-1. how to design db schema for your new API
 2. Which database to be used and when and why?

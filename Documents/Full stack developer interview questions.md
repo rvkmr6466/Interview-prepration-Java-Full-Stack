@@ -9222,6 +9222,32 @@ When you use `@Component` (or other similar annotations) without specifying a be
 
 In essence, the default behavior of a Spring bean is to be a single instance, created eagerly during application startup, and named according to the class name (first character lowercase) if no explicit name is provided.
 
+
+In Spring Boot, the scope of a bean defines its lifecycle and visibility within the application context. It dictates how many instances of a bean are created and how they are shared. Spring Boot provides several bean scopes: 
+
+• Singleton: This is the default scope. Only one instance of the bean is created per Spring IoC container. All requests for that bean will return the same instance. [1]  
+• Prototype: A new instance of the bean is created every time it is requested from the Spring container. [1, 2]  
+• Request: A new instance of the bean is created for each HTTP request. This scope is only applicable in web applications. [1, 2, 3]  
+• Session: A new instance of the bean is created for each HTTP session. This scope is also only applicable in web applications. [1, 2, 3]  
+• Application: One instance of the bean is created for the entire lifecycle of the ServletContext. 
+• Global Session: Used in portlet-based web applications, it creates a single bean instance per global HTTP session. 
+
+The @Scope annotation is used to define the scope of a bean. If no scope is specified, the default scope (singleton) is applied. For example: [2]  
+@Component
+@Scope("prototype")
+public class MyPrototypeBean {
+    // ...
+}
+
+@Component
+@RequestScope
+public class MyRequestBean {
+    // ...
+}
+
+Choosing the appropriate scope depends on the specific requirements of the bean. Singleton is suitable for stateless beans, while prototype is useful for stateful beans or when a new instance is needed for each request. Request and session scopes are designed for web applications to manage data within the context of an HTTP request or session. 
+
+
 ---
 ## Q. dockerfile vs docker.yaml
 The distinction between a `Dockerfile` and a `docker-compose.yaml` lies in their purpose and scope within the Docker ecosystem. 
