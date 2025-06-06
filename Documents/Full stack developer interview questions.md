@@ -2127,6 +2127,37 @@ Here's a more detailed breakdown:
 - **Load Balancing**: If API B has multiple instances, load balancing can help distribute traffic and reduce the impact of a single instance going down.
 - **Resilience**: Service B should be designed to be resilient to failures, meaning it can continue operating even if some parts of the infrastructure are unavailable.
 
+## D. Can an abstract class have constructor in java?
+Yes, an abstract class in Java can have a constructor. While you cannot directly instantiate an abstract class, its constructor is called implicitly when a concrete subclass is instantiated. The constructor in an abstract class serves to initialize the state of the class and can be used to enforce constraints or set up shared data for its subclasses. It can also be useful for safe initialization of the class.
+```java
+abstract class Vehicle {
+    int numberOfWheels;
+
+    public Vehicle(int wheels) {
+        this.numberOfWheels = wheels;
+    }
+
+    abstract void move();
+}
+
+class Car extends Vehicle {
+    public Car() {
+        super(4);
+    }
+
+    @Override
+    void move() {
+        System.out.println("Car is moving on " + numberOfWheels + " wheels.");
+    }
+
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.move();
+    }
+}
+```
+In this example, the `Vehicle` abstract class has a constructor that initializes the `numberOfWheels`. When a `Car` object is created, the `Vehicle` constructor is called via `super(4)`, setting the `numberOfWheels` to 4.
+
 ---
 ## 20. TODO
 
@@ -2372,13 +2403,13 @@ In microservices architectures, effective logging and monitoring are crucial for
 Spring Boot utilizes SLF4J as an abstraction for logging, with Logback as the default implementation. Logging levels control the verbosity of log messages, allowing developers to filter output based on severity. 
 The available logging levels, in ascending order of severity, are: 
 
-• TRACE: Detailed information, often used for debugging. 
-• DEBUG: Information helpful for developers during troubleshooting. 
-• INFO: General application events and status updates. 
-• WARN: Potentially harmful situations or unusual occurrences. 
-• ERROR: Errors that do not necessarily halt application execution. 
-• FATAL: Severe errors that may cause the application to terminate. 
-• OFF: Disables all logging. 
+- **TRACE**: Detailed information, often used for debugging. 
+- **DEBUG**: Information helpful for developers during troubleshooting. 
+- **INFO**: General application events and status updates. 
+- **WARN**: Potentially harmful situations or unusual occurrences. 
+- **ERROR**: Errors that do not necessarily halt application execution. 
+- **FATAL**: Severe errors that may cause the application to terminate. 
+- **OFF**: Disables all logging. 
 
 Logging levels can be configured in `application.properties` or `application.yml` using the logging.level property. For example: 
 ```application.properties
@@ -2412,8 +2443,8 @@ For example, imagine you’re making an online purchase. The transaction might i
 
 SAGA addresses the limitations of 2PC (Two-Phase Commit) by breaking a transaction into smaller, independent steps, each with its own compensating action if something goes wrong.
 
-##### Note: 
-2PC (Two-Phase Commit) is a protocol used to ensure all participants in a distributed transaction either commit or abort, ensuring consistency. In the first phase, the coordinator asks all participants to agree to commit, and in the second phase, participants either vote to commit or abort the transaction.
+#### Note: 
+**2PC (Two-Phase Commit)** is a protocol used to ensure all participants in a distributed transaction either commit or abort, ensuring consistency. In the first phase, the coordinator asks all participants to agree to commit, and in the second phase, participants either vote to commit or abort the transaction.
 
 ### Approaches to Implemement SAGA Design Pattern
 - #### Orchestration-Based Approach (Centralized)
@@ -6284,6 +6315,51 @@ The most common garbage collection algorithm is the mark-and-sweep algorithm, wh
 Garbage collection is triggered automatically by the JVM when it detects low memory or when an object cannot be allocated due to insufficient space. Developers can also manually request garbage collection using `System.gc()`, although this is generally discouraged as it can impact performance. 
 
 Java uses generational garbage collection, dividing the heap into generations (young, old/tenured). Newly created objects are placed in the young generation, and objects that survive multiple garbage collection cycles are promoted to older generations. This approach optimizes garbage collection by focusing on the young generation, where most objects are short-lived. 
+
+## 75.1 Side effect of GC
+Garbage collection (GC) in Java, while crucial for automatic memory management, can introduce several side effects: 
+
+### Performance Issues: 
+
+#### - Application Pauses: 
+GC cycles can cause the application to pause, leading to hangs or lags. This occurs when the garbage collector stops application threads to reclaim memory. 
+
+#### - High CPU Usage: 
+GC processes can consume significant CPU resources, impacting overall application performance.
+
+#### - Memory Fragmentation: 
+Repeated allocation and deallocation can result in memory fragmentation, slowing down allocation speed and potentially causing allocation errors.   
+
+#### - Thrashing: 
+Programs relying on garbage collectors might spend more time copying data between storage grades than performing useful work. 
+
+### Memory Management: 
+
+#### - Memory Leaks: 
+Despite the presence of a garbage collector, memory leaks can still occur if objects are unintentionally kept reachable. 
+
+#### - Difficulty in Determining Collection Need: 
+It can be challenging for the garbage collector to detect when collection is necessary, potentially leading to inefficient memory usage. 
+
+### Other Impacts: 
+
+#### - Poor Locality: 
+Programs using garbage collectors may exhibit poor locality, affecting performance due to non-contiguous memory access. 
+#### - Unpredictable Behavior: 
+The timing of garbage collection is not always predictable, which can make it difficult to reason about application performance. 
+#### - Overhead: 
+GC uses computing resources to decide which memory to free, adding overhead that can impact program performance. 
+
+### Mitigating Side Effects: 
+
+#### - Tuning: 
+Adjusting GC settings and heap size can help minimize the impact on the application. 
+#### - Monitoring: 
+Tools like jstat or Java Flight Recorder can help identify and address memory issues. 
+#### - Code Optimization: 
+Certain coding practices can reduce the frequency and impact of garbage collection. 
+
+Understanding these potential side effects is essential for developing efficient and performant Java applications. 
 
 ---
 ## 76. Can we override main method in java?

@@ -36,6 +36,13 @@ public static Optional<Character> findFirstRepeatedCharacter(String input) {
     return input.chars().mapToObj(c -> (char) c).filter(c -> !seen.add(c)).findFirst();
 }
 ```
+#### Note: 
+The `string.chars()` method in Java returns an `IntStream` of Unicode code points (integers) representing the characters in the string. It was introduced in Java 9 as a way to process characters as a stream of integers, which can be useful for operations like filtering, mapping, and reducing characters. Each integer in the stream corresponds to the UTF-16 code point of a character in the string. 
+```java
+String str = "Hello";
+IntStream charStream = str.chars();
+charStream.forEach(System.out::println); // Prints 72 101 108 108 111
+```
 ---
 ### 2. Find the longest uniform substring in given String.
 #### Examples:
@@ -245,7 +252,7 @@ TODO:
 | `s = "a good   example"` | `"example good a"`  | You need to reduce multiple spaces between two words to a single space in the reversed string.  |
 
 #### Solution:
-```
+```java
 public static void reverseWordsInString(){
     String s = "the sky is blue";
 
@@ -258,7 +265,7 @@ _**List.of():**_ This method (introduced in Java 9) creates an immutable list. T
 
 ---
 ### 8. Find output
-```
+```java
 final int i;
 i = 20;
 int j = i+20;
@@ -273,7 +280,7 @@ java: variable i might already have been assigned at `i = j+30;`
 The problem is that `i` is declared as `final`. In Java, a `final` variable can only be assigned a value once.  You can initialize it at the time of declaration or assign the value later, but only once.  The code attempts to assign a value to `i` twice: first with `i = 20;` and then with `i = j + 30;`. The second assignment is illegal.
 
 **How to fix it and find output:**
-```
+```java
 final int i;  // Declare i as final
 i = 20;       // Initialize i
 int j = i + 20; // Declare and initialize j
@@ -287,7 +294,7 @@ System.out.println(i + " " + j); // corrected output
 
 ---
 ### 9. Find the output:
-```
+```java
 class Parent {
     public void print() throws FileNotFoundException {
 	System.out.println("Parent");
@@ -2989,6 +2996,118 @@ public class CommonEmployeeFinder {
 }
 ```
 
+---
+## Q. Find Maximum Water Contained from a list (LeetCode)
+```java
+public class FindMaxWaterContained {
+    public static void main(String[] args) {
+        System.out.println("naiveApproach:: "+naiveApproach(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7})); // 49
+        System.out.println("naiveApproach:: "+naiveApproach(new int[]{2, 1, 8, 6, 4, 6, 5, 5})); // 25
+        System.out.println("naiveApproach:: "+naiveApproach(new int[]{1, 5, 4, 3})); // 6
+
+        System.out.println("optimizeApproach:: "+optimizeApproach(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7})); // 49
+        System.out.println("optimizeApproach:: "+optimizeApproach(new int[]{2, 1, 8, 6, 4, 6, 5, 5})); // 25
+        System.out.println("optimizeApproach:: "+optimizeApproach(new int[]{1, 5, 4, 3})); // 6
+    }
+
+    public static int naiveApproach(int[] height) {
+        int area=0;
+        int n = height.length;
+        for(int i=0; i<n-1; i++) {
+            for(int j=0; j<n; j++) {
+                int tempArea = Math.min(height[i], height[j])*(j-i);
+                area = Math.max(tempArea, area);
+            }
+        }
+
+        return area;
+    }
+
+    public static int optimizeApproach(int[] height) {
+        int area=0;
+        int left=0, right=height.length-1;
+        while(left < right){ // 0 < 8
+            int tempArea = 0;
+            int len = Math.min(height[left], height[right]);
+            tempArea = len*(right-left);
+            area = Math.max(tempArea, area);
+
+            /*
+            The `if-else` part in the code is used to decide which pointer (`left` or `right`) to move towards the center.
+
+            Here's a simple explanation:
+            1. Compare heights: Compare the heights of the two lines at the current `left` and `right` positions.
+            2. Move the shorter line: Move the pointer of the shorter line towards the center.
+
+            Why move the shorter line?
+            * If you move the taller line, the area of the rectangle will not increase, because the height of the
+              rectangle is determined by the shorter line.
+            * By moving the shorter line, you might find a taller line that can increase the area of the rectangle.
+
+            Code explanation
+            * `if (height[left] < height[right])`: If the left line is shorter, move the `left` pointer to the right (`left++`).
+            * `else`: If the right line is shorter (or equal), move the `right` pointer to the left (`right--`).
+
+            By moving the shorter line, you're effectively trying to find a taller line that can increase the area of the rectangle.
+            */
+            if(height[left]<height[right]) //
+                left++;
+            else
+                right--;
+        }
+        return area;
+    }
+}
+```
+## Q. Convert lowercase to uppercase and uppercase to lowercase. 
+```java
+public static void main(String[] args) {
+    String str = "StAbIlIzEr";
+    StringBuilder res = new StringBuilder();
+
+    String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+    for (char ch: str.toCharArray()) {
+    if(upperCase.indexOf(ch)!=-1) {
+        res.append(Character.toLowerCase(ch));
+    } else {
+        res.append(Character.toUpperCase(ch));
+    }
+    }
+
+    System.out.println("res:: " + res);
+}
+```
+---
+## Q. Remove * from a given string along with left char (traversing from left to right)
+#### Examples:
+| Input            | Output | Explanation                          |
+|-----------------|--------|--------------------------------------|
+| `str = "ravi***code*"` | `"rcod"`  |   |
+| `str = "*"` | `"Please provide valid string"`  | No left char at left of astrik |
+| `str = "r*"` | `""`  | Empty string  |
+```java
+public static String method1(String str) {
+    StringBuilder res = new StringBuilder();
+    char astrik = '*';
+    
+    if(str.length() < 2) {
+        if(astrik==str.charAt(0)) {
+            return "";
+        } else return ""+str.charAt(0);
+    }
+    
+    for (int i=0; i<str.length(); i++) { // ravi
+        if(astrik==str.charAt(i)) {
+            res.deleteCharAt(res.length()-1);
+        } else {
+            res.append(str.charAt(i));
+        }
+    }
+
+    return res.toString(); 
+}
+```
 
 
 

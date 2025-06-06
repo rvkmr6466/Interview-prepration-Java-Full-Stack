@@ -1,4 +1,4 @@
-package ltiMindtree;
+package ltiMindtree.customFunctionalInterfaceExamples;
 
 import java.util.List;
 

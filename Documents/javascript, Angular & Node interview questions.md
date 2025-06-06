@@ -938,7 +938,7 @@ greet("Bob"); // Output: Hello, Bob!
     };
     console.log(obj[mySymbol]); // Output: This is a symbol property
     ```
-- Iterators and for...of Loop: Iterate over iterable objects like arrays, maps, sets, and strings. 
+- Iterators and `for...of` Loop: Iterate over iterable objects like arrays, maps, sets, and strings. 
 
   ```javascript
   const arr = [10, 20, 30];
@@ -1079,19 +1079,19 @@ This `deepCopy` function provides a straightforward way to create deep copies of
 ## TODO 
 Currying
 -------------------------------------------- End Javascript & Node.js --------------------------------------------
-
 ---
 ---
-
+-------------------------------------------- Start Angular -------------------------------------------------------
 
 
 ## Angular Interview Questions
 
 ## Q. Angular 17 Features with Examples
 Angular 17 brought a fresh syntax, performance improvements, and better dev ergonomics. Here's a section-wise guide with examples to explore the new capabilities.
-#### 1. Built-in Control Flow (`@if`, `@for`, `@switch`)
+
+### 1. Built-in Control Flow (`@if`, `@for`, `@switch`)
 Angular now supports native control flow syntax directly in templates, replacing structural directives like `*ngIf`, `*ngFor`.
-##### Example: `@if` and `@else`
+#### Example: `@if` and `@else`
 ```
 <!-- user.component.html -->
 @if (user?.isLoggedIn) {
@@ -1100,7 +1100,7 @@ Angular now supports native control flow syntax directly in templates, replacing
   <p>Please log in.</p>
 }
 ```
-##### Example: `@for`
+#### Example: `@for`
 ```html
 <!-- items.component.html -->
 <ul>
@@ -1124,9 +1124,9 @@ Angular now supports native control flow syntax directly in templates, replacing
   }
 }
 ```
-#### 🧱 2. Deferrable Views (`@defer`)
+### 2. Deferrable Views (`@defer`)
 Deferrable views let you lazy-load parts of the UI based on triggers.
-##### Example: Lazy load on idle
+#### Example: Lazy load on idle
 ```html
 <!-- dashboard.component.html -->
 @defer (on idle) {
@@ -1137,9 +1137,10 @@ Other triggers:
 - `on timer(3000)`
 - `on interaction`
 - `on condition(isLoaded)`
-#### ⚡ 3. View Transitions API
+
+### 3. View Transitions API
 Enable animated route/page transitions with the [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API).
-##### Example: `app.component.ts`
+### Example: `app.component.ts`
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
@@ -1164,9 +1165,10 @@ export class AppComponent {
 <!-- app.component.html -->
 <button (click)="navigate('/about')">Go to About</button>
 ```
-##### 4. Standalone Components
+
+### 4. Standalone Components
 No more need for `NgModule`. Use `standalone: true` and import directly.
-##### Example: `hello.component.ts`
+#### Example: `hello.component.ts`
 ```ts
 import { Component } from '@angular/core';
 
@@ -1187,29 +1189,33 @@ export const routes: Routes = [
   { path: 'hello', component: HelloComponent }
 ];
 ```
-#### 5. SSR & Hydration Enhancements
+
+## 5. SSR & Hydration Enhancements
 Angular 17 improves hydration time with better server-to-client DOM reconciliation.
 ```bash
 ng add @angular/ssr
 ```
 Hydration is now enabled by default when SSR is configured.
-#### 6. Strictly Typed Reactive Forms
+### 6. Strictly Typed Reactive Forms
 Now forms are fully type-safe.
-##### Example:
+#### Example:
 ```ts
 const loginForm = new FormGroup({
   email: new FormControl<string>('', { nonNullable: true }),
   password: new FormControl<string>('', { nonNullable: true }),
 });
 ```
+
 > TypeScript will now help catch mistakes like assigning numbers to strings.
-#### ⚡ 7. Vite + Esbuild (Experimental)
+
+### 7. Vite + Esbuild (Experimental)
 Angular now supports Vite + Esbuild for fast development builds.
 ```bash
 ng build --configuration=esbuild
 ```
 Enable via experimental builder in `angular.json`.
-#### 📘 Summary Table
+
+### Summary Table
 | Feature              | Description                                  | Syntax/Usage                 |
 |----------------------|----------------------------------------------|------------------------------|
 | `@if`, `@for`, `@switch` | Modern control flow in templates         | `@if`, `@for`, `@switch`     |
@@ -1224,8 +1230,8 @@ Enable via experimental builder in `angular.json`.
 ## Q. Exception handling in Angular  
 Angular applications can handle exceptions using several approaches: 
 
-### **Try...Catch Blocks** 
-As in standard JavaScript, try...catch blocks manage errors within specific code sections, particularly for synchronous operations. 
+### `Try...Catch Blocks` 
+As in standard JavaScript, `try...catch` blocks manage errors within specific code sections, particularly for synchronous operations.
 ```javascript
 try {
   // Code that may throw an error
@@ -1237,7 +1243,7 @@ try {
 }
 ```
 
-### **ErrorHandler** 
+### ErrorHandler
 Angular's ErrorHandler provides centralized error handling across the application. By extending this class, developers can customize how errors are managed globally. 
 ```javascript
 import { ErrorHandler, Injectable } from '@angular/core';
@@ -1255,8 +1261,8 @@ export class GlobalErrorHandler implements ErrorHandler {
 providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }]
 ```
 
-### **RxJS catchError Operator** 
-For asynchronous operations with observables, catchError from RxJS intercepts and handles errors gracefully. 
+### RxJS catchError Operator
+For asynchronous operations with `observables`, `catchError` from RxJS intercepts and handles errors gracefully. 
 ```javascript
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -1273,8 +1279,8 @@ this.http.get('/api/data').pipe(
 });
 ```
 
-### **HttpInterceptor** 
-HttpInterceptor provides a robust way to handle errors related to the server and network by intercepting HTTP requests and responses. 
+### HttpInterceptor
+`HttpInterceptor` provides a robust way to handle errors related to the server and network by intercepting HTTP requests and responses.
 ```javascript
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
@@ -1308,24 +1314,25 @@ Key Concepts
 - _Signal_: A wrapper around a value that notifies consumers upon changes.
 - _Computed Signal_: A read-only signal whose value is derived from other signals.
 - _Effect_: A side effect that runs when signal values it depends on change.
-**Basic Usage** 
+
+#### **Basic Usage** 
 ```javascript
-Creating a Signal:
+// Creating a Signal:
 import { signal } from '@angular/core';
 const count = signal(0);
 ```
 ```javascript
-Reading a Signal: 
+// Reading a Signal: 
 const currentCount = count(); // Access the value
 ```
 ```javascript
-Updating a Signal:
+// Updating a Signal:
 count.set(1); // Sets the value to 1
 count.update(value => value + 1); // Increments the value
 count.mutate(value => value.push(newValue)); // Mutates the value
 ```
 ```javascript
-Computed Signals: 
+// Computed Signals: 
 import { computed, signal } from '@angular/core';
 const firstName = signal('John');
 const lastName = signal('Doe');
@@ -1344,34 +1351,38 @@ effect(() => {
 });
 counter.set(1); // Triggers the effect and logs "Counter value changed: 1"
 ```
-**Benefits:**
+#### **Benefits:**
 - _Improved Performance:_ Granular change detection reduces unnecessary updates.
 - _Simpler Syntax_: More straightforward than Observables for simple state management.
 - _Predictable Updates_: Ensures glitch-free and consistent data flow. 
 
 ---
 ## Q. Zone.js  
-`zone.js` is a crucial library for Angular applications, managing and tracking asynchronous operations. It essentially creates execution contexts, or "zones," that monitor tasks like event handling, timers, promises, and HTTP requests. This allows Angular to automatically detect changes and update the UI accordingly, ensuring efficient change detection. 
-`zone.js` intercepts and wraps asynchronous tasks, enabling Angular to run code before and after these tasks. This mechanism is vital for triggering Angular's change detection cycle whenever an asynchronous operation completes, ensuring the UI remains synchronized with the application state. While change detection is not part of zone.js itself, Angular utilizes `zone.js` to initiate it automatically. 
-Angular offers the `NgZone` service, which allows developers to run code outside the context of zone.js when necessary, such as for performance optimization. This can be useful when dealing with tasks that don't require UI updates. 
+`zone.js` is a crucial library for Angular applications, managing and tracking asynchronous operations. It essentially creates execution contexts, or "zones," that monitor tasks like `event handling`, `timers`, `promises`, and HTTP requests. This allows Angular to automatically detect changes and update the UI accordingly, ensuring efficient change detection. 
+`zone.js` intercepts and wraps asynchronous tasks, enabling Angular to run code before and after these tasks. This mechanism is vital for triggering Angular's change detection cycle whenever an asynchronous operation completes, ensuring the UI remains synchronized with the application state. While change detection is not part of `zone.js` itself, Angular utilizes `zone.js` to initiate it automatically. 
+Angular offers the `NgZone` service, which allows developers to run code outside the context of `zone.js` when necessary, such as for performance optimization. This can be useful when dealing with tasks that don't require UI updates. 
 It's worth noting that Angular is moving towards a zoneless architecture, with `zone.js` no longer accepting new features. This shift aims to provide more fine-grained control over change detection and potentially improve performance. 
 
 ---
 ## Q. SwitchMap
 `switchMap` is an **RxJS operator** used in Angular to map an observable to another observable while **canceling previous subscriptions** if a new value comes in.  
+
 ### **How it Works?**  
 - Ideal for handling **API calls, user inputs, and search functionalities** where only the latest request matters.
 - Prevents **unnecessary network requests** and **race conditions**.  
-### **Example Usage in Angular HTTP Calls**  
-```typescript
+
+#### **Example Usage in Angular HTTP Calls**  
+```ts
 this.searchInput.valueChanges.pipe(
   debounceTime(300), // Wait before firing request
   switchMap(query => this.apiService.search(query)) // Cancels previous request
 ).subscribe(results => console.log(results));
 ```
+
 ### **Key Differences (vs `mergeMap`)**  
 - **`switchMap`** → Cancels previous requests, keeps only the latest one.  
 - **`mergeMap`** → Runs all requests concurrently without canceling.  
+
 ### **Best Use Cases**  
 - **Live search** (cancel previous search request).  
 - **Authentication (Login)** (only last request matters).  
@@ -1398,23 +1409,152 @@ Angular provides two ways to build forms: **Template-Driven Forms** and **Reacti
 | **Flexibility** | Less flexible, tightly coupled to the template | More flexible, easier to manage dynamically |
 | **Testing** | Harder to unit test | Easier to unit test |
 
-### **When to Use What?**  
+#### **When to Use What?**  
 - **Template-Driven Forms** – Best for simple forms with minimal logic.  
 - **Reactive Forms** – Ideal for complex forms, dynamic validations, and better testability.  
-**Example:**  
-**Template-Driven Form:**  
-  ```html
-  <form #userForm="ngForm">
-    <input type="text" name="username" ngModel required />
-  </form>
-  ```
-**Reactive Form:**  
-  ```typescript
-  userForm = new FormGroup({
-    username: new FormControl('', Validators.required)
-  });
-  ```
+
+### **Example:**  
+#### **Template-Driven Form:**  
+```html
+<form #userForm="ngForm">
+  <input type="text" name="username" ngModel required />
+</form>
+```
+
+#### **Reactive Form:**  
+```ts
+userForm = new FormGroup({
+  username: new FormControl('', Validators.required)
+});
+```
 **Note:** Reactive Forms are recommended for most real-world applications due to better flexibility and maintainability.
+
+---
+## Q. Angular form vs Reactive form
+Here's a comprehensive overview of **Angular Forms** with a focus on **Reactive Forms**, including comparison, examples, and best practices.
+
+### Angular Forms Overview
+Angular offers **two types of forms**:
+
+| Form Type                 | Description                                                                                  |
+| ------------------------- | -------------------------------------------------------------------------------------------- |
+| **Template-driven forms** | Simpler to use, defined mostly in HTML using `ngModel`, suitable for basic use cases         |
+| **Reactive forms**        | More scalable, defined in the component class, offers better testability and dynamic control |
+
+### Reactive Forms – Key Features
+* Defined and controlled in **TypeScript class**.
+* Built using `FormGroup`, `FormControl`, and `FormArray`.
+* Easy to **dynamically add/remove fields**, handle **complex validations**, and **unit test**.
+
+### Setup
+First, import the necessary module:
+
+```ts
+import { ReactiveFormsModule } from '@angular/forms';
+```
+
+In `app.module.ts`:
+
+```ts
+@NgModule({
+  imports: [
+    ReactiveFormsModule
+  ]
+})
+export class AppModule {}
+```
+
+### Reactive Forms Example (Expense Form)
+#### **expense-form.component.ts**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-expense-form',
+  templateUrl: './expense-form.component.html'
+})
+export class ExpenseFormComponent implements OnInit {
+  expenseForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.expenseForm = this.fb.group({
+      title: ['', Validators.required],
+      amount: [null, [Validators.required, Validators.min(1)]],
+      category: ['Food', Validators.required],
+      date: [new Date(), Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (this.expenseForm.valid) {
+      console.log('Form Submitted:', this.expenseForm.value);
+    }
+  }
+}
+```
+
+#### **expense-form.component.html**
+
+```html
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+  <label>Title:</label>
+  <input type="text" formControlName="title" />
+  <div *ngIf="expenseForm.get('title')?.invalid && expenseForm.get('title')?.touched">
+    Title is required.
+  </div>
+
+  <label>Amount:</label>
+  <input type="number" formControlName="amount" />
+  <div *ngIf="expenseForm.get('amount')?.errors?.['min']">
+    Amount must be at least 1.
+  </div>
+
+  <label>Category:</label>
+  <select formControlName="category">
+    <option value="Food">Food</option>
+    <option value="Travel">Travel</option>
+    <option value="Bills">Bills</option>
+  </select>
+
+  <label>Date:</label>
+  <input type="date" formControlName="date" />
+
+  <button type="submit" [disabled]="expenseForm.invalid">Submit</button>
+</form>
+```
+
+### Best Practices with Reactive Forms
+
+1. **Use FormBuilder**: Simplifies syntax for creating nested forms.
+2. **Group Fields Logically**: Use `FormGroup` for related controls (e.g., address fields).
+3. **Custom Validators**: For complex business logic.
+4. **Async Validators**: For backend validations like checking username availability.
+5. **Reactive Form Hooks**: Use `valueChanges` and `statusChanges` to react to form changes.
+
+### Template-Driven Form (Quick Example)
+Not ideal for dynamic or complex forms.
+
+```html
+<form #form="ngForm" (ngSubmit)="submit(form.value)">
+  <input name="name" ngModel required />
+  <input type="email" name="email" ngModel />
+  <button type="submit">Submit</button>
+</form>
+```
+
+## 🚀 Summary
+
+| Feature                     | Reactive Forms ✅ | Template-driven Forms ❌ |
+| --------------------------- | ---------------- | ----------------------- |
+| Suitable for large forms    | ✅                | ❌                       |
+| Unit test friendly          | ✅                | ❌                       |
+| Complex validation handling | ✅                | ❌                       |
+| Dynamic form controls       | ✅                | ❌                       |
+| Simpler syntax              | ❌                | ✅                       |
 
 ---
 ## Q. What is SPA?
@@ -1425,7 +1565,7 @@ A **Single Page Application (SPA)** loads a single HTML page and dynamically upd
 - Uses **AJAX/REST API/GraphQL** for data fetching.  
 - Examples: **Gmail, Facebook, Google Maps**.  
 
-**Efficient but needs SEO optimization & initial load handling.**
+**Note**: Efficient but needs SEO optimization & initial load handling.
 
 ---
 ## Q. How Angular works?
@@ -1438,13 +1578,13 @@ Angular is a **component-based** frontend framework that uses **TypeScript**. It
 6. **Change Detection** – Updates the DOM when data changes, using **Zone.js**.  
 7. **RxJS & Observables** – Handles async data streams efficiently.
 8. **Compilation & Optimization**
-    1. Ahead-of-Time (AOT) Compilation improves performance.
+    1. `Ahead-of-Time` (AOT) Compilation improves performance.
     2. Lazy Loading loads modules only when needed, optimizing performance.
   
 ---
 ## Q. Interceptors in Angular 
 Interceptors in Angular are services that allow you to intercept and modify HTTP requests and responses. They are useful for tasks such as adding _headers_, _handling authentication_, _logging_, or _caching_. Interceptors work by sitting between your application and the backend server, intercepting requests before they are sent and responses before they are received. They can modify these requests and responses, or handle them directly.
-To create an interceptor, you need to create a class that **implements the HttpInterceptor interface** and define the `intercept` method. This method takes two arguments: the `HttpRequest` object and the `HttpHandler` object. The `HttpRequest` object represents the outgoing request, and the `HttpHandler` object represents the next interceptor in the chain, or the backend server if there are no more interceptors.
+To create an interceptor, you need to create a class that **implements the `HttpInterceptor` interface** and define the `intercept` method. This method takes two arguments: the `HttpRequest` object and the `HttpHandler` object. The `HttpRequest` object represents the outgoing request, and the `HttpHandler` object represents the next interceptor in the chain, or the backend server if there are no more interceptors.
 ```javascript
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
@@ -1583,7 +1723,7 @@ _Disadvantages:_
 - Can make code less readable compared to constructor injection with type inference.
 
 **3. inject() Function**
-The inject() function provides a functional way to inject dependencies, especially useful in newer Angular versions and in situations outside of constructors.
+The `inject()` function provides a functional way to inject dependencies, especially useful in newer Angular versions and in situations outside of constructors.
 _Mechanism:_ It retrieves a dependency directly from the injector using the provided token.
 ```javascript
 import { Component, inject, Injectable } from '@angular/core';
@@ -1689,7 +1829,7 @@ export class ChildComponent {
 - A service can be used to share data between any components, regardless of their relationship. This is useful for sharing data between sibling components or deeply nested components.
 
 **Data Service:**
-```
+```ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -1704,7 +1844,7 @@ export class DataService {
 }
 ```
 **Component 1:**
-```
+```ts
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 
@@ -1732,7 +1872,7 @@ export class Component1 implements OnInit {
 }
 ```
 **Component 2:**
-```
+```ts
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 
@@ -1755,11 +1895,25 @@ export class Component2 implements OnInit {
 ```
 **4. Using Subject or BehaviorSubject**
 - For more complex scenarios, you can use `Subject` or `BehaviorSubject` from RxJS to share data between components.  A `BehaviorSubject` holds the current value, while a `Subject` does not.
+**Data Service:**
+```ts
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({ providedIn: 'root' })
+export class DataService {
+    private messageSource = new BehaviorSubject<string>('Default message');
+    currentMessage = this.messageSource.asObservable();
+
+    changeMessage(message: string) {
+        this.messageSource.next(message);
+    }
+}
+```
 
 **Component 1:**
-```
+```ts
 import { Component } from '@angular/core';
-
 import { DataService } from '../data.service';
 
 @Component({
@@ -1776,8 +1930,9 @@ export class Component1 {
   }
 }
 ```
+
 **Component 2:**
-```
+```ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
 import { Subscription } from 'rxjs';
@@ -1810,7 +1965,7 @@ export class Component2 implements OnInit, OnDestroy {
 - A parent component can directly access the properties and methods of its child components using `@ViewChild()` or `@ViewChildren()`.
 
 **Parent Component:**
-```
+```ts
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ChildComponent } from './child.component';
 
@@ -1831,7 +1986,7 @@ export class ParentComponent implements AfterViewInit {
 }
 ```
 **Child Component:**
-```
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -1847,20 +2002,20 @@ export class ChildComponent {
 ## Q. Authentication in Angular
 Authentication is the process of verifying a user's identity. In Angular applications, this typically involves verifying credentials (like username and password) against a server. Here's a general overview of how to implement authentication in Angular:
 
-#### 1. Setting Up a Backend Server
+### 1. Setting Up a Backend Server
 - You'll need a backend server to handle user authentication. This server will:
   - Receive login requests from the Angular application.
   - Verify the provided credentials (e.g., against a database).
   - Issue a token (e.g., JWT - JSON Web Token) upon successful authentication.
   - Handle subsequent requests from the Angular application, verifying the token to ensure the user is authenticated.
-  - The specific implementation of the backend server is beyond the scope of this document, but popular choices include Node.js with Express, Django, Ruby on Rails, and ASP.NET.
+  - The specific implementation of the backend server is beyond the scope of this document, but popular choices include `Node.js` with `Express`, `Django`, `Ruby on Rails`, and `ASP.NET`.
 
-#### 2. Installing Necessary Modules
+### 2. Installing Necessary Modules
 - In your Angular project, you might need modules like:
   - `@angular/common`: For making HTTP requests.
   - `rxjs`: For handling asynchronous operations.
 
-#### 3. Creating an Authentication Service
+### 3. Creating an Authentication Service
 - Create an Angular service to handle authentication-related logic. This service will typically include methods for:
   - `login()`: Sends a request to the backend server with the user's credentials.
   - `logout()`: Clears any stored tokens and user information.
@@ -1937,7 +2092,7 @@ export class AuthService {
 }
 ```
 
-#### 4. Creating a Login Component
+### 4. Creating a Login Component
 - Create a component with a form for the user to enter their credentials.
 - In the component, inject the `AuthService` and use it to send the login request.
 - Handle the response from the server (success or error).
@@ -1987,7 +2142,7 @@ export class LoginComponent {
 }
 ```
 
-#### 5. Creating an Auth Guard
+### 5. Creating an Auth Guard
 - Create an Angular route guard to protect routes that should only be accessible to authenticated users.
 - In the guard, inject the `AuthService` and use the `isAuthenticated()` method to check if the user is logged in.
 - If the user is not authenticated, redirect them to the login page.
@@ -2034,7 +2189,7 @@ const routes: Routes = [
 export class AppRoutingModule {}
 ```
 
-#### 6. Handling HTTP Interceptors (Optional)
+### 6. Handling HTTP Interceptors (Optional)
 - You can use an HTTP interceptor to automatically add the authentication token to the headers of outgoing HTTP requests to your backend API. This simplifies your code, as you don't have to manually add the token to every request.
 ```javascript
 import { Injectable } from '@angular/core';
@@ -2061,8 +2216,8 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 }
 ```
-_Register the interceptor in your app.module.ts:_
-```typescript
+_Register the interceptor in your `app.module.ts`:_
+```ts
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
@@ -2089,7 +2244,6 @@ export class AppModule {}
 #### Link:
 **[Authentication and JWT in Node.js](https://dev.to/eidorianavi/authentication-and-jwt-in-node-js-4i13)**
 
-
 ---
 ## Q. Optimizing Your Angular Application
 Optimizing your Angular application is crucial for achieving better performance, faster load times, and a smoother user experience. Here's a comprehensive guide to help you optimize your Angular application:
@@ -2097,7 +2251,7 @@ Optimizing your Angular application is crucial for achieving better performance,
 ### 1. Lazy Loading Modules
 - **What it is:** Lazy loading is a technique that loads parts of your application on demand, rather than loading everything upfront. This can significantly reduce the initial load time of your application.
 - **How to implement:** Use the `loadChildren` property in your route definitions to specify modules that should be loaded lazily.
-```
+```ts
 const routes: Routes = [
   {
     path: 'lazy',
@@ -2108,30 +2262,41 @@ const routes: Routes = [
 ```
 
 ### 2. Ahead-of-Time (AOT) Compilation
-**What it is:** AOT compilation compiles your Angular templates and components at build time, rather than in the browser at runtime. This results in smaller bundle sizes and faster rendering.
-**How to enable:** AOT is enabled by default in production builds (`ng build --prod`).  For Angular CLI versions prior to 8, use `ng build --aot`.
+#### **What it is:** 
+AOT compilation compiles your Angular templates and components at build time, rather than in the browser at runtime. This results in smaller bundle sizes and faster rendering.
+
+#### **How to enable:** 
+AOT is enabled by default in production builds (`ng build --prod`). 
+For Angular CLI versions prior to 8, use `ng build --aot`.
 
 ### 3. Production Mode
-**What it is:** Running your Angular application in production mode disables development-mode checks and optimizations, resulting in improved performance.How to enable:Use the --prod flag when building your application: `ng build --prod`
+#### **What it is:** 
+Running your Angular application in production mode disables development-mode checks and optimizations, resulting in improved performance.
+
+#### How to enable:
+Use the `--prod` flag when building your application: `ng build --prod`
 
 ### 4. Bundle Optimization
-**What it is:** Reducing the size of your application's bundles is crucial for faster loading.
-**How to optimize:**
-- _Tree Shaking:_ Eliminate unused code.  Angular CLI and modern bundlers like Webpack do this automatically.
-- _Minification:_ Reduce the size of your code by removing whitespace and shortening variable names.  Enabled in production builds.
-- _Code Splitting:_ Split your code into smaller chunks that can be loaded on demand.  Lazy loading is a form of code splitting.
+#### **What it is:** 
+Reducing the size of your application's bundles is crucial for faster loading.
+
+#### **How to optimize:**
+- _Tree Shaking:_ Eliminate unused code. Angular CLI and modern bundlers like Webpack do this automatically.
+- _Minification:_ Reduce the size of your code by removing whitespace and shortening variable names. Enabled in production builds.
+- _Code Splitting:_ Split your code into smaller chunks that can be loaded on demand. Lazy loading is a form of code splitting.
 
 ### 5. Caching
 **What it is:** Caching can significantly improve performance by storing frequently accessed data or resources.
 **How to implement:** 
 - _HTTP caching:_ Configure your server to set appropriate HTTP headers (e.g., `Cache-Control`) to enable browser caching of static assets and API responses.
 - _In-memory caching:_ Use services to cache data within your Angular application (e.g., using `localStorage`, `sessionStorage`, or a custom service with a `BehaviorSubject`).
-- _Service Workers:_ For more advanced caching, you can use service workers to cache assets and even enable offline functionality.  Use `@angular/service-worker`.
+- _Service Workers:_ For more advanced caching, you can use service workers to cache assets and even enable offline functionality. Use `@angular/service-worker`.
 
 ### 6. Change Detection Optimization
-**What it is:** Angular's change detection mechanism can be a performance bottleneck if not used carefully.
+#### **What it is:** 
+Angular's change detection mechanism can be a performance bottleneck if not used carefully.
 
-**How to optimize:**
+#### **How to optimize:**
 - `ChangeDetectionStrategy.OnPush`: Use this change detection strategy for components whose templates only depend on their `@Input()` properties. This tells Angular to only check for changes when the input properties change.
 ```javascript
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
@@ -2147,7 +2312,7 @@ export class MyComponent {
 ```
 - `trackBy`: Use the trackBy function in *ngFor loops to help Angular identify which items in a list have changed, allowing it to update only the changed items.
 - 
-```javascript
+```ts
 <li *ngFor="let item of items; trackBy: trackById">
   {{ item.name }}
 </li>
@@ -2206,17 +2371,17 @@ Angular applications require compilation because browsers cannot directly unders
 - AOT compilation occurs during the build process. It translates Angular HTML and TypeScript code into efficient JavaScript code before the browser downloads and runs it.  
 
 **Advantages of AOT:** 
-• _Faster rendering:_ The browser renders the UI immediately upon loading, without waiting for compilation. 
-• _Smaller bundle size:_ AOT eliminates the need to ship the Angular compiler in the production bundle, reducing the overall size.  
-• _Improved security:_ Pre-compilation mitigates the risk of client-side code injection attacks. 
-• _Template type checking:_ AOT performs template type checking during compilation, catching errors early in the development cycle. 
+- _Faster rendering:_ The browser renders the UI immediately upon loading, without waiting for compilation. 
+- _Smaller bundle size:_ AOT eliminates the need to ship the Angular compiler in the production bundle, reducing the overall size.  
+- _Improved security:_ Pre-compilation mitigates the risk of client-side code injection attacks. 
+- _Template type checking:_ AOT performs template type checking during compilation, catching errors early in the development cycle.
 
 2. **Just-in-Time (JIT)** 
 JIT compilation occurs at runtime in the browser. The Angular compiler translates the application code into JavaScript as it's needed. 
 
 **Advantages of JIT:**
-• _Faster development cycle:_ JIT allows for rapid iteration during development, as changes are quickly reflected without a full rebuild. 
-• _Easier debugging:_ Source maps are used for debugging, making it easier to trace errors back to the original code. 
+- _Faster development cycle:_ JIT allows for rapid iteration during development, as changes are quickly reflected without a full rebuild. 
+- _Easier debugging:_ Source maps are used for debugging, making it easier to trace errors back to the original code. 
 
 **Key Differences Summarized**
 
@@ -2402,7 +2567,7 @@ trackById(index: number, item: User): number {
 - Suitable for tasks that require the component to be fully initialized, such as fetching data, setting up subscriptions, or performing calculations based on input properties.
 - It is specific to Angular and part of the component's lifecycle.
 
-```typescript
+```ts
 import { Component, OnInit } from '@angular/core';
 import { MyService } from './my.service';
 
@@ -2423,133 +2588,6 @@ export class MyComponent implements OnInit {
   }
 }
 ```
----
-## Q. Angular form vs Reactive form
-Here's a comprehensive overview of **Angular Forms** with a focus on **Reactive Forms**, including comparison, examples, and best practices.
-
-### Angular Forms Overview
-Angular offers **two types of forms**:
-
-| Form Type                 | Description                                                                                  |
-| ------------------------- | -------------------------------------------------------------------------------------------- |
-| **Template-driven forms** | Simpler to use, defined mostly in HTML using `ngModel`, suitable for basic use cases         |
-| **Reactive forms**        | More scalable, defined in the component class, offers better testability and dynamic control |
-
-### Reactive Forms – Key Features
-* Defined and controlled in **TypeScript class**.
-* Built using `FormGroup`, `FormControl`, and `FormArray`.
-* Easy to **dynamically add/remove fields**, handle **complex validations**, and **unit test**.
-
-### Setup
-First, import the necessary module:
-
-```ts
-import { ReactiveFormsModule } from '@angular/forms';
-```
-
-In `app.module.ts`:
-
-```ts
-@NgModule({
-  imports: [
-    ReactiveFormsModule
-  ]
-})
-export class AppModule {}
-```
-
-### Reactive Forms Example (Expense Form)
-#### **expense-form.component.ts**
-
-```ts
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-@Component({
-  selector: 'app-expense-form',
-  templateUrl: './expense-form.component.html'
-})
-export class ExpenseFormComponent implements OnInit {
-  expenseForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit() {
-    this.expenseForm = this.fb.group({
-      title: ['', Validators.required],
-      amount: [null, [Validators.required, Validators.min(1)]],
-      category: ['Food', Validators.required],
-      date: [new Date(), Validators.required]
-    });
-  }
-
-  onSubmit() {
-    if (this.expenseForm.valid) {
-      console.log('Form Submitted:', this.expenseForm.value);
-    }
-  }
-}
-```
-
-#### **expense-form.component.html**
-
-```html
-<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
-  <label>Title:</label>
-  <input type="text" formControlName="title" />
-  <div *ngIf="expenseForm.get('title')?.invalid && expenseForm.get('title')?.touched">
-    Title is required.
-  </div>
-
-  <label>Amount:</label>
-  <input type="number" formControlName="amount" />
-  <div *ngIf="expenseForm.get('amount')?.errors?.['min']">
-    Amount must be at least 1.
-  </div>
-
-  <label>Category:</label>
-  <select formControlName="category">
-    <option value="Food">Food</option>
-    <option value="Travel">Travel</option>
-    <option value="Bills">Bills</option>
-  </select>
-
-  <label>Date:</label>
-  <input type="date" formControlName="date" />
-
-  <button type="submit" [disabled]="expenseForm.invalid">Submit</button>
-</form>
-```
-
-### Best Practices with Reactive Forms
-
-1. **Use FormBuilder**: Simplifies syntax for creating nested forms.
-2. **Group Fields Logically**: Use `FormGroup` for related controls (e.g., address fields).
-3. **Custom Validators**: For complex business logic.
-4. **Async Validators**: For backend validations like checking username availability.
-5. **Reactive Form Hooks**: Use `valueChanges` and `statusChanges` to react to form changes.
-
-### Template-Driven Form (Quick Example)
-Not ideal for dynamic or complex forms.
-
-```html
-<form #form="ngForm" (ngSubmit)="submit(form.value)">
-  <input name="name" ngModel required />
-  <input type="email" name="email" ngModel />
-  <button type="submit">Submit</button>
-</form>
-```
-
-## 🚀 Summary
-
-| Feature                     | Reactive Forms ✅ | Template-driven Forms ❌ |
-| --------------------------- | ---------------- | ----------------------- |
-| Suitable for large forms    | ✅                | ❌                       |
-| Unit test friendly          | ✅                | ❌                       |
-| Complex validation handling | ✅                | ❌                       |
-| Dynamic form controls       | ✅                | ❌                       |
-| Simpler syntax              | ❌                | ✅                       |
-
 ---
 ## Q. How to migrate from Angular version 10 to 17? 
 
@@ -2599,8 +2637,8 @@ Observables, operators (like `map`, `filter`, `subscribe`), subjects, and more.
 	• Creating shared services that expose observables.
 	• Building custom reactive components or services.  
 
-### NgRx: 
 
+### NgRx: 
 #### Purpose: 
 A library for managing the state of an Angular application, providing a structured and consistent way to handle state changes using the Redux pattern.
 
@@ -2632,7 +2670,7 @@ A library for managing the state of an Angular application, providing a structur
 ## Q. Remove Duplicate Elements from TypeScript Array
 
 ### Approach 1: Using `filter()` method
-```typescript
+```ts
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
  
 const removeDups = (arr: number[]): number[] => {
@@ -2642,7 +2680,7 @@ console.log(removeDups(arr));
 ```
 
 ### Approach 2: Using `forEach()` method
-```typescript
+```ts
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
 
 const removeDups = (arr: number[]) : number[] => {
@@ -2657,8 +2695,8 @@ const removeDups = (arr: number[]) : number[] => {
 console.log(removeDups(arr));
 ```
 
-### Approach 3: Using `map()` method
-```typescript
+### Approach 3: Using `Map<number, boolean>()` method
+```ts
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
 
 const removeDups = (arr: number[]): number[] => {
@@ -2679,7 +2717,7 @@ console.log(removeDups(arr));
 ```
 
 ### Approach 3: Using `Set()` method
-```typescript
+```ts
 let arr = [1, 2, 2, 3, 4, 3, 5, 4, 6, 5];
 
 const removeDups = (arr: number[]): number[] => {
@@ -2741,7 +2779,7 @@ Angular provides three options for view encapsulation:
 - This ensures that the styles defined in a component apply only to the elements within that component's view.
 - It's called "emulated" because the browser doesn't natively support this behavior. Angular achieves it through its own manipulation of the DOM and CSS.
 Example:
-```typescript
+```ts
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -2787,7 +2825,7 @@ As you can see, the styles are scoped to the component's elements.
 - Shadow DOM creates a separate DOM tree for the component, effectively isolating its styles and markup from the rest of the application.
 - This provides the strongest form of encapsulation, as styles and DOM structure are completely isolated.
 - Example:
-```typescript
+```ts
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -2826,7 +2864,7 @@ The HTML structure will be like this
 - The styles defined in the component will apply globally to the entire application.
 - This can be useful in some cases, such as when you want to use a global CSS library, but it can also lead to style conflicts if you're not careful.
 - Example:
-```typescript
+```ts
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -2905,55 +2943,55 @@ Here's how singletons are typically created and used in Angular:
 
 ### **1. Using `@Injectable()` with `providedIn: 'root'`**
 
-   -  The most common and recommended way to create a singleton in Angular is by using the `@Injectable()` decorator with the `providedIn: 'root'` option.
+  - The most common and recommended way to create a singleton in Angular is by using the `@Injectable()` decorator with the `providedIn: 'root'` option.
 
-   -  When you specify `providedIn: 'root'`, Angular registers the provider with the root injector. The root injector is available to the entire application, ensuring that only one instance of the service is created.
+  - When you specify `providedIn: 'root'`, Angular registers the provider with the root injector. The root injector is available to the entire application, ensuring that only one instance of the service is created.
 
-   ```typescript
-   import { Injectable } from '@angular/core';
+  ```ts
+  import { Injectable } from '@angular/core';
 
-   @Injectable({
-     providedIn: 'root',
-   })
-   export class MySingletonService {
-     private data: string[] = [];
+  @Injectable({
+    providedIn: 'root',
+  })
+  export class MySingletonService {
+    private data: string[] = [];
 
-     constructor() {
-       console.log('MySingletonService constructor called'); // Called only once
-     }
+    constructor() {
+      console.log('MySingletonService constructor called'); // Called only once
+    }
 
-     addData(item: string) {
-       this.data.push(item);
-     }
+    addData(item: string) {
+      this.data.push(item);
+    }
 
-     getData() {
-       return this.data;
-     }
-   }
-   ```
+    getData() {
+      return this.data;
+    }
+  }
+  ```
 
-   -   In this example, `MySingletonService` will be created only once.  Any component or service that injects `MySingletonService` will receive the same instance.  The constructor will only be called a single time for the entire application.
+  - In this example, `MySingletonService` will be created only once.  Any component or service that injects `MySingletonService` will receive the same instance.  The constructor will only be called a single time for the entire application.
 
-### **2.  Registering in a Module (Not Recommended for Singletons)**
+### **2. Registering in a Module (Not Recommended for Singletons)**
 
-   -   You can also provide a service by adding it to the `providers` array of an Angular module. However, this can lead to multiple instances of the service if the module is loaded in multiple contexts (e.g., lazy-loaded modules).
+  - You can also provide a service by adding it to the `providers` array of an Angular module. However, this can lead to multiple instances of the service if the module is loaded in multiple contexts (e.g., lazy-loaded modules).
 
-   ```typescript
-   import { NgModule } from '@angular/core';
+  ```ts
+  import { NgModule } from '@angular/core';
 
-   @NgModule({
-     providers: [MySingletonService], // Potentially creates multiple instances
-   })
-   export class MyModule {}
-   ```
+  @NgModule({
+    providers: [MySingletonService], // Potentially creates multiple instances
+  })
+  export class MyModule {}
+  ```
 
-   -   While this method *can* create a singleton within a specific module, it does not guarantee a single instance across the entire application, especially in applications with lazy loading.  Therefore, `providedIn: 'root'` is the preferred way to ensure a true application-wide singleton.
+  - While this method *can* create a singleton within a specific module, it does not guarantee a single instance across the entire application, especially in applications with lazy loading.  Therefore, `providedIn: 'root'` is the preferred way to ensure a true application-wide singleton.
 
-### **3.  `@Optional()` and `@SkipSelf()`**
+### **3. `@Optional()` and `@SkipSelf()`**
 
-   -   These decorators are used in the constructor of a service to control how Angular resolves dependencies. They are more related to hierarchical injection and preventing circular dependencies than creating singletons, but it's worth knowing about them in the context of service instantiation.
-   -   `@Optional()`:  Allows Angular to inject a service even if it's not available. The injected parameter will be `null` if the service is not found.
-   -   `@SkipSelf()`:  Tells Angular to start the dependency lookup from the parent injector, rather than the current injector.  This is used to avoid circular dependencies in certain scenarios.
+  - These decorators are used in the constructor of a service to control how Angular resolves dependencies. They are more related to hierarchical injection and preventing circular dependencies than creating singletons, but it's worth knowing about them in the context of service instantiation.
+  - `@Optional()`:  Allows Angular to inject a service even if it's not available. The injected parameter will be `null` if the service is not found.
+  - `@SkipSelf()`:  Tells Angular to start the dependency lookup from the parent injector, rather than the current injector.  This is used to avoid circular dependencies in certain scenarios.
 
 ### **Key Points about Angular Singletons:**
 
@@ -3000,7 +3038,7 @@ TypeScript itself isn't directly executed by browsers. Browsers only understand 
   - `reflect-metadata`: Used for Angular's dependency injection.
   - ES6 features (e.g., `Map`, `Set`, `Promise`) are included if you uncomment the relevant imports in `polyfills.ts`.
 - Example `polyfills.ts`:
-```javasctipt
+```ts
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -3031,19 +3069,19 @@ import 'zone.js/browser';  // Included with Angular CLI.
 ### 4. Browserlist (Handled by Angular CLI)
 - Browserlist is a configuration that specifies which browsers your project needs to support.
 - Angular CLI uses Browserlist to tell Babel which transformations are needed for your target browsers.
-- The Browserlist configuration is usually in a file named .browserslistrc at the root of your project, or within the `package.json` file.
-```
-Example `.browserslistrc`:
+- The Browserlist configuration is usually in a file named `.browserslistrc` at the root of your project, or within the `package.json` file.
+
+- Example `.browserslistrc`:
 ```
 > 1%
 last 2 versions
 not dead
 ```
 This configuration targets:
-    * Browsers with more than 1% global usage
-    * The last 2 versions of each browser
-    * Browsers that are not dead (no longer maintained)
-```
+  * Browsers with more than 1% global usage
+  * The last 2 versions of each browser
+  * Browsers that are not dead (no longer maintained)
+
 - Example in `package.json`:
 `json "browserslist": [ "> 1%", "last 2 versions", "not dead" ]` 
 
@@ -3063,8 +3101,8 @@ To make your Angular application compatible with different browsers:
 By following these steps, you can ensure that your Angular application works across a wide range of browsers, including older ones.
 
 ---
-## Q. How do you prevent the form on back of a browser in angular using canActivate?
-```typescript
+## Q. How do you prevent the form after click of a back button of a browser in angular using `canActivate`?
+```ts
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { FormComponent } from '../components/form/form.component';
@@ -3083,7 +3121,7 @@ export class FormGuard implements CanActivate {
   }
 }
 ```
-```typescript
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -3110,7 +3148,7 @@ export class FormComponent {
   }
 }
 ```
-```typescript
+```ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormComponent } from './components/form/form.component';
@@ -3134,10 +3172,9 @@ export class AppRoutingModule { }
 - Implement a method in your form component to track changes.
 - Use the guard in your routing configuration to protect the form route.
 
-
 ---
 ## Q. When does renderer calls in angular using example
-Renderer calls in Angular are invoked during the component's lifecycle, specifically when changes occur that affect the view. These calls are essential for updating the DOM and ensuring the UI reflects the current state of the application. The `Renderer2` service in Angular provides an abstraction layer for manipulating the DOM, promoting platform independence and testability. 
+`Renderer` calls in Angular are invoked during the component's lifecycle, specifically when changes occur that affect the view. These calls are essential for updating the DOM and ensuring the UI reflects the current state of the application. The `Renderer2` service in Angular provides an abstraction layer for manipulating the DOM, promoting platform independence and testability. 
 
 ### Change Detection 
 Angular's change detection mechanism plays a crucial role in triggering renderer calls. After each asynchronous event, such as user interactions (e.g., clicks, input changes), HTTP requests, or timers, Angular runs change detection to check for updates in the component tree. If changes are detected, the renderer is invoked to update the DOM accordingly. 
@@ -3151,7 +3188,7 @@ Angular's change detection mechanism plays a crucial role in triggering renderer
 - `afterNextRender`: Registers a callback that executes only once after the next render cycle, when the DOM is loaded.
 
 #### Example 
-```typescript
+```ts
 import { Component, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
@@ -3178,7 +3215,7 @@ Custom directives can also utilize the `Renderer2` to interact with the DOM. Str
 
 #### Programmatic Rendering 
 Angular allows for programmatically creating and rendering components using `ViewContainerRef`. This mechanism also relies on the renderer to insert the new components into the DOM. 
-```typescript
+```ts
 import { Component, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 @Component({
@@ -3211,13 +3248,13 @@ In the code above, the `createComponent` method uses the `ViewContainerRef` and 
 Creating a custom directive in Angular involves defining a class with the `@Directive` decorator and implementing the desired logic. Here's a step-by-step guide: 
 
 - **Generate the Directive**: Use the Angular CLI to generate the directive files: 
-```
+```cmd
 ng generate directive my-directive
 ```
 This command creates two files: `my-directive.directive.ts` and `my-directive.directive.spec.ts`. 
 
 - **Implement the Directive Logic**: Open the `my-directive.directive.ts` file and add the following code: 
-```typescript
+```ts
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
@@ -3256,7 +3293,7 @@ export class MyDirectiveDirective {
 The directive will highlight the element when the user hovers over it. 
 
 - **Declare the Directive**: Add the directive to the declarations array in your module (e.g., `app.module.ts`): 
-```typescript
+```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -3277,82 +3314,7 @@ export class AppModule { }
 ```
 
 ---
-## Q. 
-Debouncing in Angular is a technique used to limit the rate at which a function is executed, particularly in response to user input events. It ensures that a function is only called after a specified delay, preventing excessive calls during rapid input changes, such as typing in a search box. 
-
-### What is Debouncing?
-
-- **Definition**: Debouncing is a programming pattern that delays the execution of a function until a certain amount of time has passed since the last triggering event. This is particularly useful in scenarios where rapid events can overwhelm the system or degrade user experience.
-
-- **Use Case**: For example, in a search bar, debouncing can help execute a search query only after the user has stopped typing, rather than making multiple API calls for each keystroke.
-
-### Benefits of Debouncing
-
-1. **Prevent Excessive API Calls**: Reduces the number of requests sent to the server, which can help avoid overwhelming the backend and improve response times.
-
-2. **Improve App Performance**: Minimizes resource utilization by reducing the frequency of function executions, ensuring that the application remains responsive.
-
-3. **Enhanced User Experience**: Creates a smoother interface by reducing interruptions, allowing users to interact seamlessly with the application.
-
-### Implementing Debouncing in Angular
-
-To implement debouncing in Angular, you can use the `debounceTime` operator from RxJS. Here’s a step-by-step guide:
-
-#### Step 1: Import Required Modules
-
-```javascript
-import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-```
-
-#### Step 2: Create the Component
-
-```javascript
-@Component({
-  selector: 'app-search',
-  template: `<input (input)="onSearch($event)" placeholder="Search...">`
-})
-export class SearchComponent {
-  private searchSubject = new Subject<string>();
-
-  constructor() {
-    this.searchSubject.pipe(debounceTime(300)).subscribe(query => {
-      this.search(query);
-    });
-  }
-
-  onSearch(event: Event): void {
-    const query = (event.target as HTMLInputElement).value;
-    this.searchSubject.next(query);
-  }
-
-  search(query: string): void {
-    console.log(`Searching for: ${query}`);
-    // Implement API call or other logic here
-  }
-}
-```
-
-### Explanation of the Code
-
-- **Subject**: A `Subject` is used to capture and emit input events as observable streams.
-
-- **debounceTime(300)**: This operator ensures that the `search()` function is executed only if 300 milliseconds have passed since the last keystroke, filtering out rapid successive events.
-
-- **onSearch Method**: This method captures the input event and pushes the value to the `searchSubject`.
-
-- **search Method**: This method is where the actual search logic or API call would be implemented.
-
-### Conclusion
-
-Debouncing is a powerful technique in Angular that can significantly enhance the performance and usability of applications. By implementing debouncing in scenarios like search bars, you can ensure that your application remains responsive while efficiently managing user input.
-
----
-## Q. Debouncing in Angular
-Debouncing in Angular is a technique used to limit the rate at which a function is executed, particularly in response to user input events. It ensures that a function is only called after a specified delay, preventing excessive calls during rapid input changes, such as typing in a search box. 
-
-### What is Debouncing?
+## Q. What is Debouncing?
 
 - **Definition**: Debouncing is a programming pattern that delays the execution of a function until a certain amount of time has passed since the last triggering event. This is particularly useful in scenarios where rapid events can overwhelm the system or degrade user experience.
 
@@ -3477,7 +3439,7 @@ To create a resolver: generate a resolver.
 ng generate resolver <resolver-name>
 ```
 #### Implement the Resolve interface. 
-```typescript
+```ts
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -3499,7 +3461,7 @@ export class MyResolver implements Resolve<any> {
 }
 ```
 #### Configure the route. 
-```typescript
+```ts
 const routes: Routes = [
   {
     path: 'my-path/:id',
@@ -3511,7 +3473,7 @@ const routes: Routes = [
 ];
 ```
 #### Access the resolved data. 
-```typescript
+```ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -3534,7 +3496,7 @@ export class MyComponent implements OnInit {
 
 #### Functional Resolvers 
 Angular also supports functional resolvers, which are simpler for basic scenarios: 
-```typescript
+```ts
 import { ResolveFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { MyService } from './my.service';
@@ -3551,12 +3513,11 @@ export const myResolver: ResolveFn<any> = (route, state) => {
 ```
 Configuration remains the same as with class-based resolvers, simply referencing the function instead of the class. 
 
-
 ---
 ## Q. Why should we choose angular over other libraries?
 Angular is often chosen over other front-end frameworks or libraries due to its comprehensive features, structured approach, and suitability for large-scale, enterprise-level applications. It provides a full-featured framework with built-in tools for routing, state management, and form handling, which reduces the need for third-party integrations. Additionally, Angular's component-based architecture and TypeScript integration promote code quality, maintainability, and developer productivity.
 
-Here's a more detailed look at the advantages: 
+Here's a more detailed look at the advantages:
 
 #### 1. Comprehensive Framework: 
 Angular is a full-fledged framework, not just a library, meaning it provides a complete set of tools and features out of the box. This includes built-in solutions for routing, state management, forms, and more.
@@ -3638,13 +3599,145 @@ It's recommended to use class binding for simple scenarios and ngClass for more 
 ## Q. Hot or Cold operator in angular
 
 ---
-## Q.
+## Q. How to design a full webpage using angular
+To design a full webpage using Angular, follow these steps: 
+
+- Set up the Angular project: 
+	- Install Node.js and npm. 
+	- Install Angular CLI globally using the command: `npm install -g @angular/cli`.
+	- Create a new Angular project: `ng new my-app-name`. 
+	- Navigate to the project directory: `cd my-app-name`. 
+
+- Plan the page structure: 
+	- Identify the main sections of the webpage (e.g., header, navigation, content, footer). 
+	- Design the layout and user interface (UI) for each section. 
+	- Consider using a UI framework like Angular Material or Bootstrap for pre-built components. 
+
+- Create components: 
+	- Use the Angular CLI to generate components for each section: `ng generate component component-name`. 
+	- Implement the UI for each component in its respective HTML template file. 
+	- Add logic and functionality to the components using TypeScript. 
+
+- Implement routing: 
+	- Enable routing in the Angular project: `ng generate module app-routing --flat --module app`. 
+	- Define routes for different pages or sections of the webpage in the `app-routing.module.ts` file. 
+	- Use the `<router-outlet>` directive in the main app component to display the content of the current route. 
+	- Create a navigation component with links to different routes. 
+
+- Add styles: 
+	- Style the components using CSS or a CSS preprocessor like Sass or Less. 
+	- Use global styles for common elements and component-specific styles for individual components. 
+	- Consider using a CSS framework for consistent styling. 
+
+- Implement services: 
+	- Create services to handle data fetching, business logic, and other tasks that are not specific to a single component. 
+	- Inject services into components that need them. 
+
+- Test and debug: 
+	- Use the Angular CLI to run the application in development mode: `ng serve`. 
+	- Test the webpage thoroughly in different browsers and devices. 
+	- Debug any errors or issues that arise. 
+
+- Build and deploy: 
+	- Build the application for production: `ng build --prod`. 
+	- Deploy the built files to a web server.
 
 ---
+## Q. Core concepts of Angular
+Angular's core concepts include components, directives, modules, services, data binding, and templates. These building blocks enable developers to create dynamic and interactive web applications with a structured and manageable architecture.
 
+1. Components:
 
+• Components are the fundamental building blocks of Angular applications, managing a specific view and its associated logic. 
+• They combine templates, logic, and styles, allowing for reusable and modular code. 
 
+2. Directives: 
 
+• Directives extend HTML syntax, allowing developers to manipulate the DOM and add dynamic behavior to elements.
+• There are two main types: structural directives (e.g., `*ngIf`, `*ngFor`) that alter the structure of the DOM, and attribute directives that modify the appearance and behavior of elements.
+
+3. Modules: 
+
+• Modules group related components, directives, and services, providing a way to organize and manage the application's structure.
+• The AppModule is the root module, and other modules can be imported to extend its functionality.
+
+4. Services: 
+
+• Services provide reusable functionality that can be injected into components, promoting loose coupling and making code more maintainable.
+• They can handle tasks like data fetching, authentication, or managing application state.
+
+5. Data Binding:
+
+• Data binding connects the view (HTML template) with the component's data, allowing for automatic synchronization between them. 
+• It enables two-way data binding, where changes in the view automatically update the component's data, and vice versa. 
+
+6. Templates:
+
+• Templates define the structure and content of the component's view. 
+• They use HTML syntax, but also include Angular directives and binding markup, allowing for dynamic content and behavior. 
+
+7. Dependency Injection: 
+
+• Dependency injection is a software design pattern that allows components to receive their dependencies (services, other components) from an external source.
+• This makes components more testable, reusable, and reduces coupling.
+
+8. Routing:  
+
+• Routing allows users to navigate between different views or pages within the application. 
+• Angular provides a powerful routing engine for managing application navigation and passing data between views. 
+
+9. Forms:
+
+• Angular provides support for creating and managing forms, both template-driven and reactive. 
+• Forms allow users to input data, submit it to the server, and interact with the application. 
+
+10. Other concepts: 
+
+• Pipes: Pipes transform data before displaying it in the view, allowing for formatting, filtering, or other transformations.
+• Change Detection: Angular's change detection mechanism ensures that the view is updated whenever the underlying data changes.
+• RxJS: RxJS is a reactive programming library used for handling asynchronous events and streams of data, providing powerful tools for building complex applications.
+
+---
+## Q. What is the use of `trackBy`? 
+`trackBy` is a performance optimization feature in Angular, primarily used with the `*ngFor` directive. It helps Angular efficiently update the DOM when iterating over a collection of items, especially when that collection changes (items are added, removed, or reordered). 
+
+### Here's how it works and why it's beneficial: 
+
+#### - Without `trackBy`: 
+By default, when the data source for an `*ngFor` loop changes, Angular might re-render all the DOM elements associated with the list. This can be inefficient, especially for large lists or when only a few items have actually changed. 
+
+#### - With `trackBy`: 
+You provide a `trackBy` function to `*ngFor`. This function takes the index and the item from the array as arguments and should return a unique identifier for each item. When the array is updated, Angular uses this unique identifier to determine which specific items have been added, removed, or reordered. This allows Angular to only update or re-render the necessary DOM elements, instead of the entire list. 
+
+### Benefits of using `trackBy`: 
+
+• Improved Performance: Reduces unnecessary DOM manipulations, leading to faster rendering and a smoother user experience, especially with large or frequently changing lists. 
+• Preserves Element State: If you have elements within your `*ngFor` loop that maintain their own internal state (e.g., input fields with user input), `trackBy` can help preserve that state by ensuring that Angular only re-renders the elements that truly need to be updated. 
+
+Example:
+```ts 
+// In your component.ts
+interface Item {
+  id: number;
+  name: string;
+}
+
+items: Item[] = [
+  { id: 1, name: 'Item A' },
+  { id: 2, name: 'Item B' },
+  { id: 3, name: 'Item C' }
+];
+
+trackById(index: number, item: Item): number {
+  return item.id; // Return a unique identifier for each item
+}
+```
+```html
+<!-- In your template.html -->
+<div *ngFor="let item of items; trackBy: trackById">
+  {{ item.name }}
+</div>
+```
 
 ---
 ## Q. **What is Angular and why is it used?**  
@@ -3720,10 +3813,10 @@ It's recommended to use class binding for simple scenarios and ngClass for more 
     Built-in service to make HTTP calls. Supports interceptors for auth/logging.
 
 ## 22. **What are Angular lifecycle hooks?**  
-    Hooks like `ngOnInit`, `ngOnDestroy`, `ngAfterViewInit` let you tap into component life stages.
+  Hooks like `ngOnInit`, `ngOnDestroy`, `ngAfterViewInit` let you tap into component life stages.
 
 ## 23. **How do you handle forms validation?**  
-    Use `Validators` (required, minLength, pattern etc.) in template-driven or reactive forms.
+  Use `Validators` (required, minLength, pattern etc.) in template-driven or reactive forms.
 
 ## 24. **What are guards in Angular?**  
     Control navigation using `CanActivate`, `CanDeactivate`, `Resolve` etc.
