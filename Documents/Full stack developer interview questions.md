@@ -9440,7 +9440,7 @@ public class Flight {
 - **@Column(nullable = false, unique = true):** Specifies column mapping and constraints.  
   - `nullable = false` → disallows `NULL`.  
   - `unique = true` → enforces column value uniqueness.  
-  -If `@Column` is omitted, the field name is used as the column name.
+  - If `@Column` is omitted, the field name is used as the column name.
 
 ### 2. What is Object-Relational Mapping (ORM)?
 
