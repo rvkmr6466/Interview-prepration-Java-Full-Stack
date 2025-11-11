@@ -9369,7 +9369,7 @@ Java Persistence API is a collection of classes and methods to persist or store 
 - **Spring Data JPA**: It reduces the amount of boilerplate code needed for common database operations like GET, PUT, POST, etc.
 - **Spring Repository**: It is an extension of Spring Repository which contains APIs for basic CRUD operations, pagination, and Sorting.
 
-##JpaRepository vs CrudRepository in SpringBoot
+## `JpaRepository` vs `CrudRepository` in SpringBoot
 `JpaRepository` extends `PagingAndSortingRepository` which in turn extends `CrudRepository`.
 Their main functions are:
 - `CrudRepository` mainly provides CRUD functions.
@@ -9379,7 +9379,207 @@ Because of the inheritance mentioned above, `JpaRepository` will have all the fu
 
 
 ---
-## 126.
+## 126. JPA Entities & Object-Relational Mapping (ORM)
+Understanding how Java objects map to database tables is fundamental to working with **Spring Data JPA**.  
+This module covers **JPA Entities** and the power of **Object-Relational Mapping (ORM).**
+
+### 1. What is an Entity?
+
+In the context of JPA (Java Persistence API), an **Entity** is a *plain old Java object (POJO)* that represents a table in your relational database.  
+It forms the core structure of your backend domain model, allowing you to interact with database records as Java objects.
+
+### When you define an Entity, you are essentially telling JPA how to:
+- **Map a Java Class to a Table:** The class name often corresponds to the table name, or you can explicitly define it.  
+- **Map Java Fields to Table Columns:** Each field typically corresponds to a column.  
+- **Identify a Primary Key:** Every entity must have a unique identifier.
+
+### Examples of Entities in a Travel Booking System (like Voyexa)
+- **Flight:** Captures flight scheduling and operational data (e.g., flight number, departure/arrival airports, times, status).  
+- **Passenger:** Holds traveler identity and contact details (e.g., name, email, passport info).  
+- **Booking:** Stores ticket reservations, linking passengers to flights.  
+- **Payment:** Tracks financial transactions related to bookings.  
+- **Airport, Airline, Route:** Used as lookup entities for various reports and referential data.
+
+### Anatomy of a JPA Entity
+
+### Example: `Flight` Entity
+
+```java
+@Entity
+@Table(name = "flights")
+public class Flight {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String flightNumber;
+
+    @Column(nullable = false)
+    private String departureAirport;
+
+    @Column(nullable = false)
+    private String arrivalAirport;
+
+    @Column(nullable = false)
+    private LocalDateTime departureTime;
+
+    @Column(nullable = false)
+    private LocalDateTime arrivalTime;
+
+    private String status;
+}
+```
+
+### Explanation of Annotations
+- **@Entity:** Marks a plain Java class as a JPA entity, to be managed by a JPA provider (e.g., Hibernate).  
+- **@Table(name = "flights"):** Specifies the exact table name; defaults to class name if omitted.  
+- **@Id:** Denotes the primary key field.  
+- **@GeneratedValue(strategy = GenerationType.IDENTITY):** Configures automatic ID generation.  
+- **@Column(nullable = false, unique = true):** Specifies column mapping and constraints.  
+  - `nullable = false` → disallows `NULL`.  
+  - `unique = true` → enforces column value uniqueness.  
+  -If `@Column` is omitted, the field name is used as the column name.
+
+### 2. What is Object-Relational Mapping (ORM)?
+
+**Object-Relational Mapping (ORM)** bridges the gap between *object-oriented* Java code and *relational* databases.
+
+Instead of writing raw SQL queries:
+- Define data as **Java objects (Entities)**.
+- Map these objects to **database tables**.
+- Perform database operations using **object methods** (`save`, `find`, etc.) instead of SQL statements.
+
+### Why ORM Matters for a System like Voyexa
+- **Simplifies Database Access Logic:** Reduces raw SQL and complexity.  
+- **Keeps Code Clean and Maintainable:** Focuses on business logic instead of SQL syntax.  
+- **Avoids SQL Errors:** Type-safe access minimizes runtime database errors.  
+- **Database Agnosticism:** Enables switching between databases (MySQL to PostgreSQL) with minimal changes.
+
+### 3. Primary Key Generation Strategies
+
+In JPA, **primary keys** uniquely identify each entity.  
+Use `@Id` and `@GeneratedValue` annotations to define and automate key generation.
+
+### @Id – Declaring the Primary Key
+
+```
+@Entity
+public class User {
+    @Id
+    private Long id;
+}
+```
+
+To automate ID generation, combine with `@GeneratedValue`.
+
+
+### @GeneratedValue – Automating Key Generation
+
+JPA supports **four strategies** via `GenerationType`:
+
+| Strategy | Behavior | Typical Databases | Notes / When to Use |
+|-----------|-----------|-------------------|---------------------|
+| **AUTO** (default) | Lets the persistence provider choose the best strategy. | MySQL, PostgreSQL, Oracle | Use when DB is undecided or for simple apps. |
+| **IDENTITY** | Uses DB auto-increment columns; ID is generated upon insertion. | MySQL, SQL Server, PostgreSQL (SERIAL) | Simple to use but no JPA batching. |
+| **SEQUENCE** | Uses a database sequence object to generate unique IDs. | Oracle, PostgreSQL, H2 | Best performance; supports batching. |
+| **TABLE** | Uses a dedicated table to simulate sequences. | Any (DB-agnostic) | Portable but slow. Avoid for high-performance use cases. |
+
+
+### Examples
+
+#### GenerationType.AUTO
+```
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long id;
+```
+
+#### GenerationType.IDENTITY
+```
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+```
+
+#### GenerationType.SEQUENCE
+```
+@Id
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_seq")
+@SequenceGenerator(
+    name = "user_seq",
+    sequenceName = "user_sequence",
+    allocationSize = 1
+)
+private Long id;
+```
+
+#### GenerationType.TABLE
+```
+@Id
+@GeneratedValue(strategy = GenerationType.TABLE, generator = "flight_table_gen")
+@TableGenerator(
+    name = "flight_table_gen",
+    table = "id_generator",
+    pkColumnName = "gen_name",
+    valueColumnName = "gen_value",
+    pkColumnValue = "id"
+)
+private Long id;
+```
+
+### Best Practices
+- Prefer **SEQUENCE** for high-performance and batch insert capability.  
+- Use **IDENTITY** only when required, avoid for bulk inserts.  
+- Use **AUTO** for portability in small apps.  
+- Avoid **TABLE** except for maximum portability.  
+- Always specify `allocationSize` when using `SEQUENCE` to improve performance.
+
+
+### 4. Core JPA Annotations
+
+| Annotation | Description |
+|-------------|-------------|
+| `@Entity` | Marks a Java class as a JPA entity (maps to a table). |
+| `@Table(name = "...")` | Specifies the database table name. |
+| `@Id` | Identifies the primary key field. |
+| `@GeneratedValue` | Defines the automatic primary key generation strategy. |
+| `@Column` | Maps a field to a database column; define name, nullability, and uniqueness. |
+| `@Enumerated(EnumType.STRING)` | Specifies how enums are stored (name vs. ordinal). |
+| `@Transient` | Marks a field as non-persistent (not mapped to a column). |
+
+---
+## 127.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+ 
+
+Best Practices:
+Prefer SEQUENCE for performance and batching, if supported.
+Use IDENTITY only when necessary, but be cautious with bulk inserts.
+Use AUTO for portability in simple apps.
+Avoid TABLE unless multi-DB support is a must and others are not available.
+Always specify allocationSize when using SEQUENCE to optimize performance.
 
 ---
 
