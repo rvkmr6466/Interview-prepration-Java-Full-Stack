@@ -9388,12 +9388,12 @@ This module covers **JPA Entities** and the power of **Object-Relational Mapping
 In the context of JPA (Java Persistence API), an **Entity** is a *plain old Java object (POJO)* that represents a table in your relational database.  
 It forms the core structure of your backend domain model, allowing you to interact with database records as Java objects.
 
-### When you define an Entity, you are essentially telling JPA how to:
+#### When you define an Entity, you are essentially telling JPA how to:
 - **Map a Java Class to a Table:** The class name often corresponds to the table name, or you can explicitly define it.  
 - **Map Java Fields to Table Columns:** Each field typically corresponds to a column.  
 - **Identify a Primary Key:** Every entity must have a unique identifier.
 
-### Examples of Entities in a Travel Booking System (like Voyexa)
+#### Examples of Entities in a Travel Booking System (like Voyexa)
 - **Flight:** Captures flight scheduling and operational data (e.g., flight number, departure/arrival airports, times, status).  
 - **Passenger:** Holds traveler identity and contact details (e.g., name, email, passport info).  
 - **Booking:** Stores ticket reservations, linking passengers to flights.  
@@ -9402,7 +9402,7 @@ It forms the core structure of your backend domain model, allowing you to intera
 
 ### Anatomy of a JPA Entity
 
-### Example: `Flight` Entity
+#### Example: `Flight` Entity
 
 ```java
 @Entity
@@ -9432,7 +9432,7 @@ public class Flight {
 }
 ```
 
-### Explanation of Annotations
+#### Explanation of Annotations
 - **@Entity:** Marks a plain Java class as a JPA entity, to be managed by a JPA provider (e.g., Hibernate).  
 - **@Table(name = "flights"):** Specifies the exact table name; defaults to class name if omitted.  
 - **@Id:** Denotes the primary key field.  
@@ -9451,7 +9451,7 @@ Instead of writing raw SQL queries:
 - Map these objects to **database tables**.
 - Perform database operations using **object methods** (`save`, `find`, etc.) instead of SQL statements.
 
-### Why ORM Matters for a System like Voyexa
+#### Why ORM Matters for a System like Voyexa?
 - **Simplifies Database Access Logic:** Reduces raw SQL and complexity.  
 - **Keeps Code Clean and Maintainable:** Focuses on business logic instead of SQL syntax.  
 - **Avoids SQL Errors:** Type-safe access minimizes runtime database errors.  
@@ -9462,7 +9462,7 @@ Instead of writing raw SQL queries:
 In JPA, **primary keys** uniquely identify each entity.  
 Use `@Id` and `@GeneratedValue` annotations to define and automate key generation.
 
-### @Id – Declaring the Primary Key
+#### @Id – Declaring the Primary Key
 
 ```
 @Entity
@@ -9474,8 +9474,7 @@ public class User {
 
 To automate ID generation, combine with `@GeneratedValue`.
 
-
-### @GeneratedValue – Automating Key Generation
+#### @GeneratedValue – Automating Key Generation
 
 JPA supports **four strategies** via `GenerationType`:
 
@@ -9529,7 +9528,7 @@ private Long id;
 private Long id;
 ```
 
-### Best Practices
+#### Best Practices
 - Prefer **SEQUENCE** for high-performance and batch insert capability.  
 - Use **IDENTITY** only when required, avoid for bulk inserts.  
 - Use **AUTO** for portability in small apps.  
