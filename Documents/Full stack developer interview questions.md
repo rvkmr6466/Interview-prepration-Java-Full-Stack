@@ -9578,9 +9578,121 @@ private Long id;
 | `@Transient` | Marks a field as non-persistent (not mapped to a column). |
 
 ---
-## 127.
+## 127. Mastering Queries in Spring Data JPA
+
+Spring Data JPA offers several ways to query your database, from auto-generated queries to custom, high-performance SQL. This guide summarizes key strategies, syntax, and best practices.
+
+### Types of Queries in Spring Data JPA
+
+| Type           | Description                                                        | Example Use Case                   |
+|----------------|--------------------------------------------------------------------|------------------------------------|
+| Derived Query  | SQL is derived from method name and executed automatically         | `findByFlightNumber()`             |
+| JPQL           | Object-oriented query language based on entity attributes          | Complex business logic             |
+| Native SQL     | Executes raw SQL for database-specific features or performance     | Vendor-specific or heavy queries   |
+
+### 1. Derived Query Methods
+
+Derived query methods use naming conventions in repository interfaces to create SQL/JPQL automatically.
+
+**Syntax Pattern:**
+```
+findBy<PropertyName>[Condition]And/Or<PropertyName>[Condition]...
+```
+
+**Examples:**
+```java
+// Find flights by flight number
+List<Flight> findByFlightNumber(String number);
+
+// Find flights by airport and status
+List<Flight> findByDepartureAirportAndStatus(String airport, String status);
+```
+_Resulting SQL example:_
+```sql
+SELECT * FROM flights WHERE departure_airport = ? AND status = ?
+```
+
+#### Supported Keywords
+
+| Keyword         | Description                    |
+|-----------------|-------------------------------|
+| And, Or         | Combine conditions             |
+| Is, Equals, Not | Equality conditions            |
+| Between, LessThan, GreaterThan | Range checks     |
+| Like, StartingWith, EndingWith, Containing | Pattern matching |
+| In, NotIn       | Collections                    |
+| IsNull, IsNotNull | Null checks                   |
+| IgnoreCase      | Case-insensitivity             |
 
 
+### 2. Custom JPQL Queries with `@Query`
+
+JPQL queries are written using entity class names and properties for portable logic.
+
+**Example:**
+```java
+@Query("SELECT f FROM Flight f WHERE f.status = :status AND f.airlineName LIKE %:keyword%")
+List<Flight> searchFlights(@Param("status") String status, @Param("keyword") String keyword);
+```
+- Use entity names and named parameters mapped with `@Param`.
+
+
+### 3. Custom Native Queries with `@Query`
+
+Native queries execute raw SQL for advanced or highly optimized needs.
+
+**Example:**
+```java
+@Query(value = "SELECT * FROM flights WHERE status = :status AND departure_airport = :airport", nativeQuery = true)
+List<Flight> nativeSearch(@Param("status") String status, @Param("airport") String airport);
+```
+- Direct table and column names, plus `nativeQuery = true`.
+
+
+### 4. Projection Queries (Selecting Only Needed Fields)
+
+Use projections for fetching specific fields only, improving performance.
+
+**Interface Example:**
+```java
+public interface FlightSummary {
+    String getFlightNumber();
+    String getStatus();
+}
+
+// Repository method
+List<FlightSummary> findByStatus(String status);
+```
+- Spring generates a query to fetch only the requested columns.
+
+
+### Best Practices
+
+- **Start with derived queries** for common lookups.
+- **JPQL** for complex, portable business logic.
+- **Native SQL** only for performance-critical or DB-specific features.
+- **Refactor long method names** into `@Query` methods.
+- **Always use projection interfaces** for read-only or API endpoints.
+- **Use Specifications** for dynamic, flexible advanced queries.
+
+
+### Example Scenarios Table
+
+| Scenario                                 | Query Type    | Example Method/Code Snippet                                                            |
+|-------------------------------------------|--------------|----------------------------------------------------------------------------------------|
+| Find by status                           | Derived       | `List<Flight> findByStatus(String status);`                                            |
+| Filter by status & airline name           | JPQL          | `@Query("SELECT f FROM Flight f WHERE ...")`                                           |
+| Find by status & airport (SQL)            | Native SQL    | `@Query(value = "SELECT ...", nativeQuery = true)`                                     |
+| Fetch flight number & status only         | Projection    | `public interface FlightSummary {...}`,<br>`List<FlightSummary> findByStatus(String);` |
+
+---
+## 128.
+
+---
+## 129.
+
+---
+## 130.
 
 
 
