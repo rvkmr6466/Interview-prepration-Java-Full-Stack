@@ -9695,10 +9695,88 @@ The sequence (hierarchy) is:
 - `JpaRepository` (extends `PagingAndSortingRepository`) - adds JPA-specific features like batch operations and flushing the persistence context.
 
 ---
-## 129.
+## 129. Different Query methods in Spring Data Jpa?
+Spring Data JPA supports several major query methods, each suited for different use cases and application needs. Below is a concise list of the main query approaches, with descriptions and code examples compatible with Markdown for documentation:[1][2][3][5]
 
+### Query Methods in Spring Data JPA
+
+| Query Type        | Description                                                                                       | Code Example / Usage                                |
+|-------------------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| **Derived Query** | Auto-generates SQL/JPQL based on repository method names.                                         | `List<User> findByEmailAndLastname(String email, String lastname);` |
+| **JPQL Query**    | Uses the Java Persistence Query Language (object-oriented, via entity properties).                | `@Query("SELECT u FROM User u WHERE u.status = :status")`<br>`List<User> findByStatus(@Param("status") String status);` |
+| **Native Query**  | Runs raw SQL against the database for high-performance or DB-specific features.                   | `@Query(value = "SELECT * FROM users WHERE status = ?1", nativeQuery = true)`<br>`List<User> findByStatus(String status);`         |
+| **Named Query**   | Predefined query attached to entities via annotations or XML, reused by name in repositories.     | `@NamedQuery(name = "User.findByStatus", query = "SELECT u FROM User u WHERE u.status = :status")`<br>`List<User> findByStatus(String status);` |
+| **Specification** | Builds type-safe, dynamic queries programmatically using the Criteria API and Specification class. | `public interface UserRepository extends JpaSpecificationExecutor<User> {}`<br>`Specification<User> hasName(String name) {...}`    |
+
+### 1. Derived Queries
+
+- Method names drive query generation.  
+  ```java
+  List<User> findByAgeGreaterThan(int age);
+  List<User> findByFirstnameAndLastname(String firstname, String lastname);
+  ```
+
+### 2. JPQL Queries (`@Query` Annotation)
+
+- Object-oriented, portable, written with entity names.
+  ```java
+  @Query("SELECT p FROM Product p WHERE p.price < :maxPrice")
+  List<Product> findCheaperThan(@Param("maxPrice") double maxPrice);
+  ```
+
+### 3. Native SQL Queries (`@Query` with `nativeQuery = true`)
+
+- Use direct SQL for performance or vendor features.
+  ```java
+  @Query(value = "SELECT * FROM products WHERE category = ?1", nativeQuery = true)
+  List<Product> findByCategory(String category);
+  ```
+
+### 4. Named Queries
+
+- Attached to entity class or XML, reusable by name.
+  ```java
+  @NamedQuery(name = "User.findByStatus", query = "SELECT u FROM User u WHERE u.status = :status")
+  ```
+  And repository usage:
+  ```java
+  List<User> findByStatus(String status);
+  ```
+
+### 5. Specification (Dynamic, Criteria API)
+
+- Programmatically build complex, type-safe queries.
+  ```java
+  public class UserSpecification {
+      public static Specification<User> hasName(String name) {
+          return (root, query, builder) -> builder.equal(root.get("name"), name);
+      }
+  }
+  // Repository interface: extends JpaSpecificationExecutor<User>
+  ```
+  
 ---
 ## 130.
+
+
+---
+## 131.
+
+
+---
+## 132.
+
+
+---
+## 133.
+
+
+---
+## 134.
+
+
+---
+## 135.
 
 
 
