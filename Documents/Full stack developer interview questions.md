@@ -9686,7 +9686,13 @@ List<FlightSummary> findByStatus(String status);
 | Fetch flight number & status only         | Projection    | `public interface FlightSummary {...}`,<br>`List<FlightSummary> findByStatus(String);` |
 
 ---
-## 128.
+## 128. Which interface is extended by both `JpaRepository` and `PagingAndSortingRepository`? Repository CrudRepository JpaRepository EntityRepository and its sequence?
+Both `JpaRepository` and `PagingAndSortingRepository` extend the `CrudRepository` interface.
+The sequence (hierarchy) is:
+- `Repository` (marker interface)
+- `CrudRepository` (extends `Repository`) - defines basic CRUD operations (create, read, update, delete).
+- `PagingAndSortingRepository` (extends `CrudRepository`) - adds methods for pagination and sorting capabilities.
+- `JpaRepository` (extends `PagingAndSortingRepository`) - adds JPA-specific features like batch operations and flushing the persistence context.
 
 ---
 ## 129.
