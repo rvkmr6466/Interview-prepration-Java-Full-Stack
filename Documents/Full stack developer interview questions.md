@@ -9756,8 +9756,321 @@ Spring Data JPA supports several major query methods, each suited for different 
   ```
   
 ---
-## 130.
+## 130. Efficient Data Handling: Paging and Sorting in Spring Data JPA
 
+### 1. Why Paging and Sorting Are Essential
+
+In real apps like **Voyexa**, you never want to:
+
+* Load **all flights** from DB and then filter/sort in Java.
+* Return thousands of rows in a single API response.
+
+That leads to:
+
+* High memory usage on the server.
+* Slow response times.
+* Bad UX (huge payloads, long loading).
+
+**Paging** and **sorting** push this work down to the **database**, which is good at it:
+
+* Paging = fetch only a **slice of data** (page 0, size 20).
+* Sorting = **order** the results at DB level (`ORDER BY price ASC, departureTime DESC`).
+
+Benefits:
+
+* Efficient DB usage.
+* Faster API responses.
+* Easier UX (page-wise navigation, infinite scroll, etc.).
+* Clean APIs: standardized way of handling `page`, `size`, `sort` query params.
+
+---
+
+### 2. Key Interfaces and Classes
+
+Spring Data JPA gives a nice abstraction for this:
+
+#### `Pageable`
+
+* Represents **page request information**.
+* Contains: `pageNumber`, `pageSize`, `Sort`.
+* Commonly created via `PageRequest.of(page, size, sort)`.
+
+```java
+Pageable pageable = PageRequest.of(0, 20, Sort.by("price").ascending());
+```
+
+
+#### `Page<T>`
+
+* Returned when your repository method uses a `Pageable`.
+* Contains:
+
+  * `getContent()` – actual list of entities.
+  * `getTotalElements()` – total count of records.
+  * `getTotalPages()` – total pages.
+  * `getNumber()` – current page index.
+  * `hasNext()`, `hasPrevious()`, etc.
+
+```java
+Page<Flight> page = flightRepository.findByFromCityAndToCity("DEL", "BOM", pageable);
+List<Flight> flights = page.getContent();
+long total = page.getTotalElements();
+```
+
+#### `Slice<T>`
+
+* Lighter than `Page<T>`.
+* Does NOT know `totalElements` / `totalPages`.
+* Only knows whether there is a **next slice**.
+* Good for infinite scroll where you don’t care about total count.
+
+```java
+Slice<Flight> slice = flightRepository
+    .findByFromCityAndToCity("DEL", "BOM", pageable);
+```
+
+#### `Sort`
+
+* Represents **sorting criteria**.
+* Can be standalone or attached to `Pageable`.
+
+```java
+Sort sort = Sort.by("price").ascending().and(Sort.by("departureTime").descending());
+```
+
+#### Repository Support
+
+You usually extend:
+
+```java
+public interface FlightRepository extends JpaRepository<Flight, Long> {
+
+    Page<Flight> findByFromCityAndToCity(String fromCity, String toCity, Pageable pageable);
+
+    List<Flight> findByFromCityAndToCity(String fromCity, String toCity, Sort sort);
+}
+```
+
+`JpaRepository` already gives you pagination and sorting methods.
+
+
+### 3. Real-World Scenario: Paginated Flight Search in Voyexa
+
+Assume **Voyexa** has a `Flight` entity:
+
+```java
+@Entity
+public class Flight {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String fromCity;
+    private String toCity;
+    private LocalDate departureDate;
+    private LocalTime departureTime;
+    private Double price;
+    private String airline;
+
+    // getters, setters
+}
+```
+
+You want API like:
+
+```http
+GET /api/flights/search?from=DEL&to=BOM&date=2025-12-25&page=0&size=20&sort=price,asc
+```
+
+Behavior:
+
+* Only show 20 flights per page.
+* Sorted by `price ASC`.
+* Allow client to request page 1, 2… etc.
+
+
+### 4. Sample Service Layer Usage
+
+#### Repository
+
+```java
+public interface FlightRepository extends JpaRepository<Flight, Long> {
+
+    Page<Flight> findByFromCityAndToCityAndDepartureDate(
+            String fromCity,
+            String toCity,
+            LocalDate departureDate,
+            Pageable pageable
+    );
+}
+```
+
+#### Service
+
+```java
+@Service
+public class FlightService {
+
+    private final FlightRepository flightRepository;
+
+    public FlightService(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
+    }
+
+    public Page<Flight> searchFlights(
+            String fromCity,
+            String toCity,
+            LocalDate departureDate,
+            int page,
+            int size,
+            String sortBy,
+            String direction
+    ) {
+        Sort sort = ("desc".equalsIgnoreCase(direction))
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return flightRepository.findByFromCityAndToCityAndDepartureDate(
+                fromCity,
+                toCity,
+                departureDate,
+                pageable
+        );
+    }
+}
+```
+
+#### Controller (REST)
+
+```java
+@RestController
+@RequestMapping("/api/flights")
+public class FlightController {
+
+    private final FlightService flightService;
+
+    public FlightController(FlightService flightService) {
+        this.flightService = flightService;
+    }
+
+    @GetMapping("/search")
+    public Page<Flight> searchFlights(
+            @RequestParam String from,
+            @RequestParam String to,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "price") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
+        return flightService.searchFlights(from, to, date, page, size, sortBy, direction);
+    }
+}
+```
+
+This gives Voyexa:
+
+* Clean API.
+* Dynamic paging & sorting.
+* Database-level efficiency.
+
+### 5. Sorting-Only Use Case
+
+Sometimes you just want **sorted data** without pagination.
+
+Example: Admin reporting screen where you need **all flights sorted by price** (reasonable small result).
+
+#### Repository
+
+```java
+List<Flight> findByFromCityAndToCity(String fromCity, String toCity, Sort sort);
+```
+
+#### Service
+
+```java
+public List<Flight> getSortedFlights(
+        String fromCity,
+        String toCity,
+        String sortBy,
+        String direction
+) {
+    Sort sort = ("desc".equalsIgnoreCase(direction))
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+    return flightRepository.findByFromCityAndToCity(fromCity, toCity, sort);
+}
+```
+
+#### Usage
+
+```java
+List<Flight> flights = flightService.getSortedFlights("DEL", "BOM", "departureTime", "asc");
+```
+
+### 7. Best Practices for Voyexa
+
+Tailored to a flight-search product:
+
+1. **Always paginate customer-facing lists**
+
+   * Search results, booking history, offers, etc. should **never** return an unbounded list.
+   * Use sensible defaults: `page=0`, `size=20` or `size=50`.
+
+2. **Limit maximum page size**
+
+   * Prevent clients from requesting `size=10000`.
+   * In controller, clamp: `size = Math.min(requestedSize, 100)`.
+
+3. **Whitelist sortable fields**
+
+   * Don’t trust `sortBy` directly (to avoid SQL injection-like issues & invalid columns).
+   * Map API fields to entity fields:
+
+     * `"price" -> "price"`, `"departureTime" -> "departureTime"`, `"airline" -> "airline"`.
+   * If unknown, fall back to a safe default.
+
+4. **Use `Page<T>` for user UIs, `Slice<T>` for infinite scroll**
+
+   * For Voyexa’s mobile app:
+
+     * Infinite scroll flight list → use `Slice<Flight>` to avoid heavy `count(*)` queries.
+   * For web with pagination UI (1, 2, 3 …) → use `Page<Flight>`.
+
+5. **Expose metadata in API**
+
+   * Frontend (Angular/React) will need:
+
+     * `totalPages`, `totalElements`, `size`, `number`, `hasNext`, `hasPrevious`.
+   * Either return `Page<Flight>` directly (it serializes nicely), or wrap in custom DTO.
+
+6. **Index the columns you sort/filter on**
+
+   * For performance at DB level:
+
+     * Index columns like `fromCity`, `toCity`, `departureDate`, `price`.
+   * This makes paging + sorting queries much faster.
+
+7. **Consistent default sorting**
+
+   * For flight search, define a default:
+
+     * e.g., `price ASC`, or `departureTime ASC`.
+   * So if client doesn’t pass `sort`, they still get a meaningful ordering.
+
+8. **Avoid exposing entity directly for public APIs (optional but recommended)**
+
+   * Use DTOs to return only needed data, especially for large entities.
+   * Combine with paging: `Page<FlightDto>`.
+
+9. **Validation & error handling**
+
+   * If user passes negative page or size, return `400 Bad Request` with a clear message.
+   * Sanitize `direction` (only `asc` or `desc`).
 
 ---
 ## 131.
